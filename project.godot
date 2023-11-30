@@ -21,6 +21,16 @@ Transition="*res://scenes/autoloads/Transition.tscn"
 LevelManager="*res://scenes/autoloads/LevelManager.tscn"
 AudioManager="*res://scenes/autoloads/AudioManager.tscn"
 
+[file_customization]
+
+folder_colors={
+"res://art/": "yellow",
+"res://resources/": "gray",
+"res://scenes/": "purple",
+"res://scripts/": "blue",
+"res://sfx/": "orange"
+}
+
 [input]
 
 restart_level={
