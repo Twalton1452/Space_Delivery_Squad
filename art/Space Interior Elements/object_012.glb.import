@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/object_012.glb-246fd4cf1499cce64f1a06af6dcb72
 
 [params]
 
-nodes/root_type="StaticBody3D"
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
