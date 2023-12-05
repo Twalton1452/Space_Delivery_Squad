@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c5q0kao3qbmkp" path="res://art/Space Interior Elements/object.glb" id="1_itjvg"]
 [ext_resource type="PackedScene" uid="uid://3iqisgoeh4b1" path="res://art/Space Interior Elements/object_001.glb" id="2_8ps2p"]
 [ext_resource type="PackedScene" uid="uid://cjcd6cenbdee0" path="res://art/Space Interior Elements/object_002.glb" id="3_5fgxr"]
-[ext_resource type="PackedScene" uid="uid://bhbnm71w3rth1" path="res://art/Space Interior Elements/object_003.glb" id="4_4gdb6"]
+[ext_resource type="PackedScene" uid="uid://d1q7bp6mgxsjb" path="res://art/Space Interior Elements/object_003.glb" id="4_4gdb6"]
 [ext_resource type="PackedScene" uid="uid://5o214wa0gv4" path="res://art/Space Interior Elements/object_004.glb" id="5_7akwh"]
 [ext_resource type="PackedScene" uid="uid://ce5wufm3se8rv" path="res://art/Space Interior Elements/object_005.glb" id="6_1veke"]
 [ext_resource type="PackedScene" uid="uid://cylrdvbe545mu" path="res://art/Space Interior Elements/object_006.glb" id="7_oum7o"]
