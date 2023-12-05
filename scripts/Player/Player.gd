@@ -1,13 +1,15 @@
 extends CharacterBody3D
 class_name Player
 
-const WALK_SPEED = 5.0
+const WALK_SPEED = 3.0
 const JUMP_VELOCITY = 3.0
 const BASE_FOV = 75.0
 const FOV_CHANGE = 2.0
 
 @onready var player_input : PlayerInput = $PlayerInput
 @onready var camera : Camera3D = $Camera3D
+@onready var interacter : Interacter = $Camera3D/Interacter
+@onready var holder : RemoteTransform3D = $Camera3D/Holder
 
 var look_speed = .005
 var move_speed = WALK_SPEED
@@ -28,13 +30,46 @@ func _physics_process(delta):
 	if not is_multiplayer_authority():
 		return
 	
-	# Capture direction during input because we let the player have authority
-	# over their own rotation
 	var direction = (transform.basis * Vector3(player_input.x, 0, player_input.y)).normalized()
-	
-	# Clientside Prediction - Simulate player movement
+	if player_input.dropping:
+		drop()
+	if player_input.interacting:
+		interact()
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
+
+func drop() -> void:
+	# Nothing to drop
+	if holder.remote_path == NodePath(""):
+		return
+	var space_state = get_world_3d().direct_space_state
+
+	# Dropping object
+	var holding_object = get_node(holder.remote_path) as Node3D
+	# TODO: Drop noise
+	holder.remote_path = NodePath("")
+	holding_object.rotation = Vector3.ZERO
+
+	var origin = holding_object.global_position
+	var end = origin + Vector3.DOWN * 1000
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_areas = true
+	var result = space_state.intersect_ray(query)
+	holding_object.position.y = result.position.y
+
+func interact() -> void:
+	# Interacting with air
+	if interacter.current_interactable == null:
+		# TODO: Error noise
+		return
+	
+	# Can't pick up something while holding another thing
+	if holder.remote_path != NodePath(""):
+		# TODO: Error noise
+		return
+	
+	# Hold
+	holder.remote_path = interacter.current_interactable.get_parent().get_path()
 
 func move(direction: Vector3, jump: int, delta: float) -> void:
 	if not is_on_floor():

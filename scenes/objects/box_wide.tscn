@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm7bfr7yfdtk4"]
+
+[ext_resource type="PackedScene" uid="uid://cg5k6y6sdl01h" path="res://art/objects/box-wide.glb" id="1_e3rav"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8w38r"]
+points = PackedVector3Array(0.25, 0.5, 0.5, -0.25, 0.5, 0.5, 0.25, 0, 0.5, 0.25, 0.5, -0.5, -0.25, 0, 0.5, -0.25, 0.5, -0.5, 0.25, 0, -0.5, -0.25, 0, -0.5)
+
+[node name="box_wide" instance=ExtResource("1_e3rav")]
+
+[node name="box-wide" parent="." index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="." index="1"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_8w38r")

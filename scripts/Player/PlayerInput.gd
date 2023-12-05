@@ -8,6 +8,8 @@ class_name PlayerInput
 @export var x := 0.0
 @export var y := 0.0
 @export var jumping := 0
+@export var interacting := false
+@export var dropping := false
 
 @onready var player : Player = get_parent()
 
@@ -42,6 +44,8 @@ func _physics_process(_delta):
 		return
 	
 	jumping = Input.is_action_pressed("jump")
+	interacting = Input.is_action_pressed("interact")
+	dropping = Input.is_action_pressed("drop")
 
 	x = Input.get_axis("left", "right")
 	y = Input.get_axis("up", "down")
