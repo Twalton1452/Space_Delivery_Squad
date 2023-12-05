@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name Player
 
 const WALK_SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 3.0
 const BASE_FOV = 75.0
 const FOV_CHANGE = 2.0
 

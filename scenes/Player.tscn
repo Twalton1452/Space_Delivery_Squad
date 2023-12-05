@@ -12,6 +12,8 @@ albedo_color = Color(0.184314, 0.184314, 0.184314, 1)
 material = SubResource("StandardMaterial3D_jf68f")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_368e4"]
+radius = 0.125
+height = 0.5
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_23l6a"]
 properties/0/path = NodePath(".:position")
@@ -26,19 +28,19 @@ collision_layer = 2
 script = ExtResource("1_5bue4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.25, 0)
 mesh = SubResource("CapsuleMesh_ns1nv")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.141022)
 
 [node name="Eyes" type="MeshInstance3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 0.303581, 0, 0, 0, 0.0584915, 0, -0.0169319, 0.0213387)
+transform = Transform3D(0.222262, 0, 0, 0, 0.0614429, 0, 0, 0, 0.0335833, 0, -0.0169319, 0.0213387)
 mesh = SubResource("BoxMesh_j4ybv")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("CapsuleShape3D_368e4")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
