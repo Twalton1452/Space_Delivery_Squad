@@ -25,6 +25,7 @@ properties/1/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
+floor_max_angle = 1.0472
 script = ExtResource("1_5bue4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -32,10 +33,11 @@ transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.25, 0)
 mesh = SubResource("CapsuleMesh_ns1nv")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.141022)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.114478)
+near = 0.01
 
 [node name="Eyes" type="MeshInstance3D" parent="Camera3D"]
-transform = Transform3D(0.222262, 0, 0, 0, 0.0614429, 0, 0, 0, 0.0335833, 0, -0.0169319, 0.0213387)
+transform = Transform3D(0.222262, 0, 0, 0, 0.0614429, 0, 0, 0, 0.0335833, 0, -0.0169319, 0.00379127)
 mesh = SubResource("BoxMesh_j4ybv")
 skeleton = NodePath("../..")
 
