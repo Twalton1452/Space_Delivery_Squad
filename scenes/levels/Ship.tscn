@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://nk1l6h8dmcw"]
 
-[ext_resource type="Script" path="res://scripts/Player/PlayerSpawner.gd" id="1_5lm7w"]
+[ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="1_5lm7w"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="2_ecxme"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0j0e5"]

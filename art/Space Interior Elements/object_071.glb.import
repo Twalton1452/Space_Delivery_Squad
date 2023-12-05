@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b03odyyfn27da"
-path="res://.godot/imported/object_071.glb-c524bbf5ae4ba8d8062acfc926427566.scn"
+path="res://.godot/imported/object_071.glb-c5b87c3c8d620f1315ccfc393ccd8acb.scn"
 
 [deps]
 
-source_file="res://art/Space Interior Elements/object_071.glb"
-dest_files=["res://.godot/imported/object_071.glb-c524bbf5ae4ba8d8062acfc926427566.scn"]
+source_file="res://art/space interior elements/object_071.glb"
+dest_files=["res://.godot/imported/object_071.glb-c5b87c3c8d620f1315ccfc393ccd8acb.scn"]
 
 [params]
 
