@@ -17,6 +17,9 @@ var move_speed = WALK_SPEED
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func get_held_node() -> Node3D:
+	return get_node_or_null(holder.remote_path)
+
 ## Based on the velocity, change the camera's FOV
 ## not used at the moment because the x,z velocity don't reset to 0
 ## so the fov never changes back once it gets modified unless hitting a wall
@@ -44,6 +47,12 @@ func drop() -> void:
 		return
 
 	InteractionHandler.attempt_drop_node(multiplayer.get_unique_id())
+
+func drop_node() -> void:
+	holder.remote_path = NodePath("")
+
+func hold(node_path: String) -> void:
+	holder.remote_path = node_path
 
 func interact() -> void:
 	# Interacting with air
