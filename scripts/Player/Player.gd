@@ -42,14 +42,15 @@ func drop() -> void:
 	# Nothing to drop
 	if holder.remote_path == NodePath(""):
 		return
-	var space_state = get_world_3d().direct_space_state
 
 	# Dropping object
 	var holding_object = get_node(holder.remote_path) as Node3D
 	# TODO: Drop noise
 	holder.remote_path = NodePath("")
 	holding_object.rotation = Vector3.ZERO
-
+	
+	# Raycast below the object to find out where to drop it
+	var space_state = get_world_3d().direct_space_state
 	var origin = holding_object.global_position
 	var end = origin + Vector3.DOWN * 1000
 	var query = PhysicsRayQueryParameters3D.create(origin, end)
@@ -68,8 +69,9 @@ func interact() -> void:
 		# TODO: Error noise
 		return
 	
-	# Hold
-	holder.remote_path = interacter.current_interactable.get_parent().get_path()
+	# TODO: Play an animation to hide response time from server
+	
+	InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), interacter.current_interactable.get_path())
 
 func move(direction: Vector3, jump: int, delta: float) -> void:
 	if not is_on_floor():

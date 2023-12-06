@@ -30,7 +30,7 @@ shadow_enabled = true
 environment = SubResource("Environment_g62bv")
 
 [node name="SpawnLocation" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.55112, 0.0432219, -2.00703)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.55112, 0.0432219, -2.00703)
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_location")]
 _spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
@@ -49,13 +49,13 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="box_large" parent="." instance=ExtResource("3_pmqgt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.86348, -0.4125, -2.71533)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.399, -0.4125, -2.71533)
 
 [node name="box_long" parent="." instance=ExtResource("4_j4gt5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93592, -0.4125, -2.16678)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.326554, -0.4125, -2.16678)
 
 [node name="box_small" parent="." instance=ExtResource("5_xuiy6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.06463, -0.4125, -1.78239)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.197844, -0.4125, -1.78239)
 
 [node name="box_wide" parent="." instance=ExtResource("6_nlxls")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.036, -0.4125, -1.29851)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.226479, -0.4125, -1.29851)

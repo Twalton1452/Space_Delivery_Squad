@@ -25,6 +25,8 @@ func spawn_player(id: int) -> Node:
 	player.name = str(id)
 	player.set_multiplayer_authority(id)
 	player.position = Vector3(0, 0.5, 0) if spawn_location == null else spawn_location.position
+	player.rotation = Vector3.ZERO if spawn_location == null else spawn_location.rotation
+	PlayerManager.register_player_node(id, player)
 	return player
 
 func spawn_already_connected_players() -> void:

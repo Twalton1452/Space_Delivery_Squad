@@ -8,6 +8,7 @@ var current_interactable: Node3D = null :
 		current_interactable = value
 		spotted_interactable.emit(value)
 
+# For updating UI that the player is pointing at something
 func _physics_process(_delta):
 	if not is_multiplayer_authority():
 		return
