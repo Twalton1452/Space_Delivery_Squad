@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://0u45or1wot5p"]
+[gd_scene load_steps=85 format=3 uid="uid://0u45or1wot5p"]
 
 [ext_resource type="Script" path="res://scripts/DebugSpreader.gd" id="1_3u3rh"]
 [ext_resource type="PackedScene" uid="uid://c5q0kao3qbmkp" path="res://art/space interior elements/object.glb" id="1_itjvg"]
@@ -81,6 +81,9 @@
 [ext_resource type="PackedScene" uid="uid://c0u7aay4jk18g" path="res://art/space interior elements/object_077.glb" id="78_s3fho"]
 [ext_resource type="PackedScene" uid="uid://dv0015bgcuqrs" path="res://art/space interior elements/object_078.glb" id="79_jq2y8"]
 [ext_resource type="PackedScene" uid="uid://dujebor2npsxv" path="res://art/space interior elements/object_079.glb" id="80_ewiti"]
+[ext_resource type="PackedScene" uid="uid://ddhf52m3hrknm" path="res://art/space interior elements/object_13_half.glb" id="82_lkp16"]
+[ext_resource type="PackedScene" uid="uid://cgyqhx2xf4p8a" path="res://art/space interior elements/object_13_quarter.glb" id="83_28200"]
+[ext_resource type="PackedScene" uid="uid://cjmtwlsp175ig" path="res://art/space interior elements/object_13_L.glb" id="84_qdkal"]
 
 [node name="SpaceInteriorElements" type="Node3D"]
 script = ExtResource("1_3u3rh")
@@ -324,3 +327,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7)
 
 [node name="object_0792" parent="." instance=ExtResource("80_ewiti")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="object_13_half" parent="." instance=ExtResource("82_lkp16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 8)
+
+[node name="object_13_quarter" parent="." instance=ExtResource("83_28200")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 8)
+
+[node name="object_13_L" parent="." instance=ExtResource("84_qdkal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 8)
