@@ -26,6 +26,13 @@
 	- SFX
   - Has an `AudioStreamPlayer` for music by default with no music attached
   - Unmutes the Audio Buses when exported
+- `InteractionHandler.gd`
+	- Responsible for authoritatively handling interactions between players
+- `PlayerManager.gd`
+	- Responsible for keeping track of Player information during gameplay
+		- Player ID
+		- Player Name
+		- Node the Player is controlling
 
 ## Creating Levels
   - Add your level scenes to the `LevelStore` `Resource` file `res://resources/StandardLevels.tres`
@@ -33,6 +40,10 @@
 	- once this `signal` is emitted then it will proceed to the next level
   - You can create another `LevelStore` for levels you are testing and adjust the `level_store` variable in `LevelManager.gd`
 	- Note: You can export the `level_store` variable for more of an editor workflow
+
+## Debug Related Things
+	- Sometimes you need to create scripts to mess with data that you don't want to commit
+	- Create a "my_debug" folder and store everything in there as its already in the .gitignore
 
 ## Credits
 - SFX from [Kenney](https://www.kenney.nl/)
