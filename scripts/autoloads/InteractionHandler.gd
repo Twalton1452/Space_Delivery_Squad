@@ -80,11 +80,11 @@ func interact(p_id: int, node_path: String) -> bool:
 		return false
 	
 	# Player is too far, maybe spoofed packet, or terrible lag
-	if player.position.distance_to(player_attempting_to_interact_with.position) > ACCEPTABLE_PICKUP_DISTANCE_IN_M:
+	if player.global_position.distance_to(player_attempting_to_interact_with.global_position) > ACCEPTABLE_PICKUP_DISTANCE_IN_M:
 		return false
 	
 	# Can't pick up something while holding another thing
-	if player.holder.remote_path != NodePath(""):
+	if player.get_held_node() != null:
 		return false
 	
 	var path_to_interactable = player_attempting_to_interact_with.get_path()
