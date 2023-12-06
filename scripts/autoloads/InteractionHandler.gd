@@ -23,8 +23,36 @@ func notify_peers_of_interaction(p_id: int, path_to_interacted_node: String) -> 
 	
 	interact_with_node(player, path_to_interacted_node)
 
+@rpc("any_peer", "call_remote", "reliable")
+func tell_server_of_drop_attempt_by_client(p_id) -> void:
+	drop(p_id)
+
+@rpc("authority", "call_remote", "reliable")
+func notify_peers_of_drop(p_id: int, dropped_node_position: Vector3) -> void:
+	var player = PlayerManager.get_player_by_id(p_id)
+	if player == null:
+		return
+	
+	drop_node(player, dropped_node_position)
+
+func attempt_drop_node(p_id: int) -> void:
+	if multiplayer.is_server():
+		drop(p_id)
+		return
+	
+	tell_server_of_drop_attempt_by_client.rpc_id(1, p_id)
+
 func interact_with_node(player: Player, node_path: String) -> void:
 	player.holder.remote_path = node_path
+
+func drop_node(player: Player, dropped_node_position: Vector3) -> void:
+	var held_node = get_node(player.holder.remote_path)
+	player.holder.remote_path = NodePath("")
+	if held_node == null:
+		return
+	
+	held_node.position = dropped_node_position
+	held_node.rotation = Vector3.ZERO
 
 func attempt_interaction(p_id: int, node_path: String) -> void:
 	if multiplayer.is_server():
@@ -56,3 +84,29 @@ func interact(p_id: int, node_path: String) -> bool:
 	interact_with_node(player, path_to_interactable)
 	notify_peers_of_interaction.rpc(p_id, path_to_interactable)
 	return true
+
+func drop(p_id: int) -> void:
+	var player = PlayerManager.get_player_by_id(p_id)
+	if player == null:
+		return
+	
+	# Nothing to drop
+	if player.holder.remote_path == NodePath(""):
+		return
+	
+	# Dropping object
+	var holding_object = get_node(player.holder.remote_path) as Node3D
+	# TODO: Drop noise
+	player.holder.remote_path = NodePath("")
+	holding_object.rotation = Vector3.ZERO
+	
+	# Raycast below the object to find out where to drop it
+	var space_state = player.get_world_3d().direct_space_state
+	var origin = holding_object.global_position
+	var end = origin + Vector3.DOWN * 1000
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_areas = true
+	var result = space_state.intersect_ray(query)
+	holding_object.position.y = result.position.y
+	
+	notify_peers_of_drop.rpc(p_id, holding_object.position)

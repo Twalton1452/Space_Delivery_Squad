@@ -43,20 +43,7 @@ func drop() -> void:
 	if holder.remote_path == NodePath(""):
 		return
 
-	# Dropping object
-	var holding_object = get_node(holder.remote_path) as Node3D
-	# TODO: Drop noise
-	holder.remote_path = NodePath("")
-	holding_object.rotation = Vector3.ZERO
-	
-	# Raycast below the object to find out where to drop it
-	var space_state = get_world_3d().direct_space_state
-	var origin = holding_object.global_position
-	var end = origin + Vector3.DOWN * 1000
-	var query = PhysicsRayQueryParameters3D.create(origin, end)
-	query.collide_with_areas = true
-	var result = space_state.intersect_ray(query)
-	holding_object.position.y = result.position.y
+	InteractionHandler.attempt_drop_node(multiplayer.get_unique_id())
 
 func interact() -> void:
 	# Interacting with air
