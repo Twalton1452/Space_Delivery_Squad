@@ -1,0 +1,21 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://dxipancqbujtn"]
+
+[ext_resource type="Texture2D" uid="uid://dsisw07v81c1" path="res://art/hdrs/SkyboxHDRI3.hdr" id="1_5w3vs"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_nm6vo"]
+panorama = ExtResource("1_5w3vs")
+
+[sub_resource type="Sky" id="Sky_jftey"]
+sky_material = SubResource("PanoramaSkyMaterial_nm6vo")
+
+[resource]
+background_mode = 2
+background_energy_multiplier = 8.96
+sky = SubResource("Sky_jftey")
+ambient_light_sky_contribution = 0.01
+ambient_light_energy = 0.21
+tonemap_mode = 2
+tonemap_exposure = 0.71
+tonemap_white = 1.17
+fog_density = 0.0415
+volumetric_fog_density = 1.0
