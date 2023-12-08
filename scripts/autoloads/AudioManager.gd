@@ -10,6 +10,10 @@ func _ready():
 	if OS.has_feature("standalone"):
 		for i in AudioServer.bus_count:
 			AudioServer.set_bus_mute(i, false)
+	
+	var idx = AudioServer.get_bus_index("Mic")
+	var effect = AudioServer.get_bus_effect(idx, 0)
+	effect.packet_ready.connect(_on_packet_ready)
 
 func change_to(music_clip: AudioStream) -> void:
 	music_player.stream = music_clip

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://e244a03u5ux3"]
+[gd_scene load_steps=5 format=3 uid="uid://e244a03u5ux3"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3wpj0"]
 [ext_resource type="AudioStream" uid="uid://c710dv8bls4ec" path="res://sfx/click1.ogg" id="2_n2jq0"]
@@ -9,6 +9,8 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 8
 shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_201o5"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_3wpj0")
@@ -81,6 +83,11 @@ alignment = 1
 [node name="QuitButton" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_201o5")
+autoplay = true
+bus = &"Mic"
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
