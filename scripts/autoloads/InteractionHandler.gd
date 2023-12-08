@@ -8,7 +8,7 @@ extends Node
 ##     Each player might see on their screen they got the object, but the other player has it instead
 ## While the server is resolving the interaction, we can hide the delay by playing an animation
 
-const ACCEPTABLE_PICKUP_DISTANCE_IN_M = 5
+const ACCEPTABLE_INTERACTABLE_DISTANCE_IN_M = 5
 const INTERACTABLE_COLLISION_LAYERS = 1 << 2
 const NON_INTERACTABLE_COLLISION_LAYERS = 0
 
@@ -44,7 +44,16 @@ func attempt_drop_node(p_id: int) -> void:
 	tell_server_of_drop_attempt_by_client.rpc_id(1, p_id)
 
 func interact_with_node(player: Player, interactable_node_path: String) -> void:
-	player.hold(get_node(interactable_node_path).get_parent().get_path())
+	var interactable_node = get_node(interactable_node_path)
+	if interactable_node.has_method("interact"):
+		interactable_node.interact()
+		return
+	
+	# Interactable has no "interact" method, must be trying to pick something up
+	if player.get_held_node() != null:
+		return
+	
+	player.hold(interactable_node.get_parent().get_path())
 	var held_node = get_node(interactable_node_path) as CollisionObject3D
 	held_node.collision_layer = NON_INTERACTABLE_COLLISION_LAYERS
 
@@ -80,11 +89,7 @@ func interact(p_id: int, node_path: String) -> bool:
 		return false
 	
 	# Player is too far, maybe spoofed packet, or terrible lag
-	if player.global_position.distance_to(player_attempting_to_interact_with.global_position) > ACCEPTABLE_PICKUP_DISTANCE_IN_M:
-		return false
-	
-	# Can't pick up something while holding another thing
-	if player.get_held_node() != null:
+	if player.global_position.distance_to(player_attempting_to_interact_with.global_position) > ACCEPTABLE_INTERACTABLE_DISTANCE_IN_M:
 		return false
 	
 	var path_to_interactable = player_attempting_to_interact_with.get_path()

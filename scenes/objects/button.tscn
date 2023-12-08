@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhsuhcelso85c"]
+
+[ext_resource type="PackedScene" uid="uid://dujebor2npsxv" path="res://art/space interior elements/object_079.glb" id="1_11kf8"]
+[ext_resource type="Script" path="res://scripts/objects/Activater.gd" id="1_ld3ri"]
+
+[sub_resource type="Animation" id="Animation_af6xr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("model:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jb0vk"]
+resource_name = "pressed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("model:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 0.535887, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.0207617), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y3pps"]
+_data = {
+"RESET": SubResource("Animation_af6xr"),
+"activated": SubResource("Animation_jb0vk")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lbl3e"]
+size = Vector3(0.13501, 0.157837, 0.0527496)
+
+[node name="Button" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_ld3ri")
+
+[node name="model" parent="." instance=ExtResource("1_11kf8")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-09, 1, 0, -0.1, -4.37114e-08, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y3pps")
+}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000610352, -6.10352e-05, -0.0250473)
+shape = SubResource("BoxShape3D_lbl3e")

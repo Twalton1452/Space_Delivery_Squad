@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://0u45or1wot5p"]
+[gd_scene load_steps=90 format=3 uid="uid://0u45or1wot5p"]
 
 [ext_resource type="Script" path="res://scripts/DebugSpreader.gd" id="1_3u3rh"]
 [ext_resource type="PackedScene" uid="uid://c5q0kao3qbmkp" path="res://art/space interior elements/object.glb" id="1_itjvg"]
@@ -88,10 +88,10 @@
 [ext_resource type="PackedScene" uid="uid://bbvs2qsobx8g" path="res://art/space interior elements/object_002_short.glb" id="87_a366p"]
 [ext_resource type="PackedScene" uid="uid://b186k4kn0g5ws" path="res://art/space interior elements/object_003_short.glb" id="88_2c5jg"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="88_bibnb"]
+[ext_resource type="PackedScene" uid="uid://bp1w1n0fyr6ym" path="res://art/space interior elements/object_11_full.glb" id="89_gcwt1"]
 
 [node name="SpaceInteriorElements" type="Node3D"]
 script = ExtResource("1_3u3rh")
-spread = null
 
 [node name="object" parent="." instance=ExtResource("1_itjvg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
@@ -353,3 +353,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 8)
 
 [node name="object_007_stripe" parent="." instance=ExtResource("88_bibnb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 8)
+
+[node name="object_11_full" parent="." instance=ExtResource("89_gcwt1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8)

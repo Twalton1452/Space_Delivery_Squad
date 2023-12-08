@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://7188haek1n73"]
+[gd_scene load_steps=11 format=3 uid="uid://7188haek1n73"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_hldcd"]
 [ext_resource type="Script" path="res://scripts/player/Interacter.gd" id="2_0yxy6"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInput.gd" id="2_myobr"]
+[ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="3_isc5x"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ns1nv"]
 
@@ -11,6 +12,13 @@ albedo_color = Color(0.184314, 0.184314, 0.184314, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_j4ybv"]
 material = SubResource("StandardMaterial3D_jf68f")
+
+[sub_resource type="LabelSettings" id="LabelSettings_w7x1j"]
+font_size = 24
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_368e4"]
 radius = 0.125
@@ -45,14 +53,58 @@ skeleton = NodePath("../..")
 [node name="Interacter" type="RayCast3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0360803, 0.114478)
 target_position = Vector3(0, 0, -1)
-collision_mask = 4
+collision_mask = 5
 hit_from_inside = true
 collide_with_areas = true
-collide_with_bodies = false
 script = ExtResource("2_0yxy6")
 
 [node name="Holder" type="RemoteTransform3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.987881, -0.15521, 0, 0.15521, 0.987881, 0.00463852, -0.322352, -0.142844)
+
+[node name="UI" type="Control" parent="Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Reticle" type="TextureRect" parent="Camera3D/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_isc5x")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Camera3D/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 108.0
+offset_right = 20.0
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 16)
+text = "Press [E] to Interact"
+label_settings = SubResource("LabelSettings_w7x1j")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)

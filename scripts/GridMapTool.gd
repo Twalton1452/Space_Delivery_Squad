@@ -7,6 +7,6 @@ extends GridMap
 		_on_erase()
 
 func _on_erase() -> void:
-	pass
-	print("Erasing GridMap Cells")
+	return
+	#print("Erasing GridMap Cells")
 	#clear()

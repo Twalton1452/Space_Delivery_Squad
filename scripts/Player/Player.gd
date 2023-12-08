@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name Player
 
+signal interacted
+
 const WALK_SPEED = 3.0
 const JUMP_VELOCITY = 3.0
 const BASE_FOV = 75.0
@@ -60,14 +62,10 @@ func interact() -> void:
 		# TODO: Error noise
 		return
 	
-	# Can't pick up something while holding another thing
-	if holder.remote_path != NodePath(""):
-		# TODO: Error noise
-		return
-	
 	# TODO: Play an animation to hide response time from server
 	
 	InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), interacter.current_interactable.get_path())
+	interacted.emit()
 
 func move(direction: Vector3, jump: int, delta: float) -> void:
 	if not is_on_floor():
