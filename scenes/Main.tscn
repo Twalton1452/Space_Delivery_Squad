@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://e244a03u5ux3"]
+[gd_scene load_steps=4 format=3 uid="uid://e244a03u5ux3"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3wpj0"]
 [ext_resource type="AudioStream" uid="uid://c710dv8bls4ec" path="res://sfx/click1.ogg" id="2_n2jq0"]
-[ext_resource type="Script" path="res://addons/godot-voip/scripts/voice_orchestrator.gd" id="3_ysh5w"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_38u1e"]
 font_size = 48
@@ -82,10 +81,6 @@ alignment = 1
 [node name="QuitButton" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
-
-[node name="VoiceOrchestrator" type="Node" parent="."]
-script = ExtResource("3_ysh5w")
-recording = true
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
