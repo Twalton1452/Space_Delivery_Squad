@@ -32,7 +32,9 @@ jobs:
         run: |
           sudo apt install wget unzip
           wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
           sudo chmod +x butler
+          mv ./butler /usr/local/bin/
           wget https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_linux.x86_64.zip -O godot.zip
           unzip godot.zip
           sudo mv Godot_v4.2-stable_linux.x86_64 /usr/local/bin/
