@@ -13,7 +13,12 @@ config_version=5
 config/name="Space_Delivery_Squad"
 run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+run/max_fps=144
 config/icon="res://art/spaceMissiles_007.png"
+
+[audio]
+
+driver/enable_input=true
 
 [autoload]
 
@@ -22,6 +27,10 @@ LevelManager="*res://scenes/autoloads/LevelManager.tscn"
 AudioManager="*res://scenes/autoloads/AudioManager.tscn"
 InteractionHandler="*res://scripts/autoloads/InteractionHandler.gd"
 PlayerManager="*res://scripts/autoloads/PlayerManager.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-voip/plugin.cfg")
 
 [file_customization]
 

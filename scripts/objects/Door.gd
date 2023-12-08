@@ -12,6 +12,7 @@ var is_open = false
 func activate() -> void:
 	if animation_player.is_playing():
 		return
+	
 	if not is_open:
 		animation_player.play("open")
 		collision_body.collision_layer = 0
