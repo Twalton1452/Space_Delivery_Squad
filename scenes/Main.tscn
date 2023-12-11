@@ -10,7 +10,7 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 8
 shadow_color = Color(0, 0, 0, 1)
 
-[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_201o5"]
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_dt77j"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_3wpj0")
@@ -85,7 +85,7 @@ layout_mode = 2
 text = "Quit"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamMicrophone_201o5")
+stream = SubResource("AudioStreamMicrophone_dt77j")
 autoplay = true
 bus = &"Mic"
 

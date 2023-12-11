@@ -47,4 +47,4 @@
 
 ## Credits
 - SFX from [Kenney](https://www.kenney.nl/)
-- VOIP from https://github.com/meisamsafavi/Godot-Enet-VOIP and repurposed to Godot 4.2
+- VOIP from [WIP] https://github.com/RevoluPowered/one-voip-godot-4
