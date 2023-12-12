@@ -2,6 +2,8 @@ extends Node
 
 ## Autoloaded
 
+signal player_controlling_node(p_id: int)
+
 var players = {}
 
 class Info:
@@ -30,9 +32,11 @@ func _on_peer_disconnected(p_id: int) -> void:
 	player.controlling_node.queue_free()
 
 func _set_player(p_id: int, p_name: String, controlling_node: Node3D) -> void:
-	players[p_id] = Info.new(p_id)
+	if get_by_id(p_id) == null:
+		players[p_id] = Info.new(p_id)
 	players[p_id].name = p_name
 	players[p_id].controlling_node = controlling_node
+	player_controlling_node.emit(p_id)
 
 func get_by_id(p_id: int) -> Info:
 	return players.get(p_id)
@@ -58,3 +62,4 @@ func register_player_node(p_id: int, p_node: Node3D) -> void:
 		_set_player(p_id, "", p_node)
 	else:
 		player.controlling_node = p_node
+		player_controlling_node.emit(p_id)
