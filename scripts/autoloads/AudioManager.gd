@@ -8,10 +8,10 @@ var mic_capture: VOIPInputCapture
 var muted = false
 
 var users = {} # {Peer ID: AudioStreamPlayer3D}
+var debug_disable_voip = true # Auto-disabled when exported
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_end"):
-		#AudioManager.mic_capture.muted = !AudioManager.mic_capture.muted
 		muted = !muted
 		print("Muted: ", muted)
 
@@ -31,6 +31,10 @@ func _process(_delta):
 
 #region VOIP
 func _voip_setup() -> void:
+	if debug_disable_voip and not OS.has_feature("standalone"):
+		set_process(false)
+		return
+	
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	PlayerManager.player_controlling_node.connect(_on_player_controlling_node)
