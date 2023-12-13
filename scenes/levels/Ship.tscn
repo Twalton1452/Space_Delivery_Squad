@@ -57,28 +57,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)
 [node name="elevator_down" parent="Objects" instance=ExtResource("7_b8kjp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 4.5)
 
-[node name="Door" parent="Objects" instance=ExtResource("10_qn8fe")]
+[node name="Door" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("10_qn8fe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 2.5)
+triggers = [NodePath("../Button2")]
 
-[node name="Door2" parent="Objects" instance=ExtResource("10_qn8fe")]
+[node name="Door2" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("10_qn8fe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.05, 2.5)
+triggers = [NodePath("../Button"), NodePath("../Lever2"), NodePath("../Lever")]
 
-[node name="Button" parent="Objects" node_paths=PackedStringArray("to_activate") instance=ExtResource("9_k7x3o")]
+[node name="Button" parent="Objects" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.43997, 0.5, 3)
-to_activate = [NodePath("../Door2")]
 
-[node name="Button2" parent="Objects" node_paths=PackedStringArray("to_activate") instance=ExtResource("9_k7x3o")]
+[node name="Button2" parent="Objects" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.43997, 0.5, 3)
-to_activate = [NodePath("../Door")]
 
 [node name="object_073" parent="Objects" instance=ExtResource("10_17rqg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 2.5)
 
 [node name="Lever" parent="Objects" instance=ExtResource("13_xlqrf")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 0.0655602, 1)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 0.0655602, 2)
 
 [node name="Lever2" parent="Objects" instance=ExtResource("13_xlqrf")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.063, 1)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0.063, 2)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

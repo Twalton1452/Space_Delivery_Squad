@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dtxyjlio41upf"]
+[gd_scene load_steps=14 format=3 uid="uid://dtxyjlio41upf"]
 
-[ext_resource type="Script" path="res://scripts/objects/Rotater.gd" id="1_7wf3i"]
+[ext_resource type="Script" path="res://scripts/objects/Interactable.gd" id="1_hbhwl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b33ah"]
 resource_name = "metal"
@@ -98,27 +98,125 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qryth")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pnumj"]
-points = PackedVector3Array(-0.0405618, 0.445474, -0.0405618, -0.0405618, 0.445474, 0.0405618, -0.0405618, 0.5495, -0.0405618, 0.0405618, 0.445474, -0.0405618, -0.0149685, 0, -0.0149685, 0.0405618, 0.445474, 0.0405618, -0.0405618, 0.5495, 0.0405618, -0.0149685, 0, 0.0149526, 0.0405618, 0.5495, -0.0405618, 0.0149526, 0, -0.0149685, 0.0405618, 0.5495, 0.0405618, 0.0149526, 0, 0.0149526)
+[sub_resource type="Animation" id="Animation_nlgie"]
+resource_name = "activated"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("lever/handle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.329877, 1),
+"update": 0,
+"values": [Vector3(0.785398, 1.5708, 0), Vector3(-0.785398, 1.5708, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HandleCollisionShape3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.329877, 1),
+"update": 0,
+"values": [Vector3(0.785398, 1.5708, 0), Vector3(-0.785398, 1.5708, 0)]
+}
 
-[node name="Lever" type="Node3D"]
+[sub_resource type="Animation" id="Animation_aw1lm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("lever/handle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.785398, 1.5708, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HandleCollisionShape3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.785398, 1.5708, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_34dic"]
+resource_name = "deactivated"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("lever/handle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.287175, 1),
+"update": 0,
+"values": [Vector3(-0.785398, 1.5708, 0), Vector3(0.785398, 1.5708, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HandleCollisionShape3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.287175, 1),
+"update": 0,
+"values": [Vector3(-0.785398, 1.5708, 0), Vector3(0.785398, 1.5708, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l30hw"]
+_data = {
+"RESET": SubResource("Animation_aw1lm"),
+"activated": SubResource("Animation_nlgie"),
+"deactivated": SubResource("Animation_34dic")
+}
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_c5ihf"]
+points = PackedVector3Array(-5.67436e-05, 0.330848, 0.0999843, 0.289943, 0.0808336, 0.14, 0.0646653, 0.322298, 0.0999843, -5.67436e-05, 0.330848, -0.100012, -0.064722, 0.322298, 0.0999843, -0.29, 0.0808336, 0.14, 0.289943, 3.20593e-31, 0.14, 0.289943, 0.0808336, -0.14, 0.216478, 0.205841, 0.0999843, 0.176737, 0.257592, 0.0999843, 0.124959, 0.297329, 0.0999843, 0.0646653, 0.322298, -0.100012, -0.29, 0.0808336, -0.14, -0.064722, 0.322298, -0.100012, -0.125016, 0.297329, 0.0999843, -0.29, 3.20593e-31, 0.14, -0.176793, 0.257592, 0.0999843, -0.216535, 0.205841, 0.0999843, 0.289943, 3.20593e-31, -0.14, 0.124959, 0.297329, -0.100012, 0.176737, 0.257592, -0.100012, 0.216478, 0.205841, -0.100012, -0.29, 3.20593e-31, -0.14, -0.216535, 0.205841, -0.100012, -0.176793, 0.257592, -0.100012, -0.125016, 0.297329, -0.100012)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7hcfm"]
+points = PackedVector3Array(-0.0405618, 0.445474, -0.0405618, -0.0405618, 0.445474, 0.0405617, -0.0405618, 0.5495, -0.0405618, 0.0405617, 0.445474, -0.0405618, -0.0149685, 0, -0.0149685, 0.0405617, 0.445474, 0.0405617, -0.0405618, 0.5495, 0.0405617, -0.0149685, 0, 0.0149525, 0.0405617, 0.5495, -0.0405618, 0.0149525, 0, -0.0149685, 0.0405617, 0.5495, 0.0405617, 0.0149525, 0, 0.0149525)
+
+[node name="Lever" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_hbhwl")
+toggler = true
 
 [node name="lever" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_hr35j")
 skeleton = NodePath("")
 
 [node name="handle" type="MeshInstance3D" parent="lever"]
-transform = Transform3D(-4.37114e-08, 0.570407, 0.821362, 0, 0.821362, -0.570407, -1, -2.49333e-08, -3.59029e-08, -5e-08, 0.0808482, 4.99999e-08)
+transform = Transform3D(-4.37114e-08, 0.707107, 0.707107, 0, 0.707107, -0.707107, -1, -3.09086e-08, -3.09086e-08, -5e-08, 0.0808482, 4.99999e-08)
 mesh = SubResource("ArrayMesh_tr626")
 skeleton = NodePath("")
 
-[node name="Area3D" type="Area3D" parent="lever/handle"]
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("1_7wf3i")
-activated_rotation = Vector3(45, 90, 0)
-not_activated_rotation = Vector3(-45, 90, 0)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_l30hw")
+}
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="lever/handle/Area3D"]
-transform = Transform3D(1, -1.77636e-15, -3.55271e-15, 1.77636e-15, 1, 8.95177e-16, 0, 8.95177e-16, 1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_pnumj")
+[node name="BaseCollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_c5ihf")
+
+[node name="HandleCollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.707107, 0.707107, 0, 0.707107, -0.707107, -1, -3.09086e-08, -3.09086e-08, -5e-08, 0.0808482, 4.99999e-08)
+shape = SubResource("ConvexPolygonShape3D_7hcfm")

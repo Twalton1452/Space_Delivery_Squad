@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dhsuhcelso85c"]
 
 [ext_resource type="PackedScene" uid="uid://dujebor2npsxv" path="res://art/space interior elements/object_079.glb" id="1_11kf8"]
-[ext_resource type="Script" path="res://scripts/objects/Activater.gd" id="1_ld3ri"]
+[ext_resource type="Script" path="res://scripts/objects/Interactable.gd" id="1_ld3ri"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c7hlo"]
 resource_name = "metal.057"

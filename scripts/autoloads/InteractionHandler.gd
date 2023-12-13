@@ -44,16 +44,16 @@ func attempt_drop_node(p_id: int) -> void:
 	tell_server_of_drop_attempt_by_client.rpc_id(1, p_id)
 
 func interact_with_node(player: Player, interactable_node_path: String) -> void:
-	var interactable_node = get_node(interactable_node_path)
-	if interactable_node.has_method("interact"):
-		interactable_node.interact()
+	var node_on_interactable_layer = get_node(interactable_node_path)
+	if node_on_interactable_layer is Interactable:
+		node_on_interactable_layer.interact()
 		return
 	
-	# Interactable has no "interact" method, must be trying to pick something up
+	# Node has no "interact" method, must be trying to pick something up
 	if player.get_held_node() != null:
 		return
 	
-	player.hold(interactable_node.get_parent().get_path())
+	player.hold(node_on_interactable_layer.get_parent().get_path())
 	var held_node = get_node(interactable_node_path) as CollisionObject3D
 	held_node.collision_layer = NON_INTERACTABLE_COLLISION_LAYERS
 

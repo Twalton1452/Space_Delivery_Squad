@@ -31,7 +31,10 @@ func _physics_process(_delta):
 		if is_interactable(get_collider()):
 			if current_interactable != get_collider():
 				current_interactable = get_collider()
-				interact_label.show()
+				
+				if current_interactable.can_interact():
+					interact_label.show()
+				
 			return
 	
 	clear_current_interactable()
