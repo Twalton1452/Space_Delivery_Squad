@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://nk1l6h8dmcw"]
+[gd_scene load_steps=14 format=3 uid="uid://nk1l6h8dmcw"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="1_5lm7w"]
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_fp0p1"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cnsvsg5ll712j" path="res://art/space interior elements/object_073.glb" id="10_17rqg"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="10_qb1gj"]
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="10_qn8fe"]
+[ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="13_xlqrf"]
 
 [node name="Ship" type="Node3D"]
 
@@ -72,6 +73,12 @@ to_activate = [NodePath("../Door")]
 
 [node name="object_073" parent="Objects" instance=ExtResource("10_17rqg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 2.5)
+
+[node name="Lever" parent="Objects" instance=ExtResource("13_xlqrf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 0.0655602, 1)
+
+[node name="Lever2" parent="Objects" instance=ExtResource("13_xlqrf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.063, 1)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
