@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://nk1l6h8dmcw"]
+[gd_scene load_steps=18 format=3 uid="uid://nk1l6h8dmcw"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="1_5lm7w"]
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_fp0p1"]
@@ -14,11 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="10_qn8fe"]
 [ext_resource type="PackedScene" uid="uid://b0vcy1f0pal6w" path="res://scenes/objects/manual_elevator.tscn" id="11_1boo3"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="13_xlqrf"]
+[ext_resource type="PackedScene" uid="uid://c5q0kao3qbmkp" path="res://art/space interior elements/object.glb" id="15_55ce3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_33ltf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k5d2r"]
-size = Vector3(0.158325, 0.665283, 0.086731)
+size = Vector3(0.173, 0.665, 0.112)
 
 [node name="Ship" type="Node3D"]
 
@@ -40,7 +41,7 @@ spawn_location = NodePath("../SpawnLocation")
 [node name="Lights" type="Node3D" parent="."]
 
 [node name="ObservatoryLight" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.514759, 1.88812, 2.52934)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.514759, 3.88812, 2.52934)
 light_color = Color(0.894118, 0.745098, 1, 1)
 light_energy = 1.062
 shadow_enabled = true
@@ -52,7 +53,7 @@ omni_range = 3.242
 omni_attenuation = 1.80248
 
 [node name="LightFixture" parent="Lights/ObservatoryLight" instance=ExtResource("10_17rqg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.0575022, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.0575024, 0)
 
 [node name="MainDeckLight" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -5.96047e-08, 1, 0, -1, -5.96047e-08, -0.514759, 0.802858, 2.3667)
@@ -68,7 +69,7 @@ omni_range = 3.4
 transform = Transform3D(-4.37114e-08, 0, -1, -1, -5.96047e-08, 4.37114e-08, -5.96047e-08, 1, 2.6054e-15, 0.014759, -0.1333, 0.115196)
 
 [node name="EngineRoomLight" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.535778, -0.159922, 2.50477)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.535778, -2.15992, 2.50477)
 light_color = Color(0.756863, 0.607843, 0.513726, 1)
 shadow_enabled = true
 distance_fade_enabled = true
@@ -80,6 +81,15 @@ omni_attenuation = 1.10957
 
 [node name="LightFixture" parent="Lights/EngineRoomLight" instance=ExtResource("10_17rqg")]
 transform = Transform3D(-4.37114e-08, 0, -1, -1, -4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1.91069e-15, 0.0210192, -0.0245676, 0.0679992)
+
+[node name="ElevatorLight" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.5, 3.99403, 4.5)
+light_color = Color(1, 0.996078, 0.94902, 1)
+light_energy = 0.848
+spot_range = 15.157
+spot_attenuation = 0.500001
+spot_angle = 31.45
+spot_angle_attenuation = 6.49803
 
 [node name="Objects" type="Node3D" parent="."]
 
@@ -119,17 +129,18 @@ transform = Transform3D(4.37114e-08, -1, -3.82137e-15, 1, 4.37114e-08, -1.74846e
 
 [node name="ManualElevator" parent="Objects/ElevatorSystem" node_paths=PackedStringArray("up_triggers", "middle_triggers", "down_triggers") instance=ExtResource("11_1boo3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 4.5)
+speed = 0.8
 up_triggers = [NodePath("../TopButtonPanel/Button"), NodePath("../MiddleButtonPanel/Button"), NodePath("../BottomButtonPanel/Button")]
 middle_triggers = [NodePath("../TopButtonPanel/Button2"), NodePath("../MiddleButtonPanel/Button2"), NodePath("../BottomButtonPanel/Button2")]
 down_triggers = [NodePath("../TopButtonPanel/Button3"), NodePath("../MiddleButtonPanel/Button3"), NodePath("../BottomButtonPanel/Button3")]
 floor_positions = {
--1: Vector3(-0.5, -1, 4.5),
+-1: Vector3(-0.5, -3, 4.5),
 0: Vector3(-0.5, 0, 4.5),
-1: Vector3(-0.5, 1, 4.5)
+1: Vector3(-0.5, 3, 4.5)
 }
 
 [node name="TopButtonPanel" type="Node3D" parent="Objects/ElevatorSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.115)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.115)
 
 [node name="Base" type="MeshInstance3D" parent="Objects/ElevatorSystem/TopButtonPanel"]
 transform = Transform3D(0.159636, 0, 0, 0, 0.653104, 0, 0, 0, 0.088, -0.502858, 0.376808, 5.00791)
@@ -185,7 +196,7 @@ transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 
 interact_display_text = "Engine Room"
 
 [node name="BottomButtonPanel" type="Node3D" parent="Objects/ElevatorSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0.115)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0.115)
 
 [node name="Base" type="MeshInstance3D" parent="Objects/ElevatorSystem/BottomButtonPanel"]
 transform = Transform3D(0.159636, 0, 0, 0, 0.653104, 0, 0, 0, 0.088, -0.502858, 0.376808, 5.00791)
@@ -218,9 +229,9 @@ mesh_library = ExtResource("2_ecxme")
 cell_size = Vector3(1, 1, 1)
 collision_mask = 0
 data = {
-"cells": PackedInt32Array(65535, 1, 1441805, 65534, 2, 1441805, 65535, 2, 1441805, 0, 2, 13, 65535, 3, 13, 65534, 1, 655441, 0, 1, 1048657, 0, 3, 81, 65534, 3, 1441873, 65533, 2, 13, 65532, 2, 655373, 65533, 1, 655439, 65533, 3, 79, 65532, 1, 655440, 65532, 3, 1441872, 65534, 4, 1441871, 0, 4, 1048655, 0, 5, 80, 65534, 5, 1441872, 65535, 5, 79, 1, 2, 1048655, 1, 1, 1048656, 1, 3, 80, 65535, 0, 655439, 0, 0, 1048656, 65534, 0, 655440, 65531, 2, 655387, -1, 1, 13, -1, 2, 1441805, -1, 3, 1441805, -65536, 4, 1048655, -65536, 3, 1048655, -65536, 2, 1048655, -65536, 1, 1048655, -1, 0, 655439, -2, 1, 1441871, -2, 2, 1441871, -2, 3, 1441871, -2, 4, 1441871, -2, 5, 1441872, -65536, 5, 80, -65536, 0, 1048656, -2, 0, 655440, -1, 4, 524301, -1, 5, 79)
+"cells": PackedInt32Array(65535, 1, 1441805, 65534, 2, 1441805, 65535, 2, 1441805, 0, 2, 13, 65535, 3, 13, 65534, 1, 655441, 0, 1, 1048657, 0, 3, 81, 65534, 3, 1441873, 65533, 2, 13, 65532, 2, 655373, 65533, 1, 655439, 65533, 3, 79, 65532, 1, 655440, 65532, 3, 1441872, 65534, 4, 1441871, 0, 4, 1048655, 0, 5, 80, 65534, 5, 1441872, 65535, 5, 79, 1, 2, 1048655, 1, 1, 1048656, 1, 3, 80, 65535, 0, 655439, 0, 0, 1048656, 65534, 0, 655440, 65531, 2, 655387, 262141, 1, 655440, 262141, 2, 1441871, 262141, 3, 1441872, 262142, 0, 655440, 262142, 1, 655441, 262142, 2, 1441805, 262142, 3, 1441873, 262142, 4, 1441871, 262142, 5, 1441872, 262143, 0, 655439, 262143, 1, 1441805, 262143, 2, 1441805, 262143, 3, 13, 262143, 5, 79, 196608, 0, 1048656, 196608, 1, 1048657, 196608, 2, 13, 196608, 3, 81, 196608, 4, 1048655, 196608, 5, 80, 196609, 1, 1048656, 196609, 2, 1048655, 196609, 3, 80, -131074, 0, 655440, -131074, 1, 1441871, -131074, 2, 1441871, -131074, 3, 1441871, -131074, 4, 1441871, -131074, 5, 1441872, -131073, 0, 655439, -131073, 1, 13, -131073, 2, 1441805, -131073, 3, 1441805, -131073, 4, 524301, -131073, 5, 79, -196608, 0, 1048656, -196608, 1, 1048655, -196608, 2, 1048655, -196608, 3, 1048655, -196608, 4, 1048655, -196608, 5, 80)
 }
-metadata/_editor_floor_ = Vector3(0, 1, 0)
+metadata/_editor_floor_ = Vector3(0, 3, 0)
 
 [node name="GridMap Walls" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
@@ -228,9 +239,9 @@ mesh_library = ExtResource("2_ecxme")
 cell_size = Vector3(1, 1, 1)
 collision_mask = 0
 data = {
-"cells": PackedInt32Array(65532, 1, 82, 65532, 2, 11, 65532, 3, 1048658, 65533, 1, 1441799, 65533, 3, 1048583, 65534, 0, 9, 65534, 1, 82, 65534, 2, 11, 65534, 3, 1048658, 65534, 4, 86, 65534, 5, 1048658, 65535, 0, 1441878, 65535, 1, 1441803, 65535, 3, 1048587, 65535, 4, 34, 65535, 5, 1048662, 0, 0, 1441801, 0, 1, 1441874, 0, 2, 655371, 0, 3, 655442, 0, 4, 655446, 0, 5, 655442, 1, 1, 1441801, 1, 2, 655367, 1, 3, 655369, -65536, 4, 655360, -65536, 3, 655360, -65536, 2, 655361, -65536, 1, 655360, -65536, 0, 1441877, -2, 0, 85, -2, 1, 0, -2, 2, 1, -2, 3, 0, -2, 4, 0, -2, 5, 1048661, -65536, 5, 655445, -1, 5, 1048577, -1, 0, 1441793, 131070, 5, 1048661, 65536, 5, 655445, 65537, 3, 655445, 65537, 1, 1441877, 65536, 0, 1441877, 131070, 0, 85, 131068, 1, 85, 131068, 3, 1048661, 131071, 5, 1048582, 131068, 2, 6, 131071, 0, 1441798, 65537, 2, 655366, 131070, 3, 1048660, 65536, 3, 655444, 131070, 1, 84, 65536, 1, 1441876, 131070, 4, 0, 65536, 4, 655360, 131069, 1, 1441792, 131069, 3, 1048576, -1, 4, 33, 131071, 4, 1441827)
+"cells": PackedInt32Array(65532, 1, 82, 65532, 2, 11, 65532, 3, 1048658, 65533, 1, 1441799, 65533, 3, 1048583, 65534, 0, 9, 65534, 1, 82, 65534, 2, 11, 65534, 3, 1048658, 65534, 4, 86, 65534, 5, 1048658, 65535, 0, 1441878, 65535, 1, 1441803, 65535, 3, 1048587, 65535, 4, 34, 65535, 5, 1048662, 0, 0, 1441801, 0, 1, 1441874, 0, 2, 655371, 0, 3, 655442, 0, 4, 655446, 0, 5, 655442, 1, 1, 1441801, 1, 2, 655367, 1, 3, 655369, 262141, 1, 85, 262141, 3, 1048661, 262142, 0, 85, 262142, 1, 84, 262142, 3, 1048660, 262142, 4, 0, 262142, 5, 1048661, 262143, 0, 1441798, 262143, 4, 1441827, 262143, 5, 1048582, 196608, 0, 1441877, 196608, 1, 1441876, 196608, 3, 655444, 196608, 4, 655360, 196608, 5, 655445, 196609, 1, 1441877, 196609, 2, 655366, 196609, 3, 655445, -131074, 0, 85, -131074, 1, 0, -131074, 2, 1, -131074, 3, 0, -131074, 4, 0, -131074, 5, 1048661, -131073, 0, 1441793, -131073, 4, 33, -131073, 5, 1048577, -196608, 0, 1441877, -196608, 1, 655360, -196608, 2, 655361, -196608, 3, 655360, -196608, 4, 655360, -196608, 5, 655445, 262141, 2, 6)
 }
-metadata/_editor_floor_ = Vector3(0, 1, 0)
+metadata/_editor_floor_ = Vector3(0, 3, 0)
 
 [node name="Fillers" type="Node3D" parent="GridMap Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -247,14 +258,62 @@ transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -1.5, 0,
 [node name="object_007_stripe4" parent="GridMap Walls/Fillers" instance=ExtResource("10_qb1gj")]
 transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0.5, 0, 4)
 
+[node name="object" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -2, 4.5)
+
+[node name="object2" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, 4.5)
+
+[node name="object3" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -2, 4.5)
+
+[node name="object4" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1, 4.5)
+
+[node name="object5" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.5, -2, 5)
+
+[node name="object6" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.5, -1, 5)
+
+[node name="object7" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, -0.5, -2, 4)
+
+[node name="object8" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, -0.5, -1, 4)
+
+[node name="object9" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 4.5)
+
+[node name="object10" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 4.5)
+
+[node name="object11" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1, 4.5)
+
+[node name="object12" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2, 4.5)
+
+[node name="object13" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.5, 1, 5)
+
+[node name="object14" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.5, 2, 5)
+
+[node name="object15" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, -0.5, 1, 4)
+
+[node name="object16" parent="GridMap Walls/Fillers" instance=ExtResource("15_55ce3")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, -0.5, 2, 4)
+
 [node name="GridMap Ceiling" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 mesh_library = ExtResource("2_ecxme")
 cell_size = Vector3(1, 1, 1)
 collision_mask = 0
 data = {
-"cells": PackedInt32Array(65535, 2, 524301, 65534, 2, 524301, 65533, 2, 524301, 0, 2, 524301, 65535, 1, 524301, 65535, 0, 524367, 0, 1, 524369, 0, 3, 1310801, 65534, 3, 131153, 65534, 1, 1179729, 65534, 4, 1179727, 0, 4, 1310799, 1, 2, 1310799, 65532, 2, 1179727, 65533, 1, 524367, 65533, 3, 131151, 1, 1, 524368, 1, 3, 1310800, 0, 5, 1310800, 65534, 5, 131152, 65532, 3, 131152, 65532, 1, 1179728, 65534, 0, 1179728, 0, 0, 524368, 65535, 5, 131151, 65535, 3, 524301, 131071, 3, 1179661, 131071, 2, 1179661, 131071, 1, 1179661, 131069, 2, 1179661, 131070, 2, 1179661, 65536, 2, 1179661, 131068, 2, 1179727, 131070, 1, 1179729, 131070, 3, 131153, 131070, 4, 1179727, 65536, 1, 524369, 131071, 0, 524367, 131069, 1, 524367, 131069, 3, 131151, 131071, 5, 131151, 65537, 2, 1310799, 65536, 3, 1310801, 65537, 3, 1310800, 131070, 5, 131152, 131068, 3, 131152, 131068, 1, 1179728, 131070, 0, 1179728, 65536, 0, 524368, 65537, 1, 524368, 65536, 4, 1310799, 65536, 5, 1310800, 131071, 4, 1310733)
+"cells": PackedInt32Array(65535, 2, 524301, 65534, 2, 524301, 65533, 2, 524301, 0, 2, 524301, 65535, 1, 524301, 65535, 0, 524367, 0, 1, 524369, 0, 3, 1310801, 65534, 3, 131153, 65534, 1, 1179729, 65534, 4, 1179727, 0, 4, 1310799, 1, 2, 1310799, 65532, 2, 1179727, 65533, 1, 524367, 65533, 3, 131151, 1, 1, 524368, 1, 3, 1310800, 0, 5, 1310800, 65534, 5, 131152, 65532, 3, 131152, 65532, 1, 1179728, 65534, 0, 1179728, 0, 0, 524368, 65535, 5, 131151, 65535, 3, 524301, 262141, 1, 1179728, 262141, 2, 1179727, 262141, 3, 131152, 262142, 0, 1179728, 262142, 1, 1179729, 262142, 2, 1179661, 262142, 3, 131153, 262142, 4, 1179727, 262142, 5, 131152, 262143, 0, 524367, 262143, 1, 1179661, 262143, 2, 1179661, 262143, 3, 1179661, 262143, 4, 1310733, 262143, 5, 131151, 196608, 0, 524368, 196608, 1, 524369, 196608, 2, 1179661, 196608, 3, 1310801, 196608, 4, 1310799, 196608, 5, 1310800, 196609, 1, 524368, 196609, 2, 1310799, 196609, 3, 1310800, -131073, 1, 524301, -131073, 2, 524301, -131073, 3, 524301, -196608, 3, 1310799, -196608, 2, 1310799, -196608, 1, 1310799, -131074, 3, 1179727, -131074, 2, 1179727, -131074, 1, 1179727, -131073, 5, 131151, -196608, 4, 1310799, -131074, 4, 1179727, -131073, 0, 524367, -196608, 0, 524368, -131074, 0, 1179728, -131074, 5, 131152, -196608, 5, 1310800)
 }
-metadata/_editor_floor_ = Vector3(0, 1, 0)
+metadata/_editor_floor_ = Vector3(0, 3, 0)
 
 [editable path="Objects/AirlockDoor"]

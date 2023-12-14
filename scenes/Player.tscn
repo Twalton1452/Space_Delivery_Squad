@@ -34,7 +34,10 @@ properties/1/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
+collision_mask = 9
 floor_max_angle = 1.0472
+platform_floor_layers = 4294967049
+platform_wall_layers = 1
 script = ExtResource("1_hldcd")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

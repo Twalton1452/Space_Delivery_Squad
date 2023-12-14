@@ -7,3 +7,7 @@
 [node name="ManualElevator" instance=ExtResource("1_1i8y2")]
 script = ExtResource("2_1nxa2")
 highlight_material = ExtResource("3_lfrdk")
+
+[node name="StaticBody3D" parent="object_036" index="0"]
+collision_layer = 8
+collision_mask = 0
