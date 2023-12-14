@@ -24,9 +24,9 @@ func _on_middle_trigger() -> void:
 func _on_up_trigger() -> void:
 	move_to(1)
 
-func move_to(floor: int) -> void:
+func move_to(destination_floor: int) -> void:
 	if moving_tween != null and moving_tween.is_valid():
 		moving_tween.kill()
 	
 	moving_tween = create_tween()
-	moving_tween.tween_property(self, "position", floor_positions[floor], 3.0).set_ease(Tween.EASE_IN_OUT)
+	moving_tween.tween_property(self, "position", floor_positions[destination_floor], 3.0).set_ease(Tween.EASE_IN_OUT)
