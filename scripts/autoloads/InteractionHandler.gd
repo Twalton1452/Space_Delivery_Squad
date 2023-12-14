@@ -115,6 +115,9 @@ func drop(p_id: int) -> void:
 	var query = PhysicsRayQueryParameters3D.create(origin, end)
 	query.collide_with_areas = true
 	var result = space_state.intersect_ray(query)
+	# No placeable ground
+	if result.size() == 0:
+		return
 	
 	var dropped_position = player_held_node.position
 	dropped_position.y = result.position.y
