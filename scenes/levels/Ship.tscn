@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://nk1l6h8dmcw"]
+[gd_scene load_steps=15 format=3 uid="uid://nk1l6h8dmcw"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="1_5lm7w"]
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_fp0p1"]
@@ -7,12 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://d4b6j2icha5d6" path="res://scenes/objects/box_long.tscn" id="4_j4gt5"]
 [ext_resource type="PackedScene" uid="uid://o8pu2dqcdr7e" path="res://scenes/objects/box_small.tscn" id="5_xuiy6"]
 [ext_resource type="PackedScene" uid="uid://cm7bfr7yfdtk4" path="res://scenes/objects/box_wide.tscn" id="6_nlxls"]
-[ext_resource type="PackedScene" uid="uid://be054plrn2tom" path="res://art/space interior elements/object_036.glb" id="7_b8kjp"]
 [ext_resource type="PackedScene" uid="uid://dhsuhcelso85c" path="res://scenes/objects/button.tscn" id="9_k7x3o"]
 [ext_resource type="PackedScene" uid="uid://cnsvsg5ll712j" path="res://art/space interior elements/object_073.glb" id="10_17rqg"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="10_qb1gj"]
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="10_qn8fe"]
+[ext_resource type="PackedScene" uid="uid://b0vcy1f0pal6w" path="res://scenes/objects/manual_elevator.tscn" id="11_1boo3"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="13_xlqrf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qwljx"]
 
 [node name="Ship" type="Node3D"]
 
@@ -54,9 +56,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3153, 0.0875, 2.5901)
 [node name="box_wide" parent="Objects" instance=ExtResource("6_nlxls")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)
 
-[node name="elevator_down" parent="Objects" instance=ExtResource("7_b8kjp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 4.5)
-
 [node name="Door" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("10_qn8fe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 2.5)
 triggers = [NodePath("../Button2")]
@@ -66,10 +65,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.05, 2.5)
 triggers = [NodePath("../Button"), NodePath("../Lever2"), NodePath("../Lever")]
 
 [node name="Button" parent="Objects" instance=ExtResource("9_k7x3o")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.43997, 0.5, 3)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.5, 0.553283, 2)
 
 [node name="Button2" parent="Objects" instance=ExtResource("9_k7x3o")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.43997, 0.5, 3)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.5, 0.553283, 2)
 
 [node name="object_073" parent="Objects" instance=ExtResource("10_17rqg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 2.5)
@@ -79,6 +78,50 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 0.
 
 [node name="Lever2" parent="Objects" instance=ExtResource("13_xlqrf")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0.063, 2)
+
+[node name="ManualElevator" parent="Objects" node_paths=PackedStringArray("down_trigger", "middle_trigger", "up_trigger") instance=ExtResource("11_1boo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 4.5)
+down_trigger = NodePath("../ElevatorDownButtonPole/Button")
+middle_trigger = NodePath("../ElevatorMiddleButtonPole/Button")
+up_trigger = NodePath("../ElevatorUpButtonPole/Button")
+floor_positions = {
+-1: Vector3(-0.5, -2, 4.5),
+0: Vector3(-0.5, 0, 4.5),
+1: Vector3(-0.5, 2, 4.5)
+}
+
+[node name="ElevatorDownButtonPole" type="Node3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.279956, 0.260887, 5.00791)
+
+[node name="Button" parent="Objects/ElevatorDownButtonPole" instance=ExtResource("9_k7x3o")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.69847e-05, 0.199864, -3.33786e-05)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/ElevatorDownButtonPole"]
+transform = Transform3D(0.0904459, 0, 0, 0, 0.4, 0, 0, 0, 0.0875451, 0, 0, 0)
+mesh = SubResource("BoxMesh_qwljx")
+skeleton = NodePath("../..")
+
+[node name="ElevatorMiddleButtonPole" type="Node3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.503131, 0.260887, 5.00791)
+
+[node name="Button" parent="Objects/ElevatorMiddleButtonPole" instance=ExtResource("9_k7x3o")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.69549e-05, 0.199864, -3.33786e-05)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/ElevatorMiddleButtonPole"]
+transform = Transform3D(0.0904459, 0, 0, 0, 0.4, 0, 0, 0, 0.0875451, 0, 0, 0)
+mesh = SubResource("BoxMesh_qwljx")
+skeleton = NodePath("../..")
+
+[node name="ElevatorUpButtonPole" type="Node3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.728159, 0.260887, 5.00791)
+
+[node name="Button" parent="Objects/ElevatorUpButtonPole" instance=ExtResource("9_k7x3o")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.69549e-05, 0.199864, -3.33786e-05)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/ElevatorUpButtonPole"]
+transform = Transform3D(0.0904459, 0, 0, 0, 0.4, 0, 0, 0, 0.0875451, 0, 0, 0)
+mesh = SubResource("BoxMesh_qwljx")
+skeleton = NodePath("../..")
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -117,6 +160,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 mesh_library = ExtResource("2_ecxme")
 cell_size = Vector3(1, 1, 1)
 data = {
-"cells": PackedInt32Array(65535, 2, 13, 65534, 2, 13, 65533, 2, 13, 0, 2, 13, 65535, 3, 13, 65535, 1, 13, 65535, 4, 13, 65535, 0, 524367, 0, 1, 524369, 0, 3, 1310801, 65534, 3, 131153, 65534, 1, 1179729, 65534, 4, 1179727, 0, 4, 1310799, 1, 2, 1310799, 65532, 2, 1179727, 65533, 1, 524367, 65533, 3, 131151, 1, 1, 524368, 1, 3, 1310800, 0, 5, 1310800, 65534, 5, 131152, 65532, 3, 131152, 65532, 1, 1179728, 65534, 0, 1179728, 0, 0, 524368, 65535, 5, 131151)
+"cells": PackedInt32Array(65535, 2, 13, 65534, 2, 13, 65533, 2, 13, 0, 2, 13, 65535, 3, 13, 65535, 1, 13, 65535, 0, 524367, 0, 1, 524369, 0, 3, 1310801, 65534, 3, 131153, 65534, 1, 1179729, 65534, 4, 1179727, 0, 4, 1310799, 1, 2, 1310799, 65532, 2, 1179727, 65533, 1, 524367, 65533, 3, 131151, 1, 1, 524368, 1, 3, 1310800, 0, 5, 1310800, 65534, 5, 131152, 65532, 3, 131152, 65532, 1, 1179728, 65534, 0, 1179728, 0, 0, 524368, 65535, 5, 131151)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)

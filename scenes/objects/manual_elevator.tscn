@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0vcy1f0pal6w"]
+
+[ext_resource type="PackedScene" uid="uid://be054plrn2tom" path="res://art/space interior elements/object_036.glb" id="1_1i8y2"]
+[ext_resource type="Script" path="res://scripts/objects/ManualElevator.gd" id="2_1nxa2"]
+
+[node name="ManualElevator" instance=ExtResource("1_1i8y2")]
+script = ExtResource("2_1nxa2")
