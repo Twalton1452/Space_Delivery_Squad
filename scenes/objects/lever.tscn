@@ -194,12 +194,13 @@ points = PackedVector3Array(-5.67436e-05, 0.330848, 0.0999843, 0.289943, 0.08083
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7hcfm"]
 points = PackedVector3Array(-0.0405618, 0.445474, -0.0405618, -0.0405618, 0.445474, 0.0405617, -0.0405618, 0.5495, -0.0405618, 0.0405617, 0.445474, -0.0405618, -0.0149685, 0, -0.0149685, 0.0405617, 0.445474, 0.0405617, -0.0405618, 0.5495, 0.0405617, -0.0149685, 0, 0.0149525, 0.0405617, 0.5495, -0.0405618, 0.0149525, 0, -0.0149685, 0.0405617, 0.5495, 0.0405617, 0.0149525, 0, 0.0149525)
 
-[node name="Lever" type="Area3D"]
+[node name="Lever" type="Area3D" node_paths=PackedStringArray("mesh_to_highlight")]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_hbhwl")
 toggler = true
 interact_display_text = "Toggle"
+mesh_to_highlight = NodePath("lever/handle")
 
 [node name="lever" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_hr35j")

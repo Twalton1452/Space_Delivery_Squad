@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://nk1l6h8dmcw"]
+[gd_scene load_steps=17 format=3 uid="uid://nk1l6h8dmcw"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="1_5lm7w"]
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_fp0p1"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://o8pu2dqcdr7e" path="res://scenes/objects/box_small.tscn" id="5_xuiy6"]
 [ext_resource type="PackedScene" uid="uid://cm7bfr7yfdtk4" path="res://scenes/objects/box_wide.tscn" id="6_nlxls"]
 [ext_resource type="PackedScene" uid="uid://dhsuhcelso85c" path="res://scenes/objects/button.tscn" id="9_k7x3o"]
+[ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_tldvq"]
 [ext_resource type="PackedScene" uid="uid://cnsvsg5ll712j" path="res://art/space interior elements/object_073.glb" id="10_17rqg"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="10_qb1gj"]
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="10_qn8fe"]
@@ -82,25 +83,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3153, 0.0875, 2.5901)
 [node name="box_wide" parent="Objects" instance=ExtResource("6_nlxls")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)
 
-[node name="Door" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("10_qn8fe")]
+[node name="AirlockDoor" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("10_qn8fe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 2.5)
-triggers = [NodePath("../Button2")]
+triggers = [NodePath("../AirlockLever")]
 
-[node name="Door2" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("10_qn8fe")]
+[node name="object_043" parent="Objects/AirlockDoor" index="0"]
+surface_material_override/0 = ExtResource("9_tldvq")
+
+[node name="DoorToAirlock" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("10_qn8fe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.05, 2.5)
-triggers = [NodePath("../Button"), NodePath("../Lever2"), NodePath("../Lever")]
+triggers = [NodePath("../LeverBehind"), NodePath("../LeverInside")]
 
-[node name="Button" parent="Objects" instance=ExtResource("9_k7x3o")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.5, 0.553283, 2)
+[node name="AirlockLever" parent="Objects" instance=ExtResource("13_xlqrf")]
+transform = Transform3D(-4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, -1.42109e-14, -7.10543e-15, -8.74228e-08, -1, -3.50101, 0.5, 1.8)
 
-[node name="Button2" parent="Objects" instance=ExtResource("9_k7x3o")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.5, 0.553283, 2)
+[node name="LeverInside" parent="Objects" instance=ExtResource("13_xlqrf")]
+transform = Transform3D(-4.37114e-08, 1, 4.65882e-22, 1, 4.37114e-08, 8.74228e-08, 8.74228e-08, 3.82137e-15, -1, -1.501, 0.5, 1.83534)
 
-[node name="Lever" parent="Objects" instance=ExtResource("13_xlqrf")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 0.0655602, 2)
-
-[node name="Lever2" parent="Objects" instance=ExtResource("13_xlqrf")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0.063, 2)
+[node name="LeverBehind" parent="Objects" instance=ExtResource("13_xlqrf")]
+transform = Transform3D(4.37114e-08, -1, -3.82137e-15, 1, 4.37114e-08, -1.74846e-07, 1.74846e-07, 3.82137e-15, 1, -1.618, 0.5, 1.83534)
 
 [node name="ElevatorSystem" type="Node3D" parent="Objects"]
 
@@ -240,3 +241,5 @@ data = {
 "cells": PackedInt32Array(65535, 2, 524301, 65534, 2, 524301, 65533, 2, 524301, 0, 2, 524301, 65535, 1, 524301, 65535, 0, 524367, 0, 1, 524369, 0, 3, 1310801, 65534, 3, 131153, 65534, 1, 1179729, 65534, 4, 1179727, 0, 4, 1310799, 1, 2, 1310799, 65532, 2, 1179727, 65533, 1, 524367, 65533, 3, 131151, 1, 1, 524368, 1, 3, 1310800, 0, 5, 1310800, 65534, 5, 131152, 65532, 3, 131152, 65532, 1, 1179728, 65534, 0, 1179728, 0, 0, 524368, 65535, 5, 131151, 65535, 3, 524301, 131071, 3, 1179661, 131071, 2, 1179661, 131071, 1, 1179661, 131069, 2, 1179661, 131070, 2, 1179661, 65536, 2, 1179661, 131068, 2, 1179727, 131070, 1, 1179729, 131070, 3, 131153, 131070, 4, 1179727, 65536, 1, 524369, 131071, 0, 524367, 131069, 1, 524367, 131069, 3, 131151, 131071, 5, 131151, 65537, 2, 1310799, 65536, 3, 1310801, 65537, 3, 1310800, 131070, 5, 131152, 131068, 3, 131152, 131068, 1, 1179728, 131070, 0, 1179728, 65536, 0, 524368, 65537, 1, 524368, 65536, 4, 1310799, 65536, 5, 1310800, 131071, 4, 1310733)
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[editable path="Objects/AirlockDoor"]
