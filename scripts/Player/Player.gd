@@ -3,12 +3,13 @@ class_name Player
 
 signal interacted
 
-const WALK_SPEED = 3.0
+const WALK_SPEED = 2.0
 const JUMP_VELOCITY = 3.0
 const BASE_FOV = 75.0
 const FOV_CHANGE = 2.0
 
 @onready var player_input : PlayerInput = $PlayerInput
+@onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var camera : Camera3D = $Camera3D
 @onready var interacter : Interacter = $Camera3D/Interacter
 @onready var holder : RemoteTransform3D = $Camera3D/Holder
@@ -18,6 +19,7 @@ var move_speed = WALK_SPEED
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 
 func get_held_node() -> Node3D:
 	return get_node_or_null(holder.remote_path)
@@ -33,6 +35,8 @@ func movement_based_fov_change(delta) -> void:
 ## Server receives Input from clients and moves them
 func _physics_process(delta):
 	if not is_multiplayer_authority():
+		move_and_slide()
+		animate()
 		return
 	
 	var direction = (transform.basis * Vector3(player_input.x, 0, player_input.y)).normalized()
@@ -42,6 +46,7 @@ func _physics_process(delta):
 		interact()
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
+	animate()
 
 func drop() -> void:
 	# Nothing to drop
@@ -85,3 +90,20 @@ func move(direction: Vector3, jump: int, delta: float) -> void:
 			velocity.z = lerp(velocity.z, direction.z * move_speed, delta * 2.0)
 	
 	move_and_slide()
+
+func animate() -> void:
+	# TODO: Create client-side animation for moving some hands
+	if is_multiplayer_authority():
+		return
+	
+	if velocity.length() > 0 and is_on_floor():
+		animation_player.play("walking")
+	else:
+		if animation_player.is_playing():
+			# Wait until the looping animation finished and ensure they're idle
+			# Then stop the animation
+			await get_tree().create_timer(animation_player.current_animation_length - animation_player.current_animation_position).timeout
+			if velocity.length() == 0:
+				animation_player.stop()
+		else:
+			animation_player.stop()

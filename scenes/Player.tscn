@@ -1,9 +1,47 @@
-[gd_scene load_steps=11 format=3 uid="uid://7188haek1n73"]
+[gd_scene load_steps=14 format=3 uid="uid://7188haek1n73"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_hldcd"]
 [ext_resource type="Script" path="res://scripts/player/Interacter.gd" id="2_0yxy6"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInput.gd" id="2_myobr"]
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="3_isc5x"]
+
+[sub_resource type="Animation" id="Animation_47207"]
+resource_name = "walking"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.14, 0.35),
+"transitions": PackedFloat32Array(0.5, 2, 0.5),
+"update": 0,
+"values": [Vector3(0, -0.15, 0.114), Vector3(0, -0.0886905, 0.114), Vector3(0, -0.15, 0.114)]
+}
+
+[sub_resource type="Animation" id="Animation_2yhjd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.15, 0.114)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3fpg0"]
+_data = {
+"RESET": SubResource("Animation_2yhjd"),
+"walking": SubResource("Animation_47207")
+}
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ns1nv"]
 
@@ -31,6 +69,9 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath(".:velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -40,20 +81,26 @@ platform_floor_layers = 4294967049
 platform_wall_layers = 1
 script = ExtResource("1_hldcd")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.25, 0)
-cast_shadow = 0
-mesh = SubResource("CapsuleMesh_ns1nv")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3fpg0")
+}
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.114478)
 near = 0.01
 
-[node name="Eyes" type="MeshInstance3D" parent="Camera3D"]
-transform = Transform3D(0.222262, 0, 0, 0, 0.0614429, 0, 0, 0, 0.0335833, 0, -0.0169319, 0.00379127)
+[node name="Body" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.15, 0.114)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_ns1nv")
+skeleton = NodePath("../..")
+
+[node name="Eyes" type="MeshInstance3D" parent="Camera3D/Body"]
+transform = Transform3D(0.889048, 0, 0, 0, 0.245772, 0, 0, 0, 0.134333, 0, 0.532272, -0.440835)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_j4ybv")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
 [node name="Interacter" type="RayCast3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0360803, 0.114478)
