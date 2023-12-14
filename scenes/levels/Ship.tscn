@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://nk1l6h8dmcw"]
+[gd_scene load_steps=16 format=3 uid="uid://nk1l6h8dmcw"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="1_5lm7w"]
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_fp0p1"]
@@ -14,7 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://b0vcy1f0pal6w" path="res://scenes/objects/manual_elevator.tscn" id="11_1boo3"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="13_xlqrf"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_qwljx"]
+[sub_resource type="BoxMesh" id="BoxMesh_33ltf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k5d2r"]
+size = Vector3(0.158325, 0.665283, 0.086731)
 
 [node name="Ship" type="Node3D"]
 
@@ -81,47 +84,39 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0.
 
 [node name="ManualElevator" parent="Objects" node_paths=PackedStringArray("down_trigger", "middle_trigger", "up_trigger") instance=ExtResource("11_1boo3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 4.5)
-down_trigger = NodePath("../ElevatorDownButtonPole/Button")
-middle_trigger = NodePath("../ElevatorMiddleButtonPole/Button")
-up_trigger = NodePath("../ElevatorUpButtonPole/Button")
+down_trigger = NodePath("../ElevatorButtonPanel/Button3")
+middle_trigger = NodePath("../ElevatorButtonPanel/Button2")
+up_trigger = NodePath("../ElevatorButtonPanel/Button")
 floor_positions = {
 -1: Vector3(-0.5, -2, 4.5),
 0: Vector3(-0.5, 0, 4.5),
 1: Vector3(-0.5, 2, 4.5)
 }
 
-[node name="ElevatorDownButtonPole" type="Node3D" parent="Objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.279956, 0.260887, 5.00791)
+[node name="ElevatorButtonPanel" type="Node3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.115)
 
-[node name="Button" parent="Objects/ElevatorDownButtonPole" instance=ExtResource("9_k7x3o")]
-transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -3.69847e-05, 0.182845, -0.0393753)
+[node name="Base" type="MeshInstance3D" parent="Objects/ElevatorButtonPanel"]
+transform = Transform3D(0.159636, 0, 0, 0, 0.653104, 0, 0, 0, 0.088, -0.502858, 0.376808, 5.00791)
+mesh = SubResource("BoxMesh_33ltf")
+skeleton = NodePath("")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/ElevatorDownButtonPole"]
-transform = Transform3D(0.0904459, 0, 0, 0, 0.4, 0, 0, 0, 0.0875451, 0, 0, 0)
-mesh = SubResource("BoxMesh_qwljx")
-skeleton = NodePath("../..")
+[node name="StaticBody3D" type="StaticBody3D" parent="Objects/ElevatorButtonPanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.76837e-07)
+collision_mask = 0
 
-[node name="ElevatorMiddleButtonPole" type="Node3D" parent="Objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.503131, 0.260887, 5.00791)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/ElevatorButtonPanel/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.502065, 0.372047, 5.00544)
+shape = SubResource("BoxShape3D_k5d2r")
 
-[node name="Button" parent="Objects/ElevatorMiddleButtonPole" instance=ExtResource("9_k7x3o")]
-transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -3.69549e-05, 0.182845, -0.0393753)
+[node name="Button" parent="Objects/ElevatorButtonPanel" instance=ExtResource("9_k7x3o")]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.61, 4.969)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/ElevatorMiddleButtonPole"]
-transform = Transform3D(0.0904459, 0, 0, 0, 0.4, 0, 0, 0, 0.0875451, 0, 0, 0)
-mesh = SubResource("BoxMesh_qwljx")
-skeleton = NodePath("../..")
+[node name="Button2" parent="Objects/ElevatorButtonPanel" instance=ExtResource("9_k7x3o")]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.5, 4.969)
 
-[node name="ElevatorUpButtonPole" type="Node3D" parent="Objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.728159, 0.260887, 5.00791)
-
-[node name="Button" parent="Objects/ElevatorUpButtonPole" instance=ExtResource("9_k7x3o")]
-transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -3.69549e-05, 0.182845, -0.0393753)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/ElevatorUpButtonPole"]
-transform = Transform3D(0.0904459, 0, 0, 0, 0.4, 0, 0, 0, 0.0875451, 0, 0, 0)
-mesh = SubResource("BoxMesh_qwljx")
-skeleton = NodePath("../..")
+[node name="Button3" parent="Objects/ElevatorButtonPanel" instance=ExtResource("9_k7x3o")]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.39, 4.969)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

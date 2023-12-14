@@ -4,11 +4,12 @@
 [ext_resource type="AudioStream" uid="uid://c710dv8bls4ec" path="res://sfx/click1.ogg" id="2_n2jq0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_38u1e"]
-font_size = 48
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 8
+font_size = 72
+font_color = Color(1, 1, 0, 1)
+outline_size = 3
+shadow_size = 13
 shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(-0.19, 2.45)
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_dt77j"]
 
@@ -39,7 +40,7 @@ offset_top = 67.0
 offset_right = 87.5
 offset_bottom = 93.0
 grow_horizontal = 2
-text = "Networked Boilerplate Title"
+text = "Space Delivery Squad"
 label_settings = SubResource("LabelSettings_38u1e")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MainMenu"]
@@ -84,7 +85,7 @@ alignment = 1
 layout_mode = 2
 text = "Quit"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="PlayerMic" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamMicrophone_dt77j")
 autoplay = true
 bus = &"Mic"
