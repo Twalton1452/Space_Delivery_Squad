@@ -3,36 +3,41 @@ extends Node3D
 
 @export var speed = 0.5
 @export var highlight_material : StandardMaterial3D
-@export var down_trigger : Interactable
-@export var middle_trigger : Interactable
-@export var up_trigger : Interactable
+@export var up_triggers : Array[Interactable]
+@export var middle_triggers : Array[Interactable]
+@export var down_triggers : Array[Interactable]
 
 @export var floor_positions : Dictionary # { key: int, value: Vector3 }
 
 var moving_tween : Tween
 
 func _ready() -> void:
-	down_trigger.interacted.connect(_on_down_trigger)
-	middle_trigger.interacted.connect(_on_middle_trigger)
-	up_trigger.interacted.connect(_on_up_trigger)
-
-func _on_down_trigger() -> void:
-	move_to(-1)
-	down_trigger.add_highlight(highlight_material)
-	await moving_tween.finished
-	down_trigger.remove_highlight()
-
-func _on_middle_trigger() -> void:
-	move_to(0)
-	middle_trigger.add_highlight(highlight_material)
-	await moving_tween.finished
-	middle_trigger.remove_highlight()
+	for up_trigger in up_triggers:
+		up_trigger.interacted.connect(_on_up_trigger)
+	for middle_trigger in middle_triggers:
+		middle_trigger.interacted.connect(_on_middle_trigger)
+	for down_trigger in down_triggers:
+		down_trigger.interacted.connect(_on_down_trigger)
 
 func _on_up_trigger() -> void:
 	move_to(1)
-	up_trigger.add_highlight(highlight_material)
+	highlight_triggers_for(up_triggers)
+
+func _on_middle_trigger() -> void:
+	move_to(0)
+	highlight_triggers_for(middle_triggers)
+
+func _on_down_trigger() -> void:
+	move_to(-1)
+	highlight_triggers_for(down_triggers)
+
+func highlight_triggers_for(triggers: Array[Interactable]) -> void:
+	for trigger in triggers:
+		trigger.add_highlight(highlight_material)
+		
 	await moving_tween.finished
-	up_trigger.remove_highlight()
+	for trigger in triggers:
+		trigger.remove_highlight()
 
 func move_to(destination_floor: int) -> void:
 	if moving_tween != null and moving_tween.is_valid():
