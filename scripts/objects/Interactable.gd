@@ -4,6 +4,7 @@ class_name Interactable
 signal interacted
 
 @export var toggler = false
+@export var interact_display_text = "Interact"
 
 @export_category("Internal Scene Stuff")
 @export var mesh_to_highlight : MeshInstance3D

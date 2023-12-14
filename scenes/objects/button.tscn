@@ -147,6 +147,7 @@ size = Vector3(0.115723, 0.100861, 0.0288124)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_rtuve")
+interact_display_text = "Press"
 mesh_to_highlight = NodePath("button-round/buttonRound/knob")
 
 [node name="button-round" type="Node3D" parent="."]

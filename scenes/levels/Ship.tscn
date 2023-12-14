@@ -133,12 +133,15 @@ shape = SubResource("BoxShape3D_k5d2r")
 
 [node name="Button" parent="Objects/ElevatorSystem/TopButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.61, 4.969)
+interact_display_text = "Observatory"
 
 [node name="Button2" parent="Objects/ElevatorSystem/TopButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.5, 4.969)
+interact_display_text = "Main Deck"
 
 [node name="Button3" parent="Objects/ElevatorSystem/TopButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.39, 4.969)
+interact_display_text = "Engine Room"
 
 [node name="MiddleButtonPanel" type="Node3D" parent="Objects/ElevatorSystem"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.115)
@@ -158,12 +161,15 @@ shape = SubResource("BoxShape3D_k5d2r")
 
 [node name="Button" parent="Objects/ElevatorSystem/MiddleButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.61, 4.969)
+interact_display_text = "Observatory"
 
 [node name="Button2" parent="Objects/ElevatorSystem/MiddleButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.5, 4.969)
+interact_display_text = "Main Deck"
 
 [node name="Button3" parent="Objects/ElevatorSystem/MiddleButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.39, 4.969)
+interact_display_text = "Engine Room"
 
 [node name="BottomButtonPanel" type="Node3D" parent="Objects/ElevatorSystem"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0.115)
@@ -183,12 +189,15 @@ shape = SubResource("BoxShape3D_k5d2r")
 
 [node name="Button" parent="Objects/ElevatorSystem/BottomButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.61, 4.969)
+interact_display_text = "Observatory"
 
 [node name="Button2" parent="Objects/ElevatorSystem/BottomButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.5, 4.969)
+interact_display_text = "Main Deck"
 
 [node name="Button3" parent="Objects/ElevatorSystem/BottomButtonPanel" instance=ExtResource("9_k7x3o")]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.5, 0.39, 4.969)
+interact_display_text = "Engine Room"
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

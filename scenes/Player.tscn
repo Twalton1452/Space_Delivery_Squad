@@ -61,7 +61,7 @@ script = ExtResource("2_0yxy6")
 [node name="Holder" type="RemoteTransform3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.987881, -0.15521, 0, 0.15521, 0.987881, 0.00463852, -0.322352, -0.142844)
 
-[node name="UI" type="Control" parent="Camera3D"]
+[node name="HUD" type="Control" parent="Camera3D"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,7 +70,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Reticle" type="TextureRect" parent="Camera3D/UI"]
+[node name="Reticle" type="TextureRect" parent="Camera3D/HUD"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -87,7 +87,7 @@ grow_vertical = 2
 texture = ExtResource("3_isc5x")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="Camera3D/UI"]
+[node name="Label" type="Label" parent="Camera3D/HUD"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -101,7 +101,7 @@ offset_bottom = 131.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(120, 16)
-text = "Press [E] to Interact"
+text = "[E] to Interact"
 label_settings = SubResource("LabelSettings_w7x1j")
 horizontal_alignment = 1
 vertical_alignment = 1
