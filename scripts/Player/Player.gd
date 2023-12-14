@@ -107,3 +107,11 @@ func animate() -> void:
 				animation_player.stop()
 		else:
 			animation_player.stop()
+
+#region Elevator Pushing Player Through World Solution
+func _on_moving_object_detector_body_entered(body):
+	add_collision_exception_with(body)
+
+func _on_moving_object_detector_body_exited(body):
+	remove_collision_exception_with(body)
+#endregion
