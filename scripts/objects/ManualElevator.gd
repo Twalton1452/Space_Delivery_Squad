@@ -1,7 +1,7 @@
 extends Node3D
 
 
-@export var current_floor = 0 # 0 is Middle
+@export var speed = 0.5
 @export var down_trigger : Interactable
 @export var middle_trigger : Interactable
 @export var up_trigger : Interactable
@@ -29,4 +29,8 @@ func move_to(destination_floor: int) -> void:
 		moving_tween.kill()
 	
 	moving_tween = create_tween()
-	moving_tween.tween_property(self, "position", floor_positions[destination_floor], 3.0).set_ease(Tween.EASE_IN_OUT)
+	var distance = position.distance_to(floor_positions[destination_floor])
+	moving_tween \
+		.tween_property(self, "position", floor_positions[destination_floor], distance / speed) \
+		.set_ease(Tween.EASE_IN_OUT) \
+		.set_delay(0.2)
