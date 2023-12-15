@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://7188haek1n73"]
+[gd_scene load_steps=17 format=3 uid="uid://7188haek1n73"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_hldcd"]
 [ext_resource type="Script" path="res://scripts/player/Interacter.gd" id="2_0yxy6"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInput.gd" id="2_myobr"]
 [ext_resource type="PackedScene" uid="uid://chnb7t2mpka4m" path="res://art/bean_armature.glb" id="2_ow32s"]
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="3_isc5x"]
+[ext_resource type="Material" uid="uid://bcara7emet014" path="res://materials/player-mat.tres" id="3_wtvyi"]
 
 [sub_resource type="Animation" id="Animation_47207"]
 resource_name = "walking"
@@ -98,6 +99,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0284009, 0)
 
 [node name="Skeleton3D" parent="bean_armature/Armature" index="0"]
 bones/0/rotation = Quaternion(0, 1, 0, -1.94707e-07)
+
+[node name="Body" parent="bean_armature/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("3_wtvyi")
 
 [node name="Eyes" parent="bean_armature/Armature/Skeleton3D" index="1"]
 cast_shadow = 0
