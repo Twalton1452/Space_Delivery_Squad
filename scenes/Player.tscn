@@ -179,6 +179,25 @@ label_settings = SubResource("LabelSettings_w7x1j")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="StaminaProgressBar" type="TextureProgressBar" parent="Camera3D/HUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.0
+offset_top = -134.0
+offset_right = 82.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.12, 0.24)
+value = 100.0
+texture_under = ExtResource("3_isc5x")
+texture_progress = ExtResource("3_isc5x")
+tint_under = Color(0.160784, 0.160784, 0.160784, 0.270588)
+tint_progress = Color(0, 0.74902, 0, 1)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.219174, 0)
 shape = SubResource("CapsuleShape3D_368e4")

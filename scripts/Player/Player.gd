@@ -4,7 +4,7 @@ class_name Player
 signal interacted
 
 const WALK_SPEED = 1.0
-const RUN_MODIFIER = 1.0
+const RUN_SPEED = 2.0
 const JUMP_VELOCITY = 3.0
 const FOV_CHANGE = 2.0
 
@@ -14,11 +14,15 @@ const FOV_CHANGE = 2.0
 @onready var interacter : Interacter = $Camera3D/Interacter
 @onready var holder : RemoteTransform3D = $Camera3D/Holder
 @onready var skeleton_3d : Skeleton3D = $bean_armature/Armature/Skeleton3D
+@onready var stamina_bar : TextureProgressBar = $Camera3D/HUD/StaminaProgressBar
 
 var look_speed = .005
 var move_speed = WALK_SPEED
 var head_bone_id = -1
 var base_fov = 80.0
+var stamina = 100.0
+var stamina_recharge_per_frame = 0.2
+var stamina_consume_rate_per_frame = 0.8
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -30,6 +34,8 @@ func get_held_node() -> Node3D:
 func _ready():
 	if is_multiplayer_authority():
 		$bean_armature/Armature/Skeleton3D/Eyes.hide()
+	else:
+		stamina_bar.hide()
 	head_bone_id = skeleton_3d.find_bone("Head")
 	base_fov = camera.fov
 
@@ -44,6 +50,8 @@ func movement_based_fov_change(delta) -> void:
 ## Server receives Input from clients and moves them
 func _physics_process(delta):
 	if not is_multiplayer_authority():
+		# Cheap prediction since we're syncing Velocity
+		# Attempts to smooth falling
 		move_and_slide()
 		animate()
 		return
@@ -54,7 +62,20 @@ func _physics_process(delta):
 	if player_input.interacting:
 		interact()
 	
-	move_speed = WALK_SPEED + (RUN_MODIFIER * player_input.sprinting)
+	# Hasty implementation for now
+	# TODO: Move stamina_bar into its own script listening for stamina changes
+	stamina = clampf(stamina + stamina_recharge_per_frame - (stamina_consume_rate_per_frame * player_input.sprinting), 0.0, 100.0)
+	stamina_bar.value = stamina
+	
+	if player_input.sprinting and stamina > 0.0:
+		move_speed = WALK_SPEED + RUN_SPEED
+		stamina_bar.tint_progress.a = 1.0
+		stamina_bar.show()
+	else:
+		move_speed = WALK_SPEED
+		stamina_bar.tint_progress.a = 0.4
+		if stamina >= 100.0:
+			stamina_bar.hide()
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
 	animate()
