@@ -50,9 +50,6 @@ func movement_based_fov_change(delta) -> void:
 ## Server receives Input from clients and moves them
 func _physics_process(delta):
 	if not is_multiplayer_authority():
-		# Cheap prediction since we're syncing Velocity
-		# Attempts to smooth falling
-		move_and_slide()
 		animate()
 		return
 	

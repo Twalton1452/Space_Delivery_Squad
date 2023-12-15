@@ -1,4 +1,4 @@
-extends Node3D
+extends AnimatableBody3D
 
 
 @export var speed = 0.5
