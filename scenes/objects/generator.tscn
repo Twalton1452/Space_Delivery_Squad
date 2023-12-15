@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvbaglxpvfnvw"]
+
+[ext_resource type="PackedScene" uid="uid://b1vgw7f65le6x" path="res://art/objects/generator.glb" id="1_qh37q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k2ins"]
+size = Vector3(0.504639, 0.401123, 0.398865)
+
+[node name="generator" instance=ExtResource("1_qh37q")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00134277, 0.199097, -0.00326538)
+shape = SubResource("BoxShape3D_k2ins")

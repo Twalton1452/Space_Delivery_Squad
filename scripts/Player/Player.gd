@@ -3,7 +3,7 @@ class_name Player
 
 signal interacted
 
-const WALK_SPEED = 1.0
+const WALK_SPEED = 1.5
 const RUN_SPEED = 2.0
 const JUMP_VELOCITY = 3.0
 const FOV_CHANGE = 2.0
