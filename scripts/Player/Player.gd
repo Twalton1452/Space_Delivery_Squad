@@ -3,7 +3,8 @@ class_name Player
 
 signal interacted
 
-const WALK_SPEED = 2.0
+const WALK_SPEED = 1.0
+const RUN_MODIFIER = 1.0
 const JUMP_VELOCITY = 3.0
 const FOV_CHANGE = 2.0
 
@@ -52,6 +53,8 @@ func _physics_process(delta):
 		drop()
 	if player_input.interacting:
 		interact()
+	
+	move_speed = WALK_SPEED + (RUN_MODIFIER * player_input.sprinting)
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
 	animate()
@@ -105,6 +108,7 @@ func animate() -> void:
 		return
 	
 	if velocity.length() > 0 and is_on_floor():
+		animation_player.speed_scale = clamp(velocity.length(), 1.0, 1.8)
 		animation_player.play("walking")
 	else:
 		if animation_player.is_playing():

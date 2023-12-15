@@ -95,7 +95,6 @@ libraries = {
 }
 
 [node name="bean_armature" parent="." instance=ExtResource("2_ow32s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0284009, 0)
 
 [node name="Skeleton3D" parent="bean_armature/Armature" index="0"]
 bones/0/rotation = Quaternion(0, 1, 0, -1.94707e-07)
