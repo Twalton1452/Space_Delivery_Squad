@@ -10,6 +10,7 @@ class_name PlayerInput
 @export var jumping := 0
 @export var interacting := false
 @export var dropping := false
+@export var neck_look : float
 
 @onready var player : Player = get_parent()
 
@@ -43,6 +44,7 @@ func _physics_process(_delta):
 	if not is_multiplayer_authority():
 		return
 	
+	neck_look = player.camera.rotation.x
 	jumping = Input.is_action_pressed("jump")
 	interacting = Input.is_action_pressed("interact")
 	dropping = Input.is_action_pressed("drop")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://7188haek1n73"]
+[gd_scene load_steps=16 format=3 uid="uid://7188haek1n73"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_hldcd"]
 [ext_resource type="Script" path="res://scripts/player/Interacter.gd" id="2_0yxy6"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInput.gd" id="2_myobr"]
+[ext_resource type="PackedScene" uid="uid://chnb7t2mpka4m" path="res://art/bean_armature.glb" id="2_ow32s"]
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="3_isc5x"]
 
 [sub_resource type="Animation" id="Animation_47207"]
@@ -12,14 +13,14 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D/Body:position")
+tracks/0/path = NodePath("bean_armature:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.14, 0.35),
 "transitions": PackedFloat32Array(0.5, 2, 0.5),
 "update": 0,
-"values": [Vector3(0, -0.15, 0.114), Vector3(0, -0.0886905, 0.114), Vector3(0, -0.15, 0.114)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0.089, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_2yhjd"]
@@ -34,7 +35,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, -0.15, 0.114)]
+"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3fpg0"]
@@ -60,7 +61,7 @@ shadow_offset = Vector2(2, 2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_368e4"]
 radius = 0.125
-height = 0.5
+height = 0.465598
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_23l6a"]
 properties/0/path = NodePath(".:position")
@@ -72,6 +73,9 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:velocity")
 properties/2/spawn = true
 properties/2/replication_mode = 2
+properties/3/path = NodePath("PlayerInput:neck_look")
+properties/3/spawn = true
+properties/3/replication_mode = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iaoc7"]
 size = Vector3(0.303162, 0.381287, 0.267822)
@@ -89,12 +93,23 @@ libraries = {
 "": SubResource("AnimationLibrary_3fpg0")
 }
 
+[node name="bean_armature" parent="." instance=ExtResource("2_ow32s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0284009, 0)
+
+[node name="Skeleton3D" parent="bean_armature/Armature" index="0"]
+bones/0/rotation = Quaternion(0, 1, 0, -1.94707e-07)
+
+[node name="Eyes" parent="bean_armature/Armature/Skeleton3D" index="1"]
+cast_shadow = 0
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.114478)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.383244, -0.130532)
+fov = 80.0
 near = 0.01
 
 [node name="Body" type="MeshInstance3D" parent="Camera3D"]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.15, 0.114)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+visible = false
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_ns1nv")
 skeleton = NodePath("../..")
@@ -106,7 +121,7 @@ mesh = SubResource("BoxMesh_j4ybv")
 skeleton = NodePath("../../..")
 
 [node name="Interacter" type="RayCast3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0360803, 0.114478)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00148126, 0.114478)
 target_position = Vector3(0, 0, -1)
 collision_mask = 5
 hit_from_inside = true
@@ -162,7 +177,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.219174, 0)
 shape = SubResource("CapsuleShape3D_368e4")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -174,6 +189,7 @@ script = ExtResource("2_myobr")
 
 [node name="MovingObjectDetector" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0388305, 0)
+visible = false
 collision_layer = 0
 collision_mask = 8
 
@@ -181,5 +197,8 @@ collision_mask = 8
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00790405, 0.309357, -0.0032959)
 shape = SubResource("BoxShape3D_iaoc7")
 
+[connection signal="synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_synchronized"]
 [connection signal="body_entered" from="MovingObjectDetector" to="." method="_on_moving_object_detector_body_entered"]
 [connection signal="body_exited" from="MovingObjectDetector" to="." method="_on_moving_object_detector_body_exited"]
+
+[editable path="bean_armature"]

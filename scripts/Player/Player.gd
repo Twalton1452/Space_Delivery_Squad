@@ -5,7 +5,6 @@ signal interacted
 
 const WALK_SPEED = 2.0
 const JUMP_VELOCITY = 3.0
-const BASE_FOV = 75.0
 const FOV_CHANGE = 2.0
 
 @onready var player_input : PlayerInput = $PlayerInput
@@ -13,9 +12,12 @@ const FOV_CHANGE = 2.0
 @onready var camera : Camera3D = $Camera3D
 @onready var interacter : Interacter = $Camera3D/Interacter
 @onready var holder : RemoteTransform3D = $Camera3D/Holder
+@onready var skeleton_3d : Skeleton3D = $bean_armature/Armature/Skeleton3D
 
 var look_speed = .005
 var move_speed = WALK_SPEED
+var head_bone_id = -1
+var base_fov = 80.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -24,12 +26,18 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func get_held_node() -> Node3D:
 	return get_node_or_null(holder.remote_path)
 
+func _ready():
+	if is_multiplayer_authority():
+		$bean_armature/Armature/Skeleton3D/Eyes.hide()
+	head_bone_id = skeleton_3d.find_bone("Head")
+	base_fov = camera.fov
+
 ## Based on the velocity, change the camera's FOV
 ## not used at the moment because the x,z velocity don't reset to 0
 ## so the fov never changes back once it gets modified unless hitting a wall
 func movement_based_fov_change(delta) -> void:
 	var velocity_clamped = clamp(velocity.length(), 0.5, move_speed * 2)
-	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
+	var target_fov = base_fov + FOV_CHANGE * velocity_clamped
 	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
 
 ## Server receives Input from clients and moves them
@@ -115,3 +123,6 @@ func _on_moving_object_detector_body_entered(body):
 func _on_moving_object_detector_body_exited(body):
 	remove_collision_exception_with(body)
 #endregion
+
+func _on_multiplayer_synchronizer_synchronized():
+	skeleton_3d.set_bone_pose_rotation(head_bone_id, Quaternion.from_euler(Vector3(-player_input.neck_look, 0.0, 0.0)))
