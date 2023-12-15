@@ -128,5 +128,6 @@ func _on_moving_object_detector_body_exited(body):
 	remove_collision_exception_with(body)
 #endregion
 
+# Animate clients necks
 func _on_multiplayer_synchronizer_synchronized():
 	skeleton_3d.set_bone_pose_rotation(head_bone_id, Quaternion.from_euler(Vector3(-player_input.neck_look, 0.0, 0.0)))

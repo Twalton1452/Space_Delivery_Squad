@@ -68,15 +68,15 @@ height = 0.465598
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
+properties/1/path = NodePath(".:velocity")
 properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath(".:velocity")
+properties/1/replication_mode = 2
+properties/2/path = NodePath("PlayerInput:neck_look")
 properties/2/spawn = true
 properties/2/replication_mode = 2
-properties/3/path = NodePath("PlayerInput:neck_look")
+properties/3/path = NodePath(".:rotation:y")
 properties/3/spawn = true
-properties/3/replication_mode = 2
+properties/3/replication_mode = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iaoc7"]
 size = Vector3(0.303162, 0.381287, 0.267822)
