@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://nk1l6h8dmcw"]
+[gd_scene load_steps=23 format=3 uid="uid://nk1l6h8dmcw"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="1_5lm7w"]
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_fp0p1"]
@@ -17,7 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://cvbaglxpvfnvw" path="res://scenes/objects/generator.tscn" id="14_n8tpw"]
 [ext_resource type="PackedScene" uid="uid://d2hvd0c34vu6h" path="res://art/objects/generator-large.glb" id="14_xo214"]
 [ext_resource type="PackedScene" uid="uid://c5q0kao3qbmkp" path="res://art/space interior elements/object.glb" id="15_55ce3"]
+[ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="15_k0s48"]
 [ext_resource type="PackedScene" uid="uid://3iqisgoeh4b1" path="res://art/space interior elements/object_001.glb" id="18_b0n5m"]
+[ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_1c6n1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_33ltf"]
 
@@ -248,6 +250,15 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.890
 [node name="generator" parent="Objects" instance=ExtResource("14_n8tpw")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.00170019, -2.93276, 1.5)
 
+[node name="cannister" parent="Objects" instance=ExtResource("15_k0s48")]
+transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.190557, 0, 3.22433)
+
+[node name="cannister3" parent="Objects" instance=ExtResource("15_k0s48")]
+transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.190557, 3, 2.72433)
+
+[node name="cannister2" parent="Objects" instance=ExtResource("15_k0s48")]
+transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.691, -3, 3.224)
+
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh_library = ExtResource("2_ecxme")
@@ -352,5 +363,8 @@ data = {
 "cells": PackedInt32Array(65535, 2, 524301, 65534, 2, 524301, 65533, 2, 524301, 0, 2, 524301, 65535, 1, 524301, 0, 1, 524369, 0, 3, 1310801, 65534, 3, 131153, 65534, 1, 1179729, 65534, 4, 1179727, 0, 4, 1310799, 1, 2, 1310799, 65532, 2, 1179727, 65533, 1, 524367, 65533, 3, 131151, 1, 1, 524368, 1, 3, 1310800, 0, 5, 1310800, 65534, 5, 131152, 65532, 3, 131152, 65532, 1, 1179728, 65535, 5, 131151, 65535, 3, 524301, 262142, 3, 1179727, 262142, 4, 1179727, 262142, 5, 131152, 262143, 3, 1179661, 262143, 4, 1310733, 262143, 5, 131151, 196608, 3, 1310799, 196608, 4, 1310799, 196608, 5, 1310800, -131073, 1, 524301, -131073, 2, 524301, -131073, 3, 524301, -196608, 3, 1310801, -196608, 2, 524369, -196608, 1, 1310799, -131074, 3, 131153, -131074, 2, 1179729, -131074, 1, 1179727, -131073, 5, 131151, -196608, 4, 1310799, -131074, 4, 1179727, -131074, 0, 1179728, -131074, 5, 131152, -196608, 5, 1310800, -131076, 3, 524301, -131076, 2, 524301, -131076, 4, 131151, -131077, 3, 1179727, -131077, 2, 1179727, -131076, 1, 524367, -131075, 3, 1310801, -131075, 2, 524369, -131077, 4, 131152, -131077, 1, 1179728, -131075, 1, 524368, -131075, 4, 1310800, -196605, 4, 1310800, -196605, 3, 1310799, -196605, 2, 1310799, -196605, 1, 524368, -196606, 4, 131151, -196606, 3, 131085, -196606, 2, 131085, -196606, 1, 524367, -196607, 4, 131152, -196607, 3, 131153, -196607, 2, 1179729, -196607, 1, 1179728, 65534, 65535, 1179728, 65535, 65535, 524367, 0, 65535, 524368, 65535, 0, 1179661, 65534, 0, 1179727, 0, 0, 1310799, -131073, 0, 524367, -196608, 0, 524368, 262143, 2, 524367, 262142, 2, 1179728, 196608, 2, 524368)
 }
 metadata/_editor_floor_ = Vector3(0, 3, 0)
+
+[node name="breaker_box" parent="." instance=ExtResource("20_1c6n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17702, 0.0625, 3.25456)
 
 [editable path="Objects/AirlockDoor"]
