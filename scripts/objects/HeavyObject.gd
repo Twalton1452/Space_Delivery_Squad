@@ -3,8 +3,10 @@ class_name HeavyObject
 
 ## Objects that should be carried by multiple people
 
+@export var move_speed_mod = 0.5
 @export var grabbable_areas : Array[Interactable]
 @export var tolerance_areas : Array[Area3D]
+@export var drop_sfx : AudioStream
 @export var offset = Vector3()
 @export var no_grabbers_rotation := Vector3.ZERO
 @export var full_grabbers_rotation := Vector3.ZERO
@@ -42,19 +44,26 @@ func _on_grabbable_interacted(interactable: Interactable, interacter: Player) ->
 	# Object is too heavy/large for player to interact with anything else
 	interactable.disable()
 	interacter.interacter.disable()
-	interacter.global_position = interactable.global_position
+	
+	
+	# Toggle the Tolerance zones on
+	var corresponding_tolerance_index = grabbable_areas.find(interactable)
+	var tolerance_area = tolerance_areas[corresponding_tolerance_index]
+	enable_tolerance_area(tolerance_area)
+	
+	interacter.global_position = tolerance_area.global_position
+	interacter.apply_flat_move_speed_mod(-move_speed_mod)
+	interacter.look_at(interactable.global_position)
+	
+	holding_players.push_back(interacter)
 	
 	# Hold the Interacted Area
 	interacter.hold(interactable.get_path())
 	
-	# Toggle the Tolerance zones on
-	var corresponding_tolerance_index = grabbable_areas.find(interactable)
-	enable_tolerance_area(tolerance_areas[corresponding_tolerance_index])
-	
-	holding_players.push_back(interacter)
-	
 	# Player is carrying this HeavyObject
 	await interacter.dropped_something
+	interacter.apply_flat_move_speed_mod(move_speed_mod)
+	AudioManager.play_one_shot_3d(drop_sfx)
 	disable_tolerance_area(tolerance_areas[corresponding_tolerance_index])
 	
 	holding_players.erase(interacter)
@@ -65,6 +74,9 @@ func _on_grabbable_interacted(interactable: Interactable, interacter: Player) ->
 	interactable.enable()
 	interactable.position = original_interactable_positions[corresponding_tolerance_index]
 	interactable.rotation = Vector3.ZERO
+	
+	#if holding_players.size() < grabbable_areas.size():
+		#position.y -= offset.y
 
 func enable_tolerance_area(area: Area3D) -> void:
 	area.collision_mask = Constants.PLAYER_LAYER
@@ -77,7 +89,7 @@ func _on_tolerance_area_exited(exiter):
 		exiter.drop()
 
 func _physics_process(_delta):
-	if holding_players.size() <= 1:
+	if holding_players.size() < grabbable_areas.size():
 		return
 	
 	var mid_point = Vector3.ZERO

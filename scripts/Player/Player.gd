@@ -20,6 +20,7 @@ const FOV_CHANGE = 2.0
 
 var look_speed = .005
 var move_speed = WALK_SPEED
+var flat_move_speed_mod = 0.0
 var head_bone_id = -1
 var base_fov = 80.0
 var stamina = 100.0
@@ -68,14 +69,15 @@ func _physics_process(delta):
 	stamina_bar.value = stamina
 	
 	if player_input.sprinting and stamina > 0.0:
-		move_speed = WALK_SPEED + RUN_SPEED
+		move_speed = WALK_SPEED + RUN_SPEED + flat_move_speed_mod
 		stamina_bar.tint_progress.a = 1.0
 		stamina_bar.show()
 	else:
-		move_speed = WALK_SPEED
+		move_speed = WALK_SPEED + flat_move_speed_mod
 		stamina_bar.tint_progress.a = 0.4
 		if stamina >= 100.0:
 			stamina_bar.hide()
+	
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
 	animate()
@@ -145,6 +147,9 @@ func animate() -> void:
 				animation_player.stop()
 		else:
 			animation_player.stop()
+
+func apply_flat_move_speed_mod(amount: float) -> void:
+	flat_move_speed_mod += amount
 
 #region Elevator Pushing Player Through World Solution
 func _on_moving_object_detector_body_entered(body):

@@ -33,7 +33,7 @@ func notify_peers_of_drop(p_id: int, dropped_node_position: Vector3) -> void:
 	drop_node(player, dropped_node_position)
 
 func attempt_drop_node(p_id: int) -> void:
-	if multiplayer.is_server():
+	if multiplayer and multiplayer.is_server():
 		drop(p_id)
 		return
 	

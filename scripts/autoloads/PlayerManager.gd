@@ -45,6 +45,10 @@ func get_player_by_id(p_id: int) -> Player:
 	var info = get_by_id(p_id)
 	if info == null:
 		return info
+	
+	if info.controlling_node == null or info.controlling_node.is_queued_for_deletion():
+		return null
+	
 	return info.controlling_node
 
 ## The name of the player
