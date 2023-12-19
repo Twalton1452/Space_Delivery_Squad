@@ -42,6 +42,7 @@ func _on_grabbable_interacted(interactable: Interactable, interacter: Player) ->
 	# Object is too heavy/large for player to interact with anything else
 	interactable.disable()
 	interacter.interacter.disable()
+	interacter.global_position = interactable.global_position
 	
 	# Hold the Interacted Area
 	interacter.hold(interactable.get_path())
