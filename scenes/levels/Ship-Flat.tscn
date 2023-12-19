@@ -1,0 +1,252 @@
+[gd_scene load_steps=16 format=3 uid="uid://bq63jkhda8241"]
+
+[ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
+[ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
+[ext_resource type="PackedScene" uid="uid://cnsvsg5ll712j" path="res://art/space interior elements/object_073.glb" id="3_uash7"]
+[ext_resource type="PackedScene" uid="uid://ceoib8msrs7jy" path="res://scenes/objects/box_large.tscn" id="4_am4w0"]
+[ext_resource type="PackedScene" uid="uid://d4b6j2icha5d6" path="res://scenes/objects/box_long.tscn" id="5_bgub2"]
+[ext_resource type="PackedScene" uid="uid://o8pu2dqcdr7e" path="res://scenes/objects/box_small.tscn" id="6_qy0dp"]
+[ext_resource type="PackedScene" uid="uid://cm7bfr7yfdtk4" path="res://scenes/objects/box_wide.tscn" id="7_rqytm"]
+[ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="8_dnlpq"]
+[ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_sl58d"]
+[ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_83m8u"]
+[ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="15_7a5q0"]
+[ext_resource type="PackedScene" uid="uid://dojily12u4kjh" path="res://scenes/objects/cannister.tscn" id="15_sne5n"]
+[ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
+[ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
+[ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
+
+[node name="Ship" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_2ly15")
+
+[node name="SpawnLocation" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.50528, 0.172416, 2)
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_location")]
+_spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 64
+script = ExtResource("2_bk4i6")
+spawn_location = NodePath("../SpawnLocation")
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="ObservatoryLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42979, 0.803, 7.93462)
+light_color = Color(0.894118, 0.745098, 1, 1)
+light_energy = 1.062
+shadow_enabled = true
+shadow_opacity = 0.2
+distance_fade_enabled = true
+distance_fade_begin = 0.1
+distance_fade_shadow = 1.0
+distance_fade_length = 4.0
+omni_range = 3.242
+omni_attenuation = 1.80248
+
+[node name="ObservatoryLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.42979, 0.803, 8.52787)
+light_color = Color(0.792157, 0.454902, 1, 1)
+light_energy = 1.062
+shadow_enabled = true
+shadow_opacity = 0.2
+distance_fade_enabled = true
+distance_fade_begin = 0.1
+distance_fade_shadow = 1.0
+distance_fade_length = 4.0
+omni_range = 1.589
+omni_attenuation = 1.80248
+
+[node name="MainDeckLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -5.96047e-08, 1, 0, -1, -5.96047e-08, 1.38427, 0.802858, 2.3667)
+light_color = Color(0.85098, 0.890196, 0.913725, 1)
+shadow_enabled = true
+shadow_opacity = 0.2
+distance_fade_enabled = true
+distance_fade_begin = 0.1
+distance_fade_shadow = 1.0
+distance_fade_length = 5.0
+omni_range = 6.407
+omni_attenuation = 0.450627
+
+[node name="LightFixture" parent="Lights/MainDeckLight" instance=ExtResource("3_uash7")]
+transform = Transform3D(-4.37114e-08, 0, -1, -1, -5.96047e-08, 4.37114e-08, -5.96047e-08, 1, 2.6054e-15, 0.014759, -0.1333, 0.115196)
+
+[node name="MainDeckLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -5.96047e-08, 1, 0, -1, -5.96047e-08, 4.18287, 0.802858, 2.53384)
+light_color = Color(0.85098, 0.890196, 0.913725, 1)
+shadow_enabled = true
+shadow_opacity = 0.2
+distance_fade_enabled = true
+distance_fade_begin = 0.5
+distance_fade_shadow = 1.0
+distance_fade_length = 5.0
+omni_range = 8.798
+omni_attenuation = 1.36604
+
+[node name="LightFixture" parent="Lights/MainDeckLight2" instance=ExtResource("3_uash7")]
+transform = Transform3D(-4.37114e-08, 0, -1, -1, -5.96047e-08, 4.37114e-08, -5.96047e-08, 1, 2.6054e-15, 0.014759, -0.1333, 0.115196)
+
+[node name="EngineRoomLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.50285, 0.803, -2.88915)
+light_color = Color(0.756863, 0.607843, 0.513726, 1)
+shadow_enabled = true
+shadow_opacity = 0.2
+distance_fade_enabled = true
+distance_fade_begin = 1.0
+distance_fade_shadow = 1.0
+distance_fade_length = 4.0
+omni_range = 3.108
+omni_attenuation = 1.10957
+
+[node name="EngineRoomLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.50285, 0.803, -3.45918)
+light_color = Color(0.666667, 0.517647, 0.423529, 1)
+shadow_enabled = true
+shadow_opacity = 0.2
+distance_fade_enabled = true
+distance_fade_begin = 1.0
+distance_fade_shadow = 1.0
+distance_fade_length = 4.0
+omni_range = 3.108
+omni_attenuation = 1.10957
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="box_large" parent="Objects" instance=ExtResource("4_am4w0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11414, 0.0875, 1.90105)
+
+[node name="box_long" parent="Objects" instance=ExtResource("5_bgub2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18659, 0.0875, 2.30453)
+
+[node name="box_small" parent="Objects" instance=ExtResource("6_qy0dp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3153, 0.0875, 2.5901)
+
+[node name="box_wide" parent="Objects" instance=ExtResource("7_rqytm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)
+
+[node name="AirlockDoor" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("8_dnlpq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 2.5)
+triggers = [NodePath("../AirlockLever")]
+
+[node name="object_043" parent="Objects/AirlockDoor" index="0"]
+surface_material_override/0 = ExtResource("9_sl58d")
+
+[node name="DoorToAirlock" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("8_dnlpq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.05, 2.5)
+triggers = [NodePath("../LeverBehind"), NodePath("../LeverInside")]
+
+[node name="AirlockLever" parent="Objects" instance=ExtResource("10_83m8u")]
+transform = Transform3D(-4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, -1.42109e-14, -7.10543e-15, -8.74228e-08, -1, -3.50101, 0.5, 1.8)
+
+[node name="LeverInside" parent="Objects" instance=ExtResource("10_83m8u")]
+transform = Transform3D(-4.37114e-08, 1, 4.65882e-22, 1, 4.37114e-08, 8.74228e-08, 8.74228e-08, 3.82137e-15, -1, -1.501, 0.5, 1.83534)
+
+[node name="LeverBehind" parent="Objects" instance=ExtResource("10_83m8u")]
+transform = Transform3D(4.37114e-08, -1, -3.82137e-15, 1, 4.37114e-08, -1.74846e-07, 1.74846e-07, 3.82137e-15, 1, -1.618, 0.5, 1.83534)
+
+[node name="cannister" parent="Objects" instance=ExtResource("15_7a5q0")]
+transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.23463, 0.210307, -4.1869)
+
+[node name="cannister2" parent="Objects" instance=ExtResource("15_7a5q0")]
+transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.62794, 0.210307, -4.1869)
+
+[node name="cannister3" parent="Objects" instance=ExtResource("15_7a5q0")]
+transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 5.01375, 0.210307, -4.1869)
+
+[node name="cannister4" parent="Objects" instance=ExtResource("15_7a5q0")]
+transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.4083, 0.542432, -4.1869)
+
+[node name="cannister6" parent="Objects" instance=ExtResource("15_7a5q0")]
+transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.58406, 0.857488, -4.1869)
+
+[node name="cannister5" parent="Objects" instance=ExtResource("15_7a5q0")]
+transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.80313, 0.542432, -4.1869)
+
+[node name="breaker_box" parent="Objects" instance=ExtResource("20_xv1bn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17702, 0.0625, 5.95371)
+
+[node name="GridMap Floor" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh_library = ExtResource("16_b1ic6")
+cell_size = Vector3(1, 1, 1)
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(65535, 1, 1441805, 65534, 2, 1441805, 65535, 2, 1441805, 0, 2, 1441805, 65535, 3, 1441805, 65534, 1, 655441, 0, 1, 1441805, 0, 3, 1441805, 65534, 3, 1441873, 65533, 2, 13, 65532, 2, 655373, 65533, 1, 655439, 65533, 3, 79, 65532, 1, 655440, 65532, 3, 1441872, 65534, 4, 1441871, 0, 4, 1441805, 0, 5, 1441805, 65534, 5, 1441871, 65535, 5, 1441805, 1, 2, 1441805, 1, 1, 1441805, 1, 3, 1441805, 65535, 0, 1441805, 0, 0, 1441805, 65534, 0, 1441871, 65531, 2, 655387, 0, 65535, 1441805, 65534, 65535, 1441871, 65535, 65535, 1441805, 65535, 4, 1441805, 1, 65535, 1441805, 1, 0, 1441805, 1, 4, 1441805, 1, 5, 1441805, 2, 65535, 1441805, 2, 0, 1441805, 2, 1, 1441805, 2, 2, 1441805, 2, 3, 1441805, 2, 4, 1441805, 2, 5, 1441805, 3, 5, 1441805, 3, 4, 1441805, 3, 3, 1441805, 3, 2, 1441805, 3, 1, 1441805, 3, 0, 1441805, 3, 65535, 1441805, 65534, 65534, 1441871, 65535, 65534, 1441805, 0, 65534, 1441805, 1, 65534, 1441805, 2, 65534, 1441805, 3, 65534, 1441805, 4, 65535, 1441805, 4, 0, 1441805, 4, 1, 1441805, 4, 2, 1441805, 4, 3, 1441805, 4, 4, 1441805, 4, 5, 1441805, 3, 6, 1441805, 2, 6, 1441805, 1, 6, 1441805, 0, 6, 1441805, 65535, 6, 1441805, 65534, 6, 1441871, 5, 2, 1441805, 5, 5, 1441805, 5, 4, 1441805, 5, 3, 1441805, 5, 1, 1441805, 5, 0, 1441805, 5, 65535, 1441805, 6, 65535, 1441805, 6, 0, 1441805, 6, 1, 1441805, 6, 2, 1441805, 6, 3, 1441805, 6, 4, 1441805, 6, 5, 1441805, 2, 65533, 1441805, 1, 65533, 1441805, 0, 65533, 1441805, 65535, 65533, 1441805, 3, 65533, 1441805, 3, 65532, 1441805, 2, 65532, 1441805, 1, 65532, 1441805, 0, 65532, 1441805, 65535, 65532, 1441805, 3, 65531, 1441805, 2, 65531, 1441805, 1, 65531, 1441805, 0, 65531, 1441805, 65535, 65531, 1441805, 65535, 7, 1441805, 0, 7, 1441805, 1, 7, 1441805, 2, 7, 1441805, 3, 7, 1441805, 65535, 8, 1441805, 0, 8, 1441805, 1, 8, 1441805, 2, 8, 1441805, 3, 8, 1441805, 65535, 9, 1441805, 0, 9, 1441805, 1, 9, 1441805, 2, 9, 1441805, 3, 9, 1441805, 4, 65532, 1048589, 4, 65531, 1048589, 5, 65531, 1048589, 5, 65532, 1048589, 5, 65533, 1048589, 4, 65533, 1048589, 4, 8, 1048589, 5, 8, 1048589, 5, 9, 1048589, 4, 9, 1048589, 4, 7, 1048589, 5, 7, 1048589, 4, 65534, 655373, 5, 65534, 655373)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="GridMap Walls" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+mesh_library = ExtResource("16_b1ic6")
+cell_size = Vector3(1, 1, 1)
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(65532, 1, 82, 65532, 2, 11, 65532, 3, 1048658, 65533, 1, 1441799, 65533, 3, 1048583, 65534, 1, 86, 65534, 2, 11, 65534, 3, 86, 65534, 65534, 82, 65534, 6, 1048658, 1, 6, 1048587, 1, 65534, 1441803, 3, 6, 655442, 2, 6, 1048662, 0, 6, 1048662, 65535, 6, 1048583, 65534, 5, 86, 65534, 4, 86, 65535, 65534, 1441799, 0, 65534, 1441878, 2, 65534, 1441878, 3, 65534, 1441874, 65534, 0, 86, 65534, 65535, 86, 65535, 7, 86, 65535, 8, 86, 65535, 9, 1048658, 0, 9, 1048662, 1, 9, 1048662, 2, 9, 1048662, 3, 7, 655367, 3, 8, 655371, 3, 9, 655442, 3, 65533, 655367, 3, 65532, 655371, 3, 65531, 1441874, 2, 65531, 1441878, 1, 65531, 1441878, 0, 65531, 1441878, 65535, 65533, 86, 65535, 65532, 86, 65535, 65531, 82, 3, 65535, 1441875, 3, 5, 655370, 4, 5, 1048662, 5, 65535, 1441799, 5, 5, 1048662, 6, 65535, 1441874, 6, 0, 655446, 6, 1, 655446, 6, 2, 655446, 6, 3, 655446, 6, 4, 655446, 6, 5, 655442, 5, 9, 655442, 5, 7, 1441874, 5, 65531, 1441874, 4, 65531, 1441878, 5, 65532, 655367, 5, 8, 655367, 4, 7, 1441878, 4, 9, 1048662, 4, 65535, 1441804, 4, 65533, 1048588, 5, 65533, 655442)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Fillers" type="Node3D" parent="GridMap Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="object_007_stripe" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.01475, 0, 1.5)
+
+[node name="object_007_stripe2" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -2.01475, 0, 3.5)
+
+[node name="object_007_stripe3" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.5, 0, 7.01883)
+
+[node name="object_007_stripe4" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(-1, 0, 2.62269e-07, 0, 1, 0, -2.62269e-07, 0, -1, 3.50266, 0, 6.5)
+
+[node name="object_007_stripe5" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 4.01725, 0, 7.5)
+
+[node name="object_007_stripe7" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(1.31135e-07, 0, 1, 0, 1, 0, -1, 0, 1.31135e-07, 4, 0, 9.5)
+
+[node name="object_007_stripe6" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.5, 0, -2.03564)
+
+[node name="object_007_stripe8" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(-1, 0, 8.74232e-08, 0, 1, 0, -8.74232e-08, 0, -1, 3.5, 0, -1.5)
+
+[node name="object_007_stripe9" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(1.31135e-07, 0, 0.538161, 0, 1, 0, -1, 0, 7.05716e-08, 3.74879, 0, -2.5)
+
+[node name="object_007_stripe11" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(-1, 0, 8.23942e-08, 0, 1, 0, -8.74232e-08, 0, -0.942475, 4.9962, 0, -1.02876)
+
+[node name="object_007_stripe12" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(-1, 0, 8.23942e-08, 0, 1, 0, -8.74232e-08, 0, -0.942475, 4.9962, 0, -1.97124)
+
+[node name="object_007_stripe13" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(1, 0, -4.21891e-13, 0, 1, 0, 4.47642e-13, 0, 0.942475, 3.9962, 0, -1.97124)
+
+[node name="object_007_stripe14" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(1, 0, -4.21891e-13, 0, 1, 0, 4.47642e-13, 0, 0.942475, 3.9962, 0, -1.02876)
+
+[node name="object_007_stripe10" parent="GridMap Walls/Fillers" instance=ExtResource("17_0h6r1")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 3.5, 0, -4.5)
+
+[node name="GridMap Ceiling" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
+mesh_library = ExtResource("16_b1ic6")
+cell_size = Vector3(1, 1, 1)
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(0, 8, 1310733, 1, 8, 1310733, 2, 8, 1310733, 3, 8, 1310733, 4, 8, 1310733, 0, 65531, 1310733, 0, 65532, 1310733, 0, 65533, 1310733, 0, 65534, 1310733, 0, 65535, 1310733, 0, 0, 1310733, 0, 1, 1310733, 0, 2, 1310733, 0, 3, 1310733, 0, 4, 1310733, 0, 5, 1310733, 0, 6, 1310733, 0, 7, 1310733, 0, 9, 1310733, 1, 65531, 1310733, 1, 65532, 1310733, 1, 65533, 1310733, 1, 65534, 1310733, 1, 65535, 1310733, 1, 0, 1310733, 1, 1, 1310733, 1, 2, 1310733, 1, 3, 1310733, 1, 4, 1310733, 1, 5, 1310733, 1, 6, 1310733, 1, 7, 1310733, 1, 9, 1310733, 2, 65531, 1310733, 2, 65532, 1310733, 2, 65533, 1310733, 2, 65534, 1310733, 2, 65535, 1310733, 2, 0, 1310733, 2, 1, 1310733, 2, 2, 1310733, 2, 3, 1310733, 2, 4, 1310733, 2, 5, 1310733, 2, 6, 1310733, 2, 7, 1310733, 2, 9, 1310733, 3, 65531, 1310733, 3, 65532, 1310733, 3, 65533, 1310733, 3, 65534, 1310733, 3, 65535, 1310733, 3, 0, 1310733, 3, 1, 1310733, 3, 2, 1310733, 3, 3, 1310733, 3, 4, 1310733, 3, 5, 1310733, 3, 6, 1310733, 3, 7, 1310733, 3, 9, 1310733, 4, 65531, 1310733, 4, 65532, 1310733, 4, 65533, 1310733, 4, 65534, 1310733, 4, 65535, 1310733, 4, 0, 1310733, 4, 1, 1310733, 4, 2, 1310733, 4, 3, 1310733, 4, 4, 1310733, 4, 5, 1310733, 4, 6, 1310733, 4, 7, 1310733, 4, 9, 1310733, 5, 65531, 1310733, 5, 65532, 1310733, 5, 65533, 1310733, 5, 65534, 1310733, 5, 65535, 1310733, 5, 0, 1310733, 5, 1, 1310733, 5, 2, 1310733, 5, 3, 1310733, 5, 4, 1310733, 5, 5, 1310733, 5, 6, 1310733, 5, 7, 1310733, 5, 8, 1310733, 5, 9, 1310733, 6, 65531, 1310733, 6, 65532, 1310733, 6, 65533, 1310733, 6, 65534, 1310733, 6, 65535, 1310733, 6, 0, 1310733, 6, 1, 1310733, 6, 2, 1310733, 6, 3, 1310733, 6, 4, 1310733, 6, 5, 1310733, 6, 6, 1310733, 6, 7, 1310733, 6, 8, 1310733, 6, 9, 1310733, 65535, 9, 1310733, 65535, 8, 1310733, 65535, 7, 1310733, 65535, 6, 1310733, 65535, 5, 1310733, 65535, 4, 1310733, 65535, 3, 1310733, 65535, 2, 1310733, 65535, 1, 1310733, 65535, 0, 1310733, 65535, 65535, 1310733, 65535, 65534, 1310733, 65535, 65533, 1310733, 65535, 65532, 1310733, 65535, 65531, 1310733, 65534, 6, 1310733, 65534, 5, 1310733, 65534, 4, 1310733, 65534, 3, 1310733, 65534, 2, 1310733, 65534, 1, 1310733, 65534, 0, 1310733, 65534, 65535, 1310733, 65534, 65534, 1310733, 65533, 2, 1310733, 65533, 3, 131151, 65533, 1, 524367, 65532, 2, 1179727, 65532, 1, 1179728, 65532, 3, 131152)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="cannister" parent="." instance=ExtResource("15_sne5n")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 3.31407, 0.244124, 2.08305)
+
+[editable path="Objects/AirlockDoor"]

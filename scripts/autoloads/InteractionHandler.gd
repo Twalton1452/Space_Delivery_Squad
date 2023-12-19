@@ -8,10 +8,6 @@ extends Node
 ##     Each player might see on their screen they got the object, but the other player has it instead
 ## While the server is resolving the interaction, we can hide the delay by playing an animation
 
-const ACCEPTABLE_INTERACTABLE_DISTANCE_IN_M = 5
-const INTERACTABLE_COLLISION_LAYERS = 1 << 2
-const NON_INTERACTABLE_COLLISION_LAYERS = 0
-
 @rpc("any_peer", "call_remote", "reliable")
 func tell_server_of_interaction_attempt_by_client(p_id, node_path: String) -> void:
 	interact(p_id, node_path)
@@ -46,7 +42,7 @@ func attempt_drop_node(p_id: int) -> void:
 func interact_with_node(player: Player, interactable_node_path: String) -> void:
 	var node_on_interactable_layer = get_node(interactable_node_path)
 	if node_on_interactable_layer is Interactable:
-		node_on_interactable_layer.interact()
+		node_on_interactable_layer.interact(player)
 		return
 	
 	# Node has no "interact" method, must be trying to pick something up
@@ -55,7 +51,7 @@ func interact_with_node(player: Player, interactable_node_path: String) -> void:
 	
 	player.hold(node_on_interactable_layer.get_parent().get_path())
 	var held_node = get_node(interactable_node_path) as CollisionObject3D
-	held_node.collision_layer = NON_INTERACTABLE_COLLISION_LAYERS
+	held_node.collision_layer = Constants.NON_INTERACTABLE_COLLISION_LAYERS
 
 func drop_node(player: Player, dropped_node_position: Vector3) -> void:
 	var held_node = player.get_held_node()
@@ -67,7 +63,7 @@ func drop_node(player: Player, dropped_node_position: Vector3) -> void:
 	held_node.rotation = Vector3.ZERO
 	for child in held_node.get_children():
 		if child is Area3D:
-			child.collision_layer = INTERACTABLE_COLLISION_LAYERS
+			child.collision_layer = Constants.INTERACTABLE_COLLISION_LAYERS
 			break
 
 func attempt_interaction(p_id: int, node_path: String) -> void:
@@ -89,7 +85,7 @@ func interact(p_id: int, node_path: String) -> bool:
 		return false
 	
 	# Player is too far, maybe spoofed packet, or terrible lag
-	if player.global_position.distance_to(player_attempting_to_interact_with.global_position) > ACCEPTABLE_INTERACTABLE_DISTANCE_IN_M:
+	if player.global_position.distance_to(player_attempting_to_interact_with.global_position) > Constants.ACCEPTABLE_INTERACTABLE_DISTANCE_IN_M:
 		return false
 	
 	var path_to_interactable = player_attempting_to_interact_with.get_path()
@@ -98,7 +94,7 @@ func interact(p_id: int, node_path: String) -> bool:
 	return true
 
 func drop(p_id: int) -> void:
-	var player = PlayerManager.get_player_by_id(p_id)
+	var player := PlayerManager.get_player_by_id(p_id)
 	if player == null:
 		return
 	

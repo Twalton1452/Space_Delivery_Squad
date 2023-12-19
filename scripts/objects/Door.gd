@@ -13,7 +13,7 @@ func _ready() -> void:
 	for trigger in triggers:
 		trigger.interacted.connect(_on_trigger)
 
-func _on_trigger() -> void:
+func _on_trigger(_interactable: Interactable, _interacter: Player) -> void:
 	# Allows for interupting the animation cleanly
 	var current_seek = 0.0
 	if animation_player.is_playing():

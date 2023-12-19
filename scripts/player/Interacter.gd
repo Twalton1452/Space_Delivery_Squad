@@ -17,6 +17,12 @@ var current_interactable: Node3D = null :
 func _ready():
 	interact_label.hide()
 
+func enable() -> void:
+	collision_mask = Constants.INTERACTABLE_COLLISION_LAYERS
+
+func disable() -> void:
+	collision_mask = Constants.NON_INTERACTABLE_COLLISION_LAYERS
+
 func is_interactable(collided_object: Node3D) -> bool:
 	return collided_object.collision_layer | INTERACTABLE_LAYER == INTERACTABLE_LAYER
 

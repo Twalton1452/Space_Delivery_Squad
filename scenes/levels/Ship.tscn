@@ -251,13 +251,13 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.890
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.00170019, -2.93276, 1.5)
 
 [node name="cannister" parent="Objects" instance=ExtResource("15_k0s48")]
-transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.190557, 0, 3.22433)
+transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.190557, 0.00398386, 3.22433)
 
 [node name="cannister3" parent="Objects" instance=ExtResource("15_k0s48")]
-transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.190557, 3, 2.72433)
+transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.190557, 3.00191, 2.72433)
 
 [node name="cannister2" parent="Objects" instance=ExtResource("15_k0s48")]
-transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.691, -3, 3.224)
+transform = Transform3D(1.67954e-16, -5.96046e-08, -1, 4.37114e-08, 1, -5.96046e-08, 1, -4.37114e-08, 2.61845e-15, 0.691, -2.99272, 3.224)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

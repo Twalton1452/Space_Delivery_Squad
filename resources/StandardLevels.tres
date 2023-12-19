@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LevelStore" load_steps=3 format=3 uid="uid://uqgpdisuofwn"]
+[gd_resource type="Resource" script_class="LevelStore" load_steps=4 format=3 uid="uid://uqgpdisuofwn"]
 
 [ext_resource type="Script" path="res://scripts/resources/LevelStore.gd" id="1_752wh"]
 [ext_resource type="PackedScene" uid="uid://nk1l6h8dmcw" path="res://scenes/levels/Ship.tscn" id="1_eybuy"]
+[ext_resource type="PackedScene" uid="uid://bq63jkhda8241" path="res://scenes/levels/Ship-Flat.tscn" id="2_i4dgx"]
 
 [resource]
 script = ExtResource("1_752wh")
-levels = Array[PackedScene]([ExtResource("1_eybuy")])
+levels = Array[PackedScene]([ExtResource("2_i4dgx"), ExtResource("1_eybuy")])

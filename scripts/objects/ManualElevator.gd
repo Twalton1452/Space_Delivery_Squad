@@ -19,15 +19,15 @@ func _ready() -> void:
 	for down_trigger in down_triggers:
 		down_trigger.interacted.connect(_on_down_trigger)
 
-func _on_up_trigger() -> void:
+func _on_up_trigger(_interactable: Interactable, _interacter: Player) -> void:
 	move_to(1)
 	highlight_triggers_for(up_triggers)
 
-func _on_middle_trigger() -> void:
+func _on_middle_trigger(_interactable: Interactable, _interacter: Player) -> void:
 	move_to(0)
 	highlight_triggers_for(middle_triggers)
 
-func _on_down_trigger() -> void:
+func _on_down_trigger(_interactable: Interactable, _interacter: Player) -> void:
 	move_to(-1)
 	highlight_triggers_for(down_triggers)
 
