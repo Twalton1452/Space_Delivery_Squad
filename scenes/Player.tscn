@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7188haek1n73"]
+[gd_scene load_steps=18 format=3 uid="uid://7188haek1n73"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_hldcd"]
 [ext_resource type="Script" path="res://scripts/player/Interacter.gd" id="2_0yxy6"]
@@ -45,6 +45,17 @@ _data = {
 "walking": SubResource("Animation_47207")
 }
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_368e4"]
+radius = 0.1165
+height = 0.466
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_on7c2"]
+radius = 0.1165
+height = 0.233
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iaoc7"]
+size = Vector3(0.303162, 0.381287, 0.267822)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ns1nv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jf68f"]
@@ -60,10 +71,6 @@ outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_368e4"]
-radius = 0.125
-height = 0.465598
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_23l6a"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -77,9 +84,9 @@ properties/2/replication_mode = 2
 properties/3/path = NodePath(".:rotation:y")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_iaoc7"]
-size = Vector3(0.303162, 0.381287, 0.267822)
+properties/4/path = NodePath("bean_armature:scale")
+properties/4/spawn = true
+properties/4/replication_mode = 0
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -105,8 +112,33 @@ surface_material_override/0 = ExtResource("3_wtvyi")
 [node name="Eyes" parent="bean_armature/Armature/Skeleton3D" index="1"]
 cast_shadow = 0
 
+[node name="WalkingCollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.219174, 0)
+shape = SubResource("CapsuleShape3D_368e4")
+
+[node name="WalkingCameraPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.363378, -0.131)
+
+[node name="CrouchingCollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102861, 0)
+shape = SubResource("CapsuleShape3D_on7c2")
+disabled = true
+
+[node name="CrouchCameraPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.178, -0.131)
+
+[node name="MovingObjectDetector" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0388305, 0)
+visible = false
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MovingObjectDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00790405, 0.309357, -0.0032959)
+shape = SubResource("BoxShape3D_iaoc7")
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.383244, -0.130532)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.363378, -0.131)
 fov = 80.0
 near = 0.01
 
@@ -198,10 +230,6 @@ texture_progress = ExtResource("3_isc5x")
 tint_under = Color(0.160784, 0.160784, 0.160784, 0.270588)
 tint_progress = Color(0, 0.74902, 0, 1)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.219174, 0)
-shape = SubResource("CapsuleShape3D_368e4")
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_23l6a")
 visibility_update_mode = 1
@@ -209,18 +237,8 @@ visibility_update_mode = 1
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("2_myobr")
 
-[node name="MovingObjectDetector" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0388305, 0)
-visible = false
-collision_layer = 0
-collision_mask = 8
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MovingObjectDetector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00790405, 0.309357, -0.0032959)
-shape = SubResource("BoxShape3D_iaoc7")
-
-[connection signal="synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_synchronized"]
 [connection signal="body_entered" from="MovingObjectDetector" to="." method="_on_moving_object_detector_body_entered"]
 [connection signal="body_exited" from="MovingObjectDetector" to="." method="_on_moving_object_detector_body_exited"]
+[connection signal="synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_synchronized"]
 
 [editable path="bean_armature"]

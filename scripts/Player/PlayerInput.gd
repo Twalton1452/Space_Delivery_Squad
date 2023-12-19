@@ -9,6 +9,7 @@ class_name PlayerInput
 @export var y := 0.0
 @export var jumping := 0
 @export var sprinting := 0
+@export var crouching := 0
 @export var interacting := false
 @export var dropping := false
 @export var neck_look : float
@@ -48,6 +49,7 @@ func _physics_process(_delta):
 	neck_look = player.camera.rotation.x
 	jumping = Input.is_action_pressed("jump")
 	sprinting = Input.is_action_pressed("sprint")
+	crouching = Input.is_action_just_pressed("crouch")
 	interacting = Input.is_action_pressed("interact")
 	dropping = Input.is_action_pressed("drop")
 

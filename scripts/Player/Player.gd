@@ -6,9 +6,13 @@ signal holding_something(something: Node3D)
 signal dropped_something(something: Node3D)
 
 const WALK_SPEED = 1.5
-const RUN_SPEED = 2.0
+const RUN_SPEED = 2.5
+const CROUCH_SPEED = 0.8
 const JUMP_VELOCITY = 3.0
 const FOV_CHANGE = 2.0
+
+@export var crouched_size = 0.5
+@export var uncrouched_size = 1.0
 
 @onready var player_input : PlayerInput = $PlayerInput
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
@@ -17,6 +21,8 @@ const FOV_CHANGE = 2.0
 @onready var holder : RemoteTransform3D = $Camera3D/Holder
 @onready var skeleton_3d : Skeleton3D = $bean_armature/Armature/Skeleton3D
 @onready var stamina_bar : TextureProgressBar = $Camera3D/HUD/StaminaProgressBar
+@onready var walking_collider : CollisionShape3D = $WalkingCollisionShape3D
+@onready var crouching_collider : CollisionShape3D = $CrouchingCollisionShape3D
 
 var look_speed = .005
 var move_speed = WALK_SPEED
@@ -26,6 +32,7 @@ var base_fov = 80.0
 var stamina = 100.0
 var stamina_recharge_per_frame = 0.2
 var stamina_consume_rate_per_frame = 0.8
+var crouched := false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -68,16 +75,27 @@ func _physics_process(delta):
 	stamina = clampf(stamina + stamina_recharge_per_frame - (stamina_consume_rate_per_frame * player_input.sprinting), 0.0, 100.0)
 	stamina_bar.value = stamina
 	
+	if player_input.crouching:
+		if not crouched:
+			crouch.rpc()
+		else:
+			uncrouch.rpc()
+	
 	if player_input.sprinting and stamina > 0.0:
-		move_speed = WALK_SPEED + RUN_SPEED + flat_move_speed_mod
+		move_speed = RUN_SPEED
 		stamina_bar.tint_progress.a = 1.0
 		stamina_bar.show()
+		if crouched:
+			uncrouch.rpc()
+	elif crouched:
+		move_speed = CROUCH_SPEED
 	else:
-		move_speed = WALK_SPEED + flat_move_speed_mod
+		move_speed = WALK_SPEED
 		stamina_bar.tint_progress.a = 0.4
 		if stamina >= 100.0:
 			stamina_bar.hide()
 	
+	move_speed += flat_move_speed_mod
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
 	animate()
@@ -147,6 +165,28 @@ func animate() -> void:
 				animation_player.stop()
 		else:
 			animation_player.stop()
+
+@rpc("authority", "call_local", "reliable")
+func crouch() -> void:
+	var t = create_tween()
+	t.set_parallel(true)
+	if is_multiplayer_authority():
+		t.tween_property(camera, "position", $CrouchCameraPosition.position, 0.2).set_ease(Tween.EASE_IN)
+	walking_collider.disabled = true
+	crouching_collider.disabled = false
+	t.tween_property(skeleton_3d, "scale:y", crouched_size, 0.2).set_ease(Tween.EASE_IN)
+	crouched = true
+
+@rpc("authority", "call_local", "reliable")
+func uncrouch() -> void:
+	var t = create_tween()
+	t.set_parallel(true)
+	if is_multiplayer_authority():
+		t.tween_property(camera, "position", $WalkingCameraPosition.position, 0.2).set_ease(Tween.EASE_OUT)
+	walking_collider.disabled = false
+	crouching_collider.disabled = true
+	t.tween_property(skeleton_3d, "scale:y", uncrouched_size, 0.2).set_ease(Tween.EASE_OUT)
+	crouched = false
 
 func apply_flat_move_speed_mod(amount: float) -> void:
 	flat_move_speed_mod += amount
