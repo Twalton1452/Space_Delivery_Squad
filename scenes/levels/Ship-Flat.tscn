@@ -104,7 +104,7 @@ omni_range = 3.108
 omni_attenuation = 1.10957
 
 [node name="EngineRoomLight2" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.50285, 0.803, -3.45918)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.55916, 0.827285, -3.07447)
 light_color = Color(0.666667, 0.517647, 0.423529, 1)
 shadow_enabled = true
 shadow_opacity = 0.2

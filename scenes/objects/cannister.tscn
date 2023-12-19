@@ -1,9 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://dojily12u4kjh"]
+[gd_scene load_steps=10 format=3 uid="uid://dojily12u4kjh"]
 
 [ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="1_8ukth"]
 [ext_resource type="Script" path="res://scripts/objects/HeavyObject.gd" id="2_0iawa"]
 [ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="3_1wbmr"]
 [ext_resource type="AudioStream" uid="uid://7m0blwd0dt38" path="res://sfx/impact1.ogg" id="3_l3sg8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e0foa"]
+albedo_color = Color(0.737255, 0.737255, 0, 1)
+metallic_specular = 1.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(0.988235, 1, 0.603922, 1)
+emission_energy_multiplier = 0.82
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_615bm"]
+albedo_color = Color(0.286275, 0.286275, 0.286275, 1)
+metallic = 1.0
+metallic_specular = 0.0
+roughness = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iri5d"]
 size = Vector3(0.414063, 0.160156, 0.366943)
@@ -26,6 +40,8 @@ no_grabbers_rotation = Vector3(90, 0, 0)
 
 [node name="Cannister" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, -3.55271e-15, 1, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_e0foa")
+surface_material_override/1 = SubResource("StandardMaterial3D_615bm")
 
 [node name="TopInteractable" parent="." index="1" instance=ExtResource("3_1wbmr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895649, 0)
