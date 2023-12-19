@@ -52,6 +52,7 @@ func movement_based_fov_change(delta) -> void:
 ## Server receives Input from clients and moves them
 func _physics_process(delta):
 	if not is_multiplayer_authority():
+		move_and_slide() # need this for is_on_floor() to work
 		animate()
 		return
 	
