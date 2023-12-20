@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=19 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dl7k7cf5vo5w5" path="res://art/objects/pipe-split.glb" id="16_wnbid"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
 [ext_resource type="PackedScene" uid="uid://pghgkjqyrwx7" path="res://art/objects/pipe-straight.glb" id="17_w1chw"]
+[ext_resource type="PackedScene" uid="uid://hyvpu6p6lq37" path="res://scenes/objects/pipe_straight.tscn" id="18_pqllm"]
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
 
 [node name="Ship" type="Node3D"]
@@ -239,7 +240,6 @@ transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 3.5, 0
 
 [node name="GridMap Ceiling" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-visible = false
 mesh_library = ExtResource("16_b1ic6")
 cell_size = Vector3(1, 1, 1)
 collision_mask = 0
@@ -249,12 +249,24 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="pipe-cross2" parent="." instance=ExtResource("15_s2ked")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112911, 0.0625, 5.67354)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112911, 0.742149, 5.67354)
 
 [node name="pipe-split2" parent="." instance=ExtResource("16_wnbid")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.112911, 0.0625, 4.67354)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.112911, 0.742149, 4.67354)
 
 [node name="pipe-straight2" parent="." instance=ExtResource("17_w1chw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112911, 0.0625, 5.17354)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112911, 0.742149, 5.17354)
+
+[node name="pipe_straight" parent="." instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 3.97358)
+
+[node name="pipe_straight2" parent="." instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 3.47358)
+
+[node name="pipe_straight3" parent="." instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 2.97358)
+
+[node name="pipe_straight4" parent="." instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0759444, 0.0625, 2.97358)
 
 [editable path="Objects/AirlockDoor"]

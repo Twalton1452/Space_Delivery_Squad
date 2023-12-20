@@ -50,7 +50,7 @@ func _physics_process(_delta):
 	jumping = Input.is_action_pressed("jump")
 	sprinting = Input.is_action_pressed("sprint")
 	crouching = Input.is_action_just_pressed("crouch")
-	interacting = Input.is_action_pressed("interact")
+	interacting = Input.is_action_just_pressed("interact")
 	dropping = Input.is_action_pressed("drop")
 
 	x = Input.get_axis("left", "right")

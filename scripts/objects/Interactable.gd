@@ -5,6 +5,7 @@ signal interacted(interactable: Interactable, interacter: Player)
 
 @export var toggler = false
 @export var interact_display_text = "Interact"
+@export var pickupable = false # TODO: Somehow convert this into a component
 
 @export_category("Internal Scene Stuff")
 @export var mesh_to_highlight : MeshInstance3D
@@ -23,10 +24,10 @@ func remove_highlight() -> void:
 	mesh_to_highlight.set_surface_override_material(0, null)
 
 func enable() -> void:
-	collision_layer = Constants.INTERACTABLE_COLLISION_LAYER
+	collision_layer = Constants.INTERACTABLE_LAYER
 
 func disable() -> void:
-	collision_layer = Constants.NON_INTERACTABLE_COLLISION_LAYER
+	collision_layer = Constants.NON_INTERACTABLE_LAYER
 
 func can_interact() -> bool:
 	return animation_player == null or not animation_player.is_playing()

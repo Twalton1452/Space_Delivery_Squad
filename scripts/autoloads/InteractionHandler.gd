@@ -42,8 +42,10 @@ func attempt_drop_node(p_id: int) -> void:
 func interact_with_node(player: Player, interactable_node_path: String) -> void:
 	var node_on_interactable_layer = get_node(interactable_node_path)
 	if node_on_interactable_layer is Interactable:
+		
 		node_on_interactable_layer.interact(player)
-		return
+		if not node_on_interactable_layer.pickupable:
+			return
 	
 	# Node has no "interact" method, must be trying to pick something up
 	if player.get_held_node() != null:
@@ -51,7 +53,7 @@ func interact_with_node(player: Player, interactable_node_path: String) -> void:
 	
 	player.hold(node_on_interactable_layer.get_parent().get_path())
 	var held_node = get_node(interactable_node_path) as CollisionObject3D
-	held_node.collision_layer = Constants.NON_INTERACTABLE_COLLISION_LAYER
+	held_node.collision_layer = Constants.NON_INTERACTABLE_LAYER
 
 func drop_node(player: Player, dropped_node_position: Vector3) -> void:
 	var held_node = player.get_held_node()
@@ -63,7 +65,7 @@ func drop_node(player: Player, dropped_node_position: Vector3) -> void:
 	held_node.rotation = Vector3.ZERO
 	for child in held_node.get_children():
 		if child is Area3D:
-			child.collision_layer = Constants.INTERACTABLE_COLLISION_LAYER
+			child.collision_layer = Constants.INTERACTABLE_LAYER
 			break
 
 func attempt_interaction(p_id: int, node_path: String) -> void:
