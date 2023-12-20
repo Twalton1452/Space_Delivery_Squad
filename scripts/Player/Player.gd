@@ -2,8 +2,8 @@ extends CharacterBody3D
 class_name Player
 
 signal interacted
-signal holding_something(something: Node3D)
-signal dropped_something(something: Node3D)
+signal holding_something(player: Player, something: Node3D)
+signal dropped_something(player: Player, something: Node3D)
 
 const WALK_SPEED = 1.5
 const RUN_SPEED = 2.5
@@ -110,13 +110,13 @@ func drop() -> void:
 func drop_node() -> void:
 	var dropping = get_held_node()
 	holder.remote_path = NodePath("")
-	dropped_something.emit(dropping)
+	dropped_something.emit(self, dropping)
 	if is_multiplayer_authority():
 		interacter.enable()
 
 func hold(node_path: String) -> void:
 	holder.remote_path = node_path
-	holding_something.emit(get_held_node())
+	holding_something.emit(self, get_held_node())
 
 func interact() -> void:
 	# Interacting with air
