@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=18 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
@@ -11,8 +11,11 @@
 [ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_sl58d"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_83m8u"]
 [ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="15_7a5q0"]
+[ext_resource type="PackedScene" uid="uid://cthj4n4q3fpm1" path="res://art/objects/pipe-cross.glb" id="15_s2ked"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
+[ext_resource type="PackedScene" uid="uid://dl7k7cf5vo5w5" path="res://art/objects/pipe-split.glb" id="16_wnbid"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
+[ext_resource type="PackedScene" uid="uid://pghgkjqyrwx7" path="res://art/objects/pipe-straight.glb" id="17_w1chw"]
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
 
 [node name="Ship" type="Node3D"]
@@ -244,5 +247,14 @@ data = {
 "cells": PackedInt32Array(0, 8, 1310733, 1, 8, 1310733, 2, 8, 1310733, 3, 8, 1310733, 4, 8, 1310733, 0, 65531, 1310733, 0, 65532, 1310733, 0, 65533, 1310733, 0, 65534, 1310733, 0, 65535, 1310733, 0, 0, 1310733, 0, 1, 1310733, 0, 2, 1310733, 0, 3, 1310733, 0, 4, 1310733, 0, 5, 1310733, 0, 6, 1310733, 0, 7, 1310733, 0, 9, 1310733, 1, 65531, 1310733, 1, 65532, 1310733, 1, 65533, 1310733, 1, 65534, 1310733, 1, 65535, 1310733, 1, 0, 1310733, 1, 1, 1310733, 1, 2, 1310733, 1, 3, 1310733, 1, 4, 1310733, 1, 5, 1310733, 1, 6, 1310733, 1, 7, 1310733, 1, 9, 1310733, 2, 65531, 1310733, 2, 65532, 1310733, 2, 65533, 1310733, 2, 65534, 1310733, 2, 65535, 1310733, 2, 0, 1310733, 2, 1, 1310733, 2, 2, 1310733, 2, 3, 1310733, 2, 4, 1310733, 2, 5, 1310733, 2, 6, 1310733, 2, 7, 1310733, 2, 9, 1310733, 3, 65531, 1310733, 3, 65532, 1310733, 3, 65533, 1310733, 3, 65534, 1310733, 3, 65535, 1310733, 3, 0, 1310733, 3, 1, 1310733, 3, 2, 1310733, 3, 3, 1310733, 3, 4, 1310733, 3, 5, 1310733, 3, 6, 1310733, 3, 7, 1310733, 3, 9, 1310733, 4, 65531, 1310733, 4, 65532, 1310733, 4, 65533, 1310733, 4, 65534, 1310733, 4, 65535, 1310733, 4, 0, 1310733, 4, 1, 1310733, 4, 2, 1310733, 4, 3, 1310733, 4, 4, 1310733, 4, 5, 1310733, 4, 6, 1310733, 4, 7, 1310733, 4, 9, 1310733, 5, 65531, 1310733, 5, 65532, 1310733, 5, 65533, 1310733, 5, 65534, 1310733, 5, 65535, 1310733, 5, 0, 1310733, 5, 1, 1310733, 5, 2, 1310733, 5, 3, 1310733, 5, 4, 1310733, 5, 5, 1310733, 5, 6, 1310733, 5, 7, 1310733, 5, 8, 1310733, 5, 9, 1310733, 6, 65531, 1310733, 6, 65532, 1310733, 6, 65533, 1310733, 6, 65534, 1310733, 6, 65535, 1310733, 6, 0, 1310733, 6, 1, 1310733, 6, 2, 1310733, 6, 3, 1310733, 6, 4, 1310733, 6, 5, 1310733, 6, 6, 1310733, 6, 7, 1310733, 6, 8, 1310733, 6, 9, 1310733, 65535, 9, 1310733, 65535, 8, 1310733, 65535, 7, 1310733, 65535, 6, 1310733, 65535, 5, 1310733, 65535, 4, 1310733, 65535, 3, 1310733, 65535, 2, 1310733, 65535, 1, 1310733, 65535, 0, 1310733, 65535, 65535, 1310733, 65535, 65534, 1310733, 65535, 65533, 1310733, 65535, 65532, 1310733, 65535, 65531, 1310733, 65534, 6, 1310733, 65534, 5, 1310733, 65534, 4, 1310733, 65534, 3, 1310733, 65534, 2, 1310733, 65534, 1, 1310733, 65534, 0, 1310733, 65534, 65535, 1310733, 65534, 65534, 1310733, 65533, 2, 1310733, 65533, 3, 131151, 65533, 1, 524367, 65532, 2, 1179727, 65532, 1, 1179728, 65532, 3, 131152)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="pipe-cross2" parent="." instance=ExtResource("15_s2ked")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112911, 0.0625, 5.67354)
+
+[node name="pipe-split2" parent="." instance=ExtResource("16_wnbid")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.112911, 0.0625, 4.67354)
+
+[node name="pipe-straight2" parent="." instance=ExtResource("17_w1chw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112911, 0.0625, 5.17354)
 
 [editable path="Objects/AirlockDoor"]
