@@ -51,7 +51,7 @@ func interact_with_node(player: Player, interactable_node_path: String) -> void:
 	
 	player.hold(node_on_interactable_layer.get_parent().get_path())
 	var held_node = get_node(interactable_node_path) as CollisionObject3D
-	held_node.collision_layer = Constants.NON_INTERACTABLE_COLLISION_LAYERS
+	held_node.collision_layer = Constants.NON_INTERACTABLE_COLLISION_LAYER
 
 func drop_node(player: Player, dropped_node_position: Vector3) -> void:
 	var held_node = player.get_held_node()
@@ -63,7 +63,7 @@ func drop_node(player: Player, dropped_node_position: Vector3) -> void:
 	held_node.rotation = Vector3.ZERO
 	for child in held_node.get_children():
 		if child is Area3D:
-			child.collision_layer = Constants.INTERACTABLE_COLLISION_LAYERS
+			child.collision_layer = Constants.INTERACTABLE_COLLISION_LAYER
 			break
 
 func attempt_interaction(p_id: int, node_path: String) -> void:
@@ -105,12 +105,7 @@ func drop(p_id: int) -> void:
 	
 	# Dropping object
 	# Raycast below the object to find out where to drop it
-	var space_state = player.get_world_3d().direct_space_state
-	var origin = player_held_node.global_position
-	var end = origin + Vector3.DOWN * 1000
-	var query = PhysicsRayQueryParameters3D.create(origin, end)
-	query.collide_with_areas = true
-	var result = space_state.intersect_ray(query)
+	var result = Helpers.ray_cast(player_held_node, Vector3.DOWN, 1000.0)
 	# No placeable ground
 	if result.size() == 0:
 		return
