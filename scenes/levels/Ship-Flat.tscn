@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=24 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
@@ -17,7 +17,15 @@
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
 [ext_resource type="PackedScene" uid="uid://pghgkjqyrwx7" path="res://art/objects/pipe-straight.glb" id="17_w1chw"]
 [ext_resource type="PackedScene" uid="uid://hyvpu6p6lq37" path="res://scenes/objects/pipe_straight.tscn" id="18_pqllm"]
+[ext_resource type="Script" path="res://scripts/UI/OxygenDisplay.gd" id="19_wwlcr"]
+[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="20_70p0j"]
+[ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="20_k18mp"]
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_baran"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jb37y"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Ship" type="Node3D"]
 
@@ -173,6 +181,24 @@ transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-
 [node name="breaker_box" parent="Objects" instance=ExtResource("20_xv1bn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17702, 0.0625, 5.95371)
 
+[node name="pipe_straight" parent="Objects" instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 3.97358)
+
+[node name="pipe_straight2" parent="Objects" instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 3.47358)
+
+[node name="pipe_straight3" parent="Objects" instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 2.97358)
+
+[node name="pipe_straight5" parent="Objects" instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.924056, 0.0625, 2.97358)
+
+[node name="pipe_straight6" parent="Objects" instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.924056, 0.0625, 3.47358)
+
+[node name="pipe_straight4" parent="Objects" instance=ExtResource("18_pqllm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0759444, 0.0625, 2.97358)
+
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh_library = ExtResource("16_b1ic6")
@@ -240,6 +266,7 @@ transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 3.5, 0
 
 [node name="GridMap Ceiling" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
 mesh_library = ExtResource("16_b1ic6")
 cell_size = Vector3(1, 1, 1)
 collision_mask = 0
@@ -257,16 +284,57 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.1129
 [node name="pipe-straight2" parent="." instance=ExtResource("17_w1chw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112911, 0.742149, 5.17354)
 
-[node name="pipe_straight" parent="." instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 3.97358)
+[node name="OxygenDisplay" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0.25, 5.87402)
+script = ExtResource("19_wwlcr")
 
-[node name="pipe_straight2" parent="." instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 3.47358)
+[node name="CanvasLayer" type="CanvasLayer" parent="OxygenDisplay"]
 
-[node name="pipe_straight3" parent="." instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.424056, 0.0625, 2.97358)
+[node name="Background" type="TextureRect" parent="OxygenDisplay/CanvasLayer"]
+self_modulate = Color(0.0745098, 0.0823529, 0.0823529, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_k18mp")
 
-[node name="pipe_straight4" parent="." instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0759444, 0.0625, 2.97358)
+[node name="Label" type="Label" parent="OxygenDisplay/CanvasLayer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_right = 27.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Airlock"
+
+[node name="Screen" type="TextureRect" parent="OxygenDisplay/CanvasLayer"]
+self_modulate = Color(0.207843, 0.294118, 0.223529, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_k18mp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OxygenDisplay"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_baran")
+
+[node name="Interactable" parent="OxygenDisplay" instance=ExtResource("20_70p0j")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OxygenDisplay/Interactable"]
+shape = SubResource("BoxShape3D_jb37y")
+
+[node name="ViewingPosition" type="Marker3D" parent="OxygenDisplay"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.151934, -0.583449)
 
 [editable path="Objects/AirlockDoor"]
