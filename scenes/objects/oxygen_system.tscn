@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c33q80hsrn0ua"]
+
+[ext_resource type="Script" path="res://scripts/components/ConnecterSystem.gd" id="1_jupj5"]
+[ext_resource type="PackedScene" uid="uid://dvmotfri1idmy" path="res://art/objects/machine-barrel.glb" id="2_y2uwu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kp56p"]
+size = Vector3(0.433594, 0.587402, 0.500977)
+
+[node name="OxygenSystem" type="StaticBody3D"]
+collision_layer = 17
+collision_mask = 0
+script = ExtResource("1_jupj5")
+
+[node name="machine-barrel" parent="." instance=ExtResource("2_y2uwu")]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.69721, 0)
+shape = SubResource("BoxShape3D_kp56p")
+
+[node name="EmissionTimer" type="Timer" parent="."]
+process_callback = 0
