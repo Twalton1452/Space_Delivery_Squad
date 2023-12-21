@@ -245,6 +245,60 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0759444, 0.0625, 2.97358)
 [node name="OxygenSystem" parent="Objects" instance=ExtResource("14_td6hh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.25)
 
+[node name="OxygenDisplay" type="Node3D" parent="Objects"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.25, -2.87598)
+script = ExtResource("19_wwlcr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Objects/OxygenDisplay"]
+
+[node name="Background" type="TextureRect" parent="Objects/OxygenDisplay/CanvasLayer"]
+self_modulate = Color(0.0745098, 0.0823529, 0.0823529, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_k18mp")
+
+[node name="Label" type="Label" parent="Objects/OxygenDisplay/CanvasLayer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_top = 624.0
+offset_right = 27.0
+offset_bottom = 647.0
+grow_horizontal = 2
+text = "Airlock"
+
+[node name="Screen" type="TextureRect" parent="Objects/OxygenDisplay/CanvasLayer"]
+self_modulate = Color(0.207843, 0.294118, 0.223529, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_k18mp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/OxygenDisplay"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_baran")
+
+[node name="Interactable" parent="Objects/OxygenDisplay" instance=ExtResource("20_70p0j")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/OxygenDisplay/Interactable"]
+shape = SubResource("BoxShape3D_jb37y")
+
+[node name="ViewingPosition" type="Marker3D" parent="Objects/OxygenDisplay"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.151934, -0.583449)
+
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh_library = ExtResource("16_b1ic6")
@@ -320,59 +374,5 @@ data = {
 "cells": PackedInt32Array(0, 8, 1310733, 1, 8, 1310733, 2, 8, 1310733, 3, 8, 1310733, 4, 8, 1310733, 0, 65531, 1310733, 0, 65532, 1310733, 0, 65533, 1310733, 0, 65534, 1310733, 0, 65535, 1310733, 0, 0, 1310733, 0, 1, 1310733, 0, 2, 1310733, 0, 3, 1310733, 0, 4, 1310733, 0, 5, 1310733, 0, 6, 1310733, 0, 7, 1310733, 0, 9, 1310733, 1, 65531, 1310733, 1, 65532, 1310733, 1, 65533, 1310733, 1, 65534, 1310733, 1, 65535, 1310733, 1, 0, 1310733, 1, 1, 1310733, 1, 2, 1310733, 1, 3, 1310733, 1, 4, 1310733, 1, 5, 1310733, 1, 6, 1310733, 1, 7, 1310733, 1, 9, 1310733, 2, 65531, 1310733, 2, 65532, 1310733, 2, 65533, 1310733, 2, 65534, 1310733, 2, 65535, 1310733, 2, 0, 1310733, 2, 1, 1310733, 2, 2, 1310733, 2, 3, 1310733, 2, 4, 1310733, 2, 5, 1310733, 2, 6, 1310733, 2, 7, 1310733, 2, 9, 1310733, 3, 65531, 1310733, 3, 65532, 1310733, 3, 65533, 1310733, 3, 65534, 1310733, 3, 65535, 1310733, 3, 0, 1310733, 3, 1, 1310733, 3, 2, 1310733, 3, 3, 1310733, 3, 4, 1310733, 3, 5, 1310733, 3, 6, 1310733, 3, 7, 1310733, 3, 9, 1310733, 4, 65531, 1310733, 4, 65532, 1310733, 4, 65533, 1310733, 4, 65534, 1310733, 4, 65535, 1310733, 4, 0, 1310733, 4, 1, 1310733, 4, 2, 1310733, 4, 3, 1310733, 4, 4, 1310733, 4, 5, 1310733, 4, 6, 1310733, 4, 7, 1310733, 4, 9, 1310733, 5, 65531, 1310733, 5, 65532, 1310733, 5, 65533, 1310733, 5, 65534, 1310733, 5, 65535, 1310733, 5, 0, 1310733, 5, 1, 1310733, 5, 2, 1310733, 5, 3, 1310733, 5, 4, 1310733, 5, 5, 1310733, 5, 6, 1310733, 5, 7, 1310733, 5, 8, 1310733, 5, 9, 1310733, 6, 65531, 1310733, 6, 65532, 1310733, 6, 65533, 1310733, 6, 65534, 1310733, 6, 65535, 1310733, 6, 0, 1310733, 6, 1, 1310733, 6, 2, 1310733, 6, 3, 1310733, 6, 4, 1310733, 6, 5, 1310733, 6, 6, 1310733, 6, 7, 1310733, 6, 8, 1310733, 6, 9, 1310733, 65535, 9, 1310733, 65535, 8, 1310733, 65535, 7, 1310733, 65535, 6, 1310733, 65535, 5, 1310733, 65535, 4, 1310733, 65535, 3, 1310733, 65535, 2, 1310733, 65535, 1, 1310733, 65535, 0, 1310733, 65535, 65535, 1310733, 65535, 65534, 1310733, 65535, 65533, 1310733, 65535, 65532, 1310733, 65535, 65531, 1310733, 65534, 6, 1310733, 65534, 5, 1310733, 65534, 4, 1310733, 65534, 3, 1310733, 65534, 2, 1310733, 65534, 1, 1310733, 65534, 0, 1310733, 65534, 65535, 1310733, 65534, 65534, 1310733, 65533, 2, 1310733, 65533, 3, 131151, 65533, 1, 524367, 65532, 2, 1179727, 65532, 1, 1179728, 65532, 3, 131152)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
-
-[node name="OxygenDisplay" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.25, -2.87598)
-script = ExtResource("19_wwlcr")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="OxygenDisplay"]
-
-[node name="Background" type="TextureRect" parent="OxygenDisplay/CanvasLayer"]
-self_modulate = Color(0.0745098, 0.0823529, 0.0823529, 1)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_k18mp")
-
-[node name="Label" type="Label" parent="OxygenDisplay/CanvasLayer/Background"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -27.0
-offset_top = 624.0
-offset_right = 27.0
-offset_bottom = 647.0
-grow_horizontal = 2
-text = "Airlock"
-
-[node name="Screen" type="TextureRect" parent="OxygenDisplay/CanvasLayer"]
-self_modulate = Color(0.207843, 0.294118, 0.223529, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -300.0
-offset_right = 400.0
-offset_bottom = 300.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_k18mp")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="OxygenDisplay"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("BoxMesh_baran")
-
-[node name="Interactable" parent="OxygenDisplay" instance=ExtResource("20_70p0j")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OxygenDisplay/Interactable"]
-shape = SubResource("BoxShape3D_jb37y")
-
-[node name="ViewingPosition" type="Marker3D" parent="OxygenDisplay"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.151934, -0.583449)
 
 [editable path="Objects/AirlockDoor"]

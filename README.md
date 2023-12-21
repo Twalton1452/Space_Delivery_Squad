@@ -48,3 +48,7 @@
 ## Credits
 - SFX from [Kenney](https://www.kenney.nl/)
 - VOIP from [WIP] https://github.com/RevoluPowered/one-voip-godot-4
+- Icons
+	- O2 https://www.svgrepo.com/svg/139900/oxygen
+	- Run https://www.svgrepo.com/svg/489113/run
+	- Heart https://www.svgrepo.com/svg/525369/heart

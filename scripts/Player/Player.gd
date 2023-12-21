@@ -84,7 +84,7 @@ func _physics_process(delta):
 	if player_input.sprinting and stamina > 0.0:
 		move_speed = RUN_SPEED
 		stamina_bar.tint_progress.a = 1.0
-		stamina_bar.show()
+		#stamina_bar.show()
 		if crouched:
 			uncrouch.rpc()
 	elif crouched:
@@ -92,8 +92,8 @@ func _physics_process(delta):
 	else:
 		move_speed = WALK_SPEED
 		stamina_bar.tint_progress.a = 0.4
-		if stamina >= 100.0:
-			stamina_bar.hide()
+		#if stamina >= 100.0:
+			#stamina_bar.hide()
 	
 	move_speed += flat_move_speed_mod
 	move(direction, player_input.jumping, delta)
