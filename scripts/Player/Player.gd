@@ -158,11 +158,14 @@ func animate() -> void:
 		animation_player.play("walking")
 	else:
 		if animation_player.is_playing():
-			# Wait until the looping animation finished and ensure they're idle
-			# Then stop the animation
-			await get_tree().create_timer(animation_player.current_animation_length - animation_player.current_animation_position).timeout
-			if velocity.length() == 0:
+			if not is_on_floor():
 				animation_player.stop()
+			else:
+				# Wait until the looping animation finished and ensure they're idle
+				# Then stop the animation
+				await get_tree().create_timer(animation_player.current_animation_length - animation_player.current_animation_position).timeout
+				if velocity.length() == 0:
+					animation_player.stop()
 		else:
 			animation_player.stop()
 
