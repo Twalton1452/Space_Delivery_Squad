@@ -2,15 +2,17 @@ extends CharacterBody3D
 class_name Player
 
 signal interacted
+signal no_longer_busy
 signal holding_something(player: Player, something: Node3D)
 signal dropped_something(player: Player, something: Node3D)
 
-signal state_changed(flags: int)
+signal state_changed(flags: int, changed: int)
 var state : int = 0 : 
 	set(value):
 		if state != value:
+			var changed = state ^ value
 			state = value
-			state_changed.emit(state)
+			state_changed.emit(state, changed)
 enum Flags {
 	NONE = 0,
 	
@@ -23,13 +25,15 @@ enum Flags {
 	LANDED = 1 << 5,
 	
 	# Interactions
-	INTERACTING = 1 << 6,
-	HOLDING = 1 << 7,
+	BUSY = 1 << 6, # Doing something clientside
+	INTERACTING = 1 << 7,
+	HOLDING = 1 << 8,
+	DROPPING = 1 << 9,
 }
 
-signal health_changed(value: float)
-signal oxygen_changed(value: float)
-signal stamina_changed(value: float)
+signal _health_changed(value: float)
+signal _oxygen_changed(value: float)
+signal _stamina_changed(value: float)
 
 const WALK_SPEED = 1.5
 const RUN_SPEED = 2.5
@@ -58,7 +62,6 @@ var base_fov = 80.0
 var stamina = 100.0
 var stamina_recharge_per_frame = 0.2
 var stamina_consume_rate_per_frame = 0.8
-var crouched := false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -74,6 +77,35 @@ func _ready():
 		stamina_bar.hide()
 	head_bone_id = skeleton_3d.find_bone("Head")
 	base_fov = camera.fov
+	state_changed.connect(_on_state_changed)
+
+func _on_state_changed(new_state: int, changed: int) -> void:
+	if changed & Flags.BUSY and not new_state & Flags.BUSY:
+		no_longer_busy.emit()
+	
+	if changed & Flags.INTERACTING:
+		if new_state & Flags.INTERACTING:
+			interact()
+	
+	if changed & Flags.DROPPING:
+		if new_state & Flags.DROPPING:
+			drop()
+	
+	if changed & Flags.CROUCHING:
+		if new_state & Flags.CROUCHING:
+			crouch.rpc()
+		else:
+			uncrouch.rpc()
+	
+	if new_state & Flags.SPRINTING:
+		move_speed = RUN_SPEED
+		stamina_bar.tint_progress.a = 1.0
+	elif new_state & Flags.CROUCHING:
+		move_speed = CROUCH_SPEED
+		stamina_bar.tint_progress.a = 0.4
+	elif new_state & Flags.WALKING:
+		move_speed = WALK_SPEED
+		stamina_bar.tint_progress.a = 0.4
 
 ## Based on the velocity, change the camera's FOV
 ## not used at the moment because the x,z velocity don't reset to 0
@@ -90,36 +122,45 @@ func _physics_process(delta):
 		animate()
 		return
 	
+	if state & Flags.BUSY:
+		if player_input.interacting or player_input.dropping:
+			state &= ~Flags.BUSY
+		return
+	
+	var new_state = state
 	var direction = (transform.basis * Vector3(player_input.x, 0, player_input.y)).normalized()
+	
+	# Interaction States
 	if player_input.dropping:
-		drop()
+		new_state |= Flags.DROPPING
 	if player_input.interacting:
-		interact()
+		new_state = (new_state & ~Flags.BUSY) | Flags.INTERACTING
 	
-	# Hasty implementation for now
-	# TODO: Move stamina_bar into its own script listening for stamina changes
-	stamina = clampf(stamina + stamina_recharge_per_frame - (stamina_consume_rate_per_frame * player_input.sprinting), 0.0, 100.0)
-	stamina_bar.value = stamina
-	
-	if player_input.crouching:
-		if not crouched:
-			crouch.rpc()
-		else:
-			uncrouch.rpc()
-	
+	# Movement States
 	if player_input.sprinting and stamina > 0.0:
-		move_speed = RUN_SPEED
-		stamina_bar.tint_progress.a = 1.0
-		#stamina_bar.show()
-		if crouched:
-			uncrouch.rpc()
-	elif crouched:
-		move_speed = CROUCH_SPEED
+		new_state = (new_state & ~(Flags.CROUCHING | Flags.WALKING)) | Flags.SPRINTING
+	elif player_input.crouching:
+		if not new_state & Flags.CROUCHING:
+			new_state = (new_state & ~Flags.SPRINTING) | Flags.CROUCHING
+		else:
+			new_state &= ~Flags.CROUCHING
+	elif direction.length() > 0:
+		new_state = (new_state & ~Flags.SPRINTING) | Flags.WALKING
 	else:
-		move_speed = WALK_SPEED
-		stamina_bar.tint_progress.a = 0.4
-		#if stamina >= 100.0:
-			#stamina_bar.hide()
+		new_state = new_state & ~(Flags.SPRINTING | Flags.WALKING)
+	
+	# A single set to only trigger the state_changed signal once
+	state = new_state
+	
+	# TODO: Move stamina into its own script listening for the states to adjust the value
+	if state & Flags.SPRINTING:
+		stamina = clampf(stamina - stamina_consume_rate_per_frame, 0.0, 100.0)
+	else:
+		stamina = clampf(stamina + stamina_recharge_per_frame, 0.0, 100.0)
+	
+	
+	# TODO: Move stamina_bar into its own script listening for stamina changes
+	stamina_bar.value = stamina
 	
 	move_speed += flat_move_speed_mod
 	move(direction, player_input.jumping, delta)
@@ -127,16 +168,14 @@ func _physics_process(delta):
 	animate()
 
 func drop() -> void:
-	# Nothing to drop
-	if holder.remote_path == NodePath(""):
-		return
-
-	InteractionHandler.attempt_drop_node(multiplayer.get_unique_id())
+	if holder.remote_path != NodePath(""):
+		InteractionHandler.attempt_drop_node(multiplayer.get_unique_id())
+	state &= ~Flags.DROPPING
 
 func drop_node() -> void:
 	var dropping = get_held_node()
 	holder.remote_path = NodePath("")
-	state &= ~Flags.HOLDING
+	state &= ~(Flags.HOLDING | Flags.DROPPING)
 	dropped_something.emit(self, dropping)
 	
 	if is_multiplayer_authority():
@@ -149,15 +188,12 @@ func hold(node_path: String) -> void:
 
 func interact() -> void:
 	# Interacting with air or doing something already
-	if interacter.current_interactable == null or \
-		state & Flags.INTERACTING:
-		# TODO: Error noise
-		return
+	if interacter.current_interactable != null:
+		# TODO: Play an animation to hide response time from server
+		InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), interacter.current_interactable.get_path())
+		interacted.emit()
 	
-	# TODO: Play an animation to hide response time from server
-	state |= Flags.INTERACTING
-	InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), interacter.current_interactable.get_path())
-	interacted.emit()
+	state &= ~Flags.INTERACTING
 
 func move(direction: Vector3, jump: int, delta: float) -> void:
 	if not is_on_floor():
@@ -208,8 +244,6 @@ func crouch() -> void:
 	walking_collider.disabled = true
 	crouching_collider.disabled = false
 	t.tween_property(skeleton_3d, "scale:y", crouched_size, 0.2).set_ease(Tween.EASE_IN)
-	crouched = true
-	state |= Flags.CROUCHING
 
 @rpc("authority", "call_local", "reliable")
 func uncrouch() -> void:
@@ -220,8 +254,12 @@ func uncrouch() -> void:
 	walking_collider.disabled = false
 	crouching_collider.disabled = true
 	t.tween_property(skeleton_3d, "scale:y", uncrouched_size, 0.2).set_ease(Tween.EASE_OUT)
-	crouched = false
-	state &= ~Flags.CROUCHING
+
+func turn_flags_on(flags: int) -> void:
+	state |= flags
+
+func turn_flags_off(flags: int) -> void:
+	state &= ~flags
 
 func apply_flat_move_speed_mod(amount: float) -> void:
 	flat_move_speed_mod += amount

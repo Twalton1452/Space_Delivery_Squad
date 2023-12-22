@@ -18,7 +18,11 @@ func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
 	interacter.global_position = viewing_position.global_position
 	interacter.global_rotation = viewing_position.global_rotation
 	enable()
-	# Apply Effect and listen for Effect removal event then Disable
+	
+	interacter.turn_flags_on(Player.Flags.BUSY)
+	await interacter.no_longer_busy
+	
+	disable()
 
 func enable() -> void:
 	# Only generate once until we can disable
