@@ -5,6 +5,32 @@ signal interacted
 signal holding_something(player: Player, something: Node3D)
 signal dropped_something(player: Player, something: Node3D)
 
+signal state_changed(flags: int)
+var state : int = 0 : 
+	set(value):
+		if state != value:
+			state = value
+			state_changed.emit(state)
+enum Flags {
+	NONE = 0,
+	
+	# Movement
+	WALKING = 1 << 0,
+	SPRINTING = 1 << 1,
+	CROUCHING = 1 << 2,
+	JUMPING = 1 << 3,
+	FALLING = 1 << 4,
+	LANDED = 1 << 5,
+	
+	# Interactions
+	INTERACTING = 1 << 6,
+	HOLDING = 1 << 7,
+}
+
+signal health_changed(value: float)
+signal oxygen_changed(value: float)
+signal stamina_changed(value: float)
+
 const WALK_SPEED = 1.5
 const RUN_SPEED = 2.5
 const CROUCH_SPEED = 0.8
@@ -110,22 +136,26 @@ func drop() -> void:
 func drop_node() -> void:
 	var dropping = get_held_node()
 	holder.remote_path = NodePath("")
+	state &= ~Flags.HOLDING
 	dropped_something.emit(self, dropping)
+	
 	if is_multiplayer_authority():
 		interacter.enable()
 
 func hold(node_path: String) -> void:
 	holder.remote_path = node_path
+	state = (state & ~Flags.INTERACTING) | Flags.HOLDING
 	holding_something.emit(self, get_held_node())
 
 func interact() -> void:
-	# Interacting with air
-	if interacter.current_interactable == null:
+	# Interacting with air or doing something already
+	if interacter.current_interactable == null or \
+		state & Flags.INTERACTING:
 		# TODO: Error noise
 		return
 	
 	# TODO: Play an animation to hide response time from server
-	
+	state |= Flags.INTERACTING
 	InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), interacter.current_interactable.get_path())
 	interacted.emit()
 
@@ -179,6 +209,7 @@ func crouch() -> void:
 	crouching_collider.disabled = false
 	t.tween_property(skeleton_3d, "scale:y", crouched_size, 0.2).set_ease(Tween.EASE_IN)
 	crouched = true
+	state |= Flags.CROUCHING
 
 @rpc("authority", "call_local", "reliable")
 func uncrouch() -> void:
@@ -190,6 +221,7 @@ func uncrouch() -> void:
 	crouching_collider.disabled = true
 	t.tween_property(skeleton_3d, "scale:y", uncrouched_size, 0.2).set_ease(Tween.EASE_OUT)
 	crouched = false
+	state &= ~Flags.CROUCHING
 
 func apply_flat_move_speed_mod(amount: float) -> void:
 	flat_move_speed_mod += amount

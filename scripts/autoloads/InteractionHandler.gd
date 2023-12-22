@@ -107,6 +107,7 @@ func drop(p_id: int) -> void:
 	
 	# Dropping object
 	# Raycast below the object to find out where to drop it
+	## TODO: Crouching makes this fail, too close to the ground
 	var result = Helpers.ray_cast(player_held_node, Vector3.DOWN, 1000.0)
 	# No placeable ground
 	if result.size() == 0:
