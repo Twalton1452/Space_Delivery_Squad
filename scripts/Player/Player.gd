@@ -66,6 +66,13 @@ var stamina_consume_rate_per_frame = 0.8
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+@rpc("authority", "call_remote", "reliable")
+func notify_crouch() -> void:
+	crouch()
+
+@rpc("authority", "call_remote", "reliable")
+func notify_uncrouch() -> void:
+	uncrouch()
 
 func get_held_node() -> Node3D:
 	return get_node_or_null(holder.remote_path)
@@ -74,7 +81,7 @@ func _ready():
 	if is_multiplayer_authority():
 		$bean_armature/Armature/Skeleton3D/Eyes.hide()
 	else:
-		stamina_bar.hide()
+		$Camera3D/HUD.hide()
 	head_bone_id = skeleton_3d.find_bone("Head")
 	base_fov = camera.fov
 	state_changed.connect(_on_state_changed)
@@ -93,9 +100,9 @@ func _on_state_changed(new_state: int, changed: int) -> void:
 	
 	if changed & Flags.CROUCHING:
 		if new_state & Flags.CROUCHING:
-			crouch.rpc()
+			crouch()
 		else:
-			uncrouch.rpc()
+			uncrouch()
 	
 	if new_state & Flags.SPRINTING:
 		move_speed = RUN_SPEED
@@ -118,8 +125,9 @@ func movement_based_fov_change(delta) -> void:
 ## Server receives Input from clients and moves them
 func _physics_process(delta):
 	if not is_multiplayer_authority():
+		if not is_on_floor():
+			velocity.y -= gravity * delta
 		move_and_slide() # need this for is_on_floor() to work
-		animate()
 		return
 	
 	if state & Flags.BUSY:
@@ -214,8 +222,7 @@ func move(direction: Vector3, jump: int, delta: float) -> void:
 	
 	move_and_slide()
 
-func animate() -> void:
-	# TODO: Create client-side animation for moving some hands
+func peer_animate() -> void:
 	if is_multiplayer_authority():
 		return
 	
@@ -235,25 +242,32 @@ func animate() -> void:
 		else:
 			animation_player.stop()
 
-@rpc("authority", "call_local", "reliable")
+func animate() -> void:
+	# TODO: Create client-side animation for moving some hands
+	if not is_multiplayer_authority():
+		return
+
 func crouch() -> void:
-	var t = create_tween()
-	t.set_parallel(true)
-	if is_multiplayer_authority():
-		t.tween_property(camera, "position", $CrouchCameraPosition.position, 0.2).set_ease(Tween.EASE_IN)
 	walking_collider.disabled = true
 	crouching_collider.disabled = false
-	t.tween_property(skeleton_3d, "scale:y", crouched_size, 0.2).set_ease(Tween.EASE_IN)
-
-@rpc("authority", "call_local", "reliable")
-func uncrouch() -> void:
+	
 	var t = create_tween()
 	t.set_parallel(true)
+	t.tween_property(skeleton_3d, "scale:y", crouched_size, 0.2).set_ease(Tween.EASE_IN)
 	if is_multiplayer_authority():
-		t.tween_property(camera, "position", $WalkingCameraPosition.position, 0.2).set_ease(Tween.EASE_OUT)
+		t.tween_property(camera, "position", $CrouchCameraPosition.position, 0.2).set_ease(Tween.EASE_IN)
+		notify_crouch.rpc()
+
+func uncrouch() -> void:
 	walking_collider.disabled = false
 	crouching_collider.disabled = true
+	
+	var t = create_tween()
+	t.set_parallel(true)
 	t.tween_property(skeleton_3d, "scale:y", uncrouched_size, 0.2).set_ease(Tween.EASE_OUT)
+	if is_multiplayer_authority():
+		t.tween_property(camera, "position", $WalkingCameraPosition.position, 0.2).set_ease(Tween.EASE_OUT)
+		notify_uncrouch.rpc()
 
 func turn_flags_on(flags: int) -> void:
 	state |= flags
@@ -275,3 +289,4 @@ func _on_moving_object_detector_body_exited(body):
 # Animate clients necks
 func _on_multiplayer_synchronizer_synchronized():
 	skeleton_3d.set_bone_pose_rotation(head_bone_id, Quaternion.from_euler(Vector3(-player_input.neck_look, 0.0, 0.0)))
+	peer_animate()
