@@ -113,6 +113,8 @@ func _on_state_changed(new_state: int, changed: int) -> void:
 	elif new_state & Flags.WALKING:
 		move_speed = WALK_SPEED
 		stamina_bar.tint_progress.a = 0.4
+	else:
+		stamina_bar.tint_progress.a = 0.4
 
 ## Based on the velocity, change the camera's FOV
 ## not used at the moment because the x,z velocity don't reset to 0
