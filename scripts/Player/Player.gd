@@ -29,6 +29,11 @@ enum Flags {
 	INTERACTING = 1 << 7,
 	HOLDING = 1 << 8,
 	DROPPING = 1 << 9,
+	
+	# States
+	OXYGEN_BREATHING = 1 << 10,
+	OXYGEN_DEPRIVED = 1 << 11,
+	
 }
 
 signal _health_changed(value: float)
@@ -79,12 +84,23 @@ func get_held_node() -> Node3D:
 
 func _ready():
 	if is_multiplayer_authority():
-		$bean_armature/Armature/Skeleton3D/Eyes.hide()
+		set_clientside_settings()
 	else:
-		$Camera3D/HUD.hide()
+		set_peer_settings()
+	
+	# Common between peer/client settings
 	head_bone_id = skeleton_3d.find_bone("Head")
-	base_fov = camera.fov
 	state_changed.connect(_on_state_changed)
+
+## Settings for the controlling player on their client
+func set_clientside_settings() -> void:
+	$bean_armature/Armature/Skeleton3D/Eyes.hide()
+	state |= Flags.OXYGEN_BREATHING
+	base_fov = camera.fov
+
+## Settings for the spawned player peers
+func set_peer_settings() -> void:
+	$Camera3D/HUD.hide()
 
 func _on_state_changed(new_state: int, changed: int) -> void:
 	if changed & Flags.BUSY and not new_state & Flags.BUSY:
