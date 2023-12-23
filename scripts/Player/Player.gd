@@ -38,7 +38,6 @@ enum Flags {
 
 signal _health_changed(value: float)
 signal _oxygen_changed(value: float)
-signal _stamina_changed(value: float)
 
 const WALK_SPEED = 1.5
 const RUN_SPEED = 2.5
@@ -55,18 +54,15 @@ const FOV_CHANGE = 2.0
 @onready var interacter : Interacter = $Camera3D/Interacter
 @onready var holder : RemoteTransform3D = $Camera3D/Holder
 @onready var skeleton_3d : Skeleton3D = $bean_armature/Armature/Skeleton3D
-@onready var stamina_bar : TextureProgressBar = $Camera3D/HUD/StaminaProgressBar
 @onready var walking_collider : CollisionShape3D = $WalkingCollisionShape3D
 @onready var crouching_collider : CollisionShape3D = $CrouchingCollisionShape3D
+@onready var stamina_node : Stamina = $Stats/Stamina
 
 var look_speed = .005
 var move_speed = WALK_SPEED
 var flat_move_speed_mod = 0.0
 var head_bone_id = -1
 var base_fov = 80.0
-var stamina = 100.0
-var stamina_recharge_per_frame = 0.2
-var stamina_consume_rate_per_frame = 0.8
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -122,15 +118,10 @@ func _on_state_changed(new_state: int, changed: int) -> void:
 	
 	if new_state & Flags.SPRINTING:
 		move_speed = RUN_SPEED
-		stamina_bar.tint_progress.a = 1.0
 	elif new_state & Flags.CROUCHING:
 		move_speed = CROUCH_SPEED
-		stamina_bar.tint_progress.a = 0.4
 	elif new_state & Flags.WALKING:
 		move_speed = WALK_SPEED
-		stamina_bar.tint_progress.a = 0.4
-	else:
-		stamina_bar.tint_progress.a = 0.4
 
 ## Based on the velocity, change the camera's FOV
 ## not used at the moment because the x,z velocity don't reset to 0
@@ -163,7 +154,7 @@ func _physics_process(delta):
 		new_state = (new_state & ~Flags.BUSY) | Flags.INTERACTING
 	
 	# Movement States
-	if player_input.sprinting and stamina > 0.0:
+	if player_input.sprinting and stamina_node.can_sprint:
 		new_state = (new_state & ~(Flags.CROUCHING | Flags.WALKING)) | Flags.SPRINTING
 	elif player_input.crouching:
 		if not new_state & Flags.CROUCHING:
@@ -177,16 +168,6 @@ func _physics_process(delta):
 	
 	# A single set to only trigger the state_changed signal once
 	state = new_state
-	
-	# TODO: Move stamina into its own script listening for the states to adjust the value
-	if state & Flags.SPRINTING:
-		stamina = clampf(stamina - stamina_consume_rate_per_frame, 0.0, 100.0)
-	else:
-		stamina = clampf(stamina + stamina_recharge_per_frame, 0.0, 100.0)
-	
-	
-	# TODO: Move stamina_bar into its own script listening for stamina changes
-	stamina_bar.value = stamina
 	
 	move_speed += flat_move_speed_mod
 	move(direction, player_input.jumping, delta)
