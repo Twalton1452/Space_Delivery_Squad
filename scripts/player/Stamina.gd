@@ -1,6 +1,7 @@
 extends Node
 class_name Stamina
 
+@export var visual_bar : TextureProgressBar
 @export var max_stamina = 100.0
 @export var value = 100.0 : 
 	set(new_value):
@@ -10,7 +11,6 @@ class_name Stamina
 @export var consume_rate_per_frame = 0.8
 
 @onready var player : Player = $"../.."
-@onready var visual_bar : TextureProgressBar = $"../../Camera3D/HUD/StaminaProgressBar"
 
 var can_sprint = true : 
 	get:
@@ -21,7 +21,7 @@ var draining = false
 func _ready() -> void:
 	player.state_changed.connect(_on_player_state_changed)
 
-func _on_player_state_changed(flags: int, changed: int) -> void:
+func _on_player_state_changed(flags: int, _changed: int) -> void:
 	if flags & Player.Flags.SPRINTING:
 		stop_recharge_stamina()
 		begin_draining_stamina()

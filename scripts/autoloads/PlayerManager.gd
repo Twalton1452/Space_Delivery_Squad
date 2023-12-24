@@ -51,6 +51,12 @@ func get_player_by_id(p_id: int) -> Player:
 	
 	return info.controlling_node
 
+func get_players() -> Array[Player]:
+	var player_array : Array[Player] = []
+	for player in players.values():
+		player_array.push_back(player.controlling_node)
+	return player_array
+
 ## The name of the player
 func register_player_name(p_id: int, p_name: String) -> void:
 	var player = get_by_id(p_id)

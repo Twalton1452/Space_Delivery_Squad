@@ -1,23 +1,24 @@
-[gd_scene load_steps=22 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=23 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
 [ext_resource type="PackedScene" uid="uid://cnsvsg5ll712j" path="res://art/space interior elements/object_073.glb" id="3_uash7"]
 [ext_resource type="PackedScene" uid="uid://ceoib8msrs7jy" path="res://scenes/objects/box_large.tscn" id="4_am4w0"]
+[ext_resource type="Script" path="res://scripts/disasters/Airlock.gd" id="4_etjmd"]
 [ext_resource type="PackedScene" uid="uid://d4b6j2icha5d6" path="res://scenes/objects/box_long.tscn" id="5_bgub2"]
 [ext_resource type="PackedScene" uid="uid://o8pu2dqcdr7e" path="res://scenes/objects/box_small.tscn" id="6_qy0dp"]
 [ext_resource type="PackedScene" uid="uid://cm7bfr7yfdtk4" path="res://scenes/objects/box_wide.tscn" id="7_rqytm"]
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="8_dnlpq"]
 [ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_sl58d"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_83m8u"]
-[ext_resource type="PackedScene" uid="uid://c33q80hsrn0ua" path="res://scenes/objects/oxygen_system.tscn" id="14_td6hh"]
 [ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="15_7a5q0"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
-[ext_resource type="PackedScene" uid="uid://hyvpu6p6lq37" path="res://scenes/objects/pipe_straight.tscn" id="18_pqllm"]
+[ext_resource type="PackedScene" uid="uid://rre2t2pta62e" path="res://scenes/objects/oxygen_station.tscn" id="19_kukbf"]
 [ext_resource type="Script" path="res://scripts/UI/OxygenDisplay.gd" id="19_wwlcr"]
 [ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="20_70p0j"]
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="20_k18mp"]
+[ext_resource type="PackedScene" uid="uid://du8ca56gtfpe8" path="res://art/space interior elements/object_048.glb" id="20_rvhcf"]
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_baran"]
@@ -124,6 +125,14 @@ distance_fade_length = 4.0
 omni_range = 3.108
 omni_attenuation = 1.10957
 
+[node name="DisasterListeners" type="Node" parent="."]
+editor_description = "Children of this Node are listening for specific events to occur to begin a Disaster Event"
+
+[node name="Airlock" type="Node" parent="DisasterListeners" node_paths=PackedStringArray("door_to_airlock", "airlock_door")]
+script = ExtResource("4_etjmd")
+door_to_airlock = NodePath("../../Objects/DoorToAirlock")
+airlock_door = NodePath("../../Objects/AirlockDoor")
+
 [node name="Objects" type="Node3D" parent="."]
 
 [node name="box_large" parent="Objects" instance=ExtResource("4_am4w0")]
@@ -179,72 +188,6 @@ transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-
 [node name="breaker_box" parent="Objects" instance=ExtResource("20_xv1bn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17702, 0.0625, 5.95371)
 
-[node name="pipe_straight" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, -0.77642)
-
-[node name="pipe_straight2" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, -1.27642)
-
-[node name="pipe_straight3" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, -1.77642)
-
-[node name="pipe_straight7" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 0.72358)
-
-[node name="pipe_straight8" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 0.22358)
-
-[node name="pipe_straight9" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, -0.27642)
-
-[node name="pipe_straight10" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 2.22358)
-
-[node name="pipe_straight11" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 1.72358)
-
-[node name="pipe_straight12" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 1.22358)
-
-[node name="pipe_straight13" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 3.72358)
-
-[node name="pipe_straight14" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 3.22358)
-
-[node name="pipe_straight15" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 2.72358)
-
-[node name="pipe_straight16" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 5.22358)
-
-[node name="pipe_straight17" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 4.72358)
-
-[node name="pipe_straight18" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 4.22358)
-
-[node name="pipe_straight19" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 6.72358)
-
-[node name="pipe_straight20" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 6.22358)
-
-[node name="pipe_straight21" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075944, 0.662267, 5.72358)
-
-[node name="pipe_straight5" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.924056, 0.0625, 2.97358)
-
-[node name="pipe_straight6" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.924056, 0.0625, 3.47358)
-
-[node name="pipe_straight4" parent="Objects" instance=ExtResource("18_pqllm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0759444, 0.0625, 2.97358)
-
-[node name="OxygenSystem" parent="Objects" instance=ExtResource("14_td6hh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.25)
-
 [node name="OxygenDisplay" type="Node3D" parent="Objects"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.25, -2.87598)
 script = ExtResource("19_wwlcr")
@@ -299,6 +242,9 @@ shape = SubResource("BoxShape3D_jb37y")
 [node name="ViewingPosition" type="Marker3D" parent="Objects/OxygenDisplay"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.151934, -0.583449)
 
+[node name="OxygenStation" parent="Objects" instance=ExtResource("19_kukbf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.0618386, -2.12837)
+
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh_library = ExtResource("16_b1ic6")
@@ -307,7 +253,7 @@ collision_mask = 0
 data = {
 "cells": PackedInt32Array(65535, 1, 1441805, 65534, 2, 1441805, 65535, 2, 1441805, 0, 2, 1441805, 65535, 3, 1441805, 65534, 1, 655441, 0, 1, 1441805, 0, 3, 1441805, 65534, 3, 1441873, 65533, 2, 13, 65532, 2, 655373, 65533, 1, 655439, 65533, 3, 79, 65532, 1, 655440, 65532, 3, 1441872, 65534, 4, 1441871, 0, 4, 1441805, 0, 5, 1441805, 65534, 5, 1441871, 65535, 5, 1441805, 1, 2, 1441805, 1, 1, 1441805, 1, 3, 1441805, 65535, 0, 1441805, 0, 0, 1441805, 65534, 0, 1441871, 65531, 2, 655387, 0, 65535, 1441805, 65534, 65535, 1441871, 65535, 65535, 1441805, 65535, 4, 1441805, 1, 65535, 1441805, 1, 0, 1441805, 1, 4, 1441805, 1, 5, 1441805, 2, 65535, 1441805, 2, 0, 1441805, 2, 1, 1441805, 2, 2, 1441805, 2, 3, 1441805, 2, 4, 1441805, 2, 5, 1441805, 3, 5, 1441805, 3, 4, 1441805, 3, 3, 1441805, 3, 2, 1441805, 3, 1, 1441805, 3, 0, 1441805, 3, 65535, 1441805, 65534, 65534, 1441871, 65535, 65534, 1441805, 0, 65534, 1441805, 1, 65534, 1441805, 2, 65534, 1441805, 3, 65534, 1441805, 4, 65535, 1441805, 4, 0, 1441805, 4, 1, 1441805, 4, 2, 1441805, 4, 3, 1441805, 4, 4, 1441805, 4, 5, 1441805, 3, 6, 1441805, 2, 6, 1441805, 1, 6, 1441805, 0, 6, 1441805, 65535, 6, 1441805, 65534, 6, 1441871, 5, 2, 1441805, 5, 5, 1441805, 5, 4, 1441805, 5, 3, 1441805, 5, 1, 1441805, 5, 0, 1441805, 5, 65535, 1441805, 6, 65535, 1441805, 6, 0, 1441805, 6, 1, 1441805, 6, 2, 1441805, 6, 3, 1441805, 6, 4, 1441805, 6, 5, 1441805, 2, 65533, 1441805, 1, 65533, 1441805, 0, 65533, 1441805, 65535, 65533, 1441805, 3, 65533, 1441805, 3, 65532, 1441805, 2, 65532, 1441805, 1, 65532, 1441805, 0, 65532, 1441805, 65535, 65532, 1441805, 3, 65531, 1441805, 2, 65531, 1441805, 1, 65531, 1441805, 0, 65531, 1441805, 65535, 65531, 1441805, 65535, 7, 1441805, 0, 7, 1441805, 1, 7, 1441805, 2, 7, 1441805, 3, 7, 1441805, 65535, 8, 1441805, 0, 8, 1441805, 1, 8, 1441805, 2, 8, 1441805, 3, 8, 1441805, 65535, 9, 1441805, 0, 9, 1441805, 1, 9, 1441805, 2, 9, 1441805, 3, 9, 1441805, 4, 65532, 1048589, 4, 65531, 1048589, 5, 65531, 1048589, 5, 65532, 1048589, 5, 65533, 1048589, 4, 65533, 1048589, 4, 8, 1048589, 5, 8, 1048589, 5, 9, 1048589, 4, 9, 1048589, 4, 7, 1048589, 5, 7, 1048589, 4, 65534, 655373, 5, 65534, 655373)
 }
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="GridMap Walls" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
@@ -374,5 +320,8 @@ data = {
 "cells": PackedInt32Array(0, 8, 1310733, 1, 8, 1310733, 2, 8, 1310733, 3, 8, 1310733, 4, 8, 1310733, 0, 65531, 1310733, 0, 65532, 1310733, 0, 65533, 1310733, 0, 65534, 1310733, 0, 65535, 1310733, 0, 0, 1310733, 0, 1, 1310733, 0, 2, 1310733, 0, 3, 1310733, 0, 4, 1310733, 0, 5, 1310733, 0, 6, 1310733, 0, 7, 1310733, 0, 9, 1310733, 1, 65531, 1310733, 1, 65532, 1310733, 1, 65533, 1310733, 1, 65534, 1310733, 1, 65535, 1310733, 1, 0, 1310733, 1, 1, 1310733, 1, 2, 1310733, 1, 3, 1310733, 1, 4, 1310733, 1, 5, 1310733, 1, 6, 1310733, 1, 7, 1310733, 1, 9, 1310733, 2, 65531, 1310733, 2, 65532, 1310733, 2, 65533, 1310733, 2, 65534, 1310733, 2, 65535, 1310733, 2, 0, 1310733, 2, 1, 1310733, 2, 2, 1310733, 2, 3, 1310733, 2, 4, 1310733, 2, 5, 1310733, 2, 6, 1310733, 2, 7, 1310733, 2, 9, 1310733, 3, 65531, 1310733, 3, 65532, 1310733, 3, 65533, 1310733, 3, 65534, 1310733, 3, 65535, 1310733, 3, 0, 1310733, 3, 1, 1310733, 3, 2, 1310733, 3, 3, 1310733, 3, 4, 1310733, 3, 5, 1310733, 3, 6, 1310733, 3, 7, 1310733, 3, 9, 1310733, 4, 65531, 1310733, 4, 65532, 1310733, 4, 65533, 1310733, 4, 65534, 1310733, 4, 65535, 1310733, 4, 0, 1310733, 4, 1, 1310733, 4, 2, 1310733, 4, 3, 1310733, 4, 4, 1310733, 4, 5, 1310733, 4, 6, 1310733, 4, 7, 1310733, 4, 9, 1310733, 5, 65531, 1310733, 5, 65532, 1310733, 5, 65533, 1310733, 5, 65534, 1310733, 5, 65535, 1310733, 5, 0, 1310733, 5, 1, 1310733, 5, 2, 1310733, 5, 3, 1310733, 5, 4, 1310733, 5, 5, 1310733, 5, 6, 1310733, 5, 7, 1310733, 5, 8, 1310733, 5, 9, 1310733, 6, 65531, 1310733, 6, 65532, 1310733, 6, 65533, 1310733, 6, 65534, 1310733, 6, 65535, 1310733, 6, 0, 1310733, 6, 1, 1310733, 6, 2, 1310733, 6, 3, 1310733, 6, 4, 1310733, 6, 5, 1310733, 6, 6, 1310733, 6, 7, 1310733, 6, 8, 1310733, 6, 9, 1310733, 65535, 9, 1310733, 65535, 8, 1310733, 65535, 7, 1310733, 65535, 6, 1310733, 65535, 5, 1310733, 65535, 4, 1310733, 65535, 3, 1310733, 65535, 2, 1310733, 65535, 1, 1310733, 65535, 0, 1310733, 65535, 65535, 1310733, 65535, 65534, 1310733, 65535, 65533, 1310733, 65535, 65532, 1310733, 65535, 65531, 1310733, 65534, 6, 1310733, 65534, 5, 1310733, 65534, 4, 1310733, 65534, 3, 1310733, 65534, 2, 1310733, 65534, 1, 1310733, 65534, 0, 1310733, 65534, 65535, 1310733, 65534, 65534, 1310733, 65533, 2, 1310733, 65533, 3, 131151, 65533, 1, 524367, 65532, 2, 1179727, 65532, 1, 1179728, 65532, 3, 131152)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="object_048" parent="." instance=ExtResource("20_rvhcf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48232, 0.235397, 4.44566)
 
 [editable path="Objects/AirlockDoor"]

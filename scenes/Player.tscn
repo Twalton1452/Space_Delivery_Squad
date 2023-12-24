@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://7188haek1n73"]
+[gd_scene load_steps=24 format=3 uid="uid://7188haek1n73"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_hldcd"]
 [ext_resource type="Script" path="res://scripts/player/Interacter.gd" id="2_0yxy6"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dronyf43vs2pg" path="res://art/icons/oxygen.svg" id="7_qomcv"]
 [ext_resource type="Texture2D" uid="uid://7uawfbno32qj" path="res://art/icons/heart.svg" id="8_iutcd"]
 [ext_resource type="Script" path="res://scripts/player/Stamina.gd" id="10_40wdu"]
+[ext_resource type="Script" path="res://scripts/player/Oxygen.gd" id="10_bisgl"]
+[ext_resource type="Script" path="res://scripts/player/Health.gd" id="12_m4y5c"]
 
 [sub_resource type="Animation" id="Animation_2yhjd"]
 length = 0.001
@@ -322,10 +324,17 @@ script = ExtResource("2_myobr")
 
 [node name="Stats" type="Node" parent="."]
 
-[node name="Oxygen" type="Node" parent="Stats"]
+[node name="Oxygen" type="Node" parent="Stats" node_paths=PackedStringArray("visual_bar")]
+script = ExtResource("10_bisgl")
+visual_bar = NodePath("../../Camera3D/HUD/OxygenProgressBar")
 
-[node name="Stamina" type="Node" parent="Stats"]
+[node name="Stamina" type="Node" parent="Stats" node_paths=PackedStringArray("visual_bar")]
 script = ExtResource("10_40wdu")
+visual_bar = NodePath("../../Camera3D/HUD/StaminaProgressBar")
+
+[node name="Health" type="Node" parent="Stats" node_paths=PackedStringArray("visual_bar")]
+script = ExtResource("12_m4y5c")
+visual_bar = NodePath("../../Camera3D/HUD/HealthProgressBar")
 
 [connection signal="body_entered" from="MovingObjectDetector" to="." method="_on_moving_object_detector_body_entered"]
 [connection signal="body_exited" from="MovingObjectDetector" to="." method="_on_moving_object_detector_body_exited"]

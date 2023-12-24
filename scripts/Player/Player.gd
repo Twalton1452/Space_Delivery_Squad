@@ -31,13 +31,12 @@ enum Flags {
 	DROPPING = 1 << 9,
 	
 	# States
-	OXYGEN_BREATHING = 1 << 10,
-	OXYGEN_DEPRIVED = 1 << 11,
+	DEAD = 1 << 10,
+	DAMAGED = 1 << 11,
+	OXYGEN_DEPLETING = 1 << 12,
+	OXYGEN_DEPRIVED = 1 << 13,
 	
 }
-
-signal _health_changed(value: float)
-signal _oxygen_changed(value: float)
 
 const WALK_SPEED = 1.5
 const RUN_SPEED = 2.5
@@ -91,7 +90,6 @@ func _ready():
 ## Settings for the controlling player on their client
 func set_clientside_settings() -> void:
 	$bean_armature/Armature/Skeleton3D/Eyes.hide()
-	state |= Flags.OXYGEN_BREATHING
 	base_fov = camera.fov
 
 ## Settings for the spawned player peers
@@ -101,6 +99,10 @@ func set_peer_settings() -> void:
 func _on_state_changed(new_state: int, changed: int) -> void:
 	if changed & Flags.BUSY and not new_state & Flags.BUSY:
 		no_longer_busy.emit()
+	
+	if changed & Flags.DEAD:
+		if new_state & Flags.DEAD:
+			die()
 	
 	if changed & Flags.INTERACTING:
 		if new_state & Flags.INTERACTING:
@@ -139,7 +141,7 @@ func _physics_process(delta):
 		move_and_slide() # need this for is_on_floor() to work
 		return
 	
-	if state & Flags.BUSY:
+	if state & Flags.BUSY or state & Flags.DEAD:
 		if player_input.interacting or player_input.dropping:
 			state &= ~Flags.BUSY
 		return
@@ -173,6 +175,12 @@ func _physics_process(delta):
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
 	animate()
+
+func die() -> void:
+	var t = create_tween()
+	t.tween_property(self, "rotation:z", PI/2, 1.0).set_ease(Tween.EASE_OUT)
+	await t.finished
+	print(name, " has died")
 
 func drop() -> void:
 	if holder.remote_path != NodePath(""):
@@ -268,11 +276,19 @@ func uncrouch() -> void:
 		t.tween_property(camera, "position", $WalkingCameraPosition.position, 0.2).set_ease(Tween.EASE_OUT)
 		notify_uncrouch.rpc()
 
+#region Utility Flag Functions
+func is_flag_on(flag: int) -> bool:
+	return state & flag
+
+func is_flag_off(flag: int) -> bool:
+	return not state & flag
+
 func turn_flags_on(flags: int) -> void:
 	state |= flags
 
 func turn_flags_off(flags: int) -> void:
 	state &= ~flags
+#endregion Utility Flag Functions
 
 func apply_flat_move_speed_mod(amount: float) -> void:
 	flat_move_speed_mod += amount

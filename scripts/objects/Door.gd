@@ -1,4 +1,8 @@
 extends Node3D
+class_name Door
+
+signal open
+signal close
 
 @export var triggers : Array[Interactable]
 
@@ -24,6 +28,7 @@ func _on_trigger(_interactable: Interactable, _interacter: Player) -> void:
 		animation_player.seek(current_seek, true)
 		collision_body.collision_layer = 0
 		opened = true
+		open.emit()
 	else:
 		# Need the end of the animation for playing backwards
 		if not animation_player.is_playing():
@@ -33,3 +38,4 @@ func _on_trigger(_interactable: Interactable, _interacter: Player) -> void:
 		animation_player.seek(current_seek, true)
 		collision_body.collision_layer = 1 << 0
 		opened = false
+		close.emit()

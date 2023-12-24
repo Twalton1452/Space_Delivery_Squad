@@ -27,6 +27,7 @@ LevelManager="*res://scenes/autoloads/LevelManager.tscn"
 AudioManager="*res://scenes/autoloads/AudioManager.tscn"
 InteractionHandler="*res://scripts/autoloads/InteractionHandler.gd"
 PlayerManager="*res://scripts/autoloads/PlayerManager.gd"
+DisasterManager="*res://scripts/autoloads/DisasterManager.gd"
 
 [file_customization]
 
