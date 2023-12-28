@@ -1,3 +1,4 @@
+@icon("res://art/icons/hand-point.svg")
 extends Area3D
 class_name Interactable
 

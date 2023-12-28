@@ -1,3 +1,4 @@
+@icon("res://art/icons/box.svg")
 extends Node3D
 class_name Slot
 
@@ -19,7 +20,7 @@ func _ready():
 		interactable.interacted.connect(_on_interacted)
 	else:
 		## TODO: Figure out how to put Editor hints in the Scene Dock as a warning
-		push_warning(name, " has no Interactable component attached")
+		push_warning(get_path(), " has no Interactable component attached")
 	
 	if holding_node != null:
 		# Let users of this Slot setup and then emit the signal
