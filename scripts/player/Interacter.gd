@@ -22,7 +22,7 @@ func disable() -> void:
 	collision_mask = Constants.NON_INTERACTABLE_LAYER
 
 func is_interactable(collided_object: Node3D) -> bool:
-	return collided_object.collision_layer | Constants.INTERACTABLE_LAYER == Constants.INTERACTABLE_LAYER
+	return collided_object.collision_layer & Constants.INTERACTABLE_LAYER == Constants.INTERACTABLE_LAYER
 
 func clear_current_interactable() -> void:
 	current_interactable = null

@@ -20,6 +20,8 @@ enum Flags {
 	WALKING = 1 << 0,
 	SPRINTING = 1 << 1,
 	CROUCHING = 1 << 2,
+	
+	# NYI
 	JUMPING = 1 << 3,
 	FALLING = 1 << 4,
 	LANDED = 1 << 5,
@@ -76,6 +78,9 @@ func notify_uncrouch() -> void:
 
 func get_held_node() -> Node3D:
 	return get_node_or_null(holder.remote_path)
+
+func is_holding_node() -> bool:
+	return holder.remote_path != NodePath("")
 
 func _ready():
 	if is_multiplayer_authority():
@@ -182,6 +187,12 @@ func die() -> void:
 	await t.finished
 	print(name, " has died")
 
+func release_node_to(receiving: Node) -> void:
+	if not is_holding_node():
+		return
+	
+	InteractionHandler.attempt_release_node_to(multiplayer.get_unique_id(), receiving.get_path())
+
 func drop() -> void:
 	if holder.remote_path != NodePath(""):
 		InteractionHandler.attempt_drop_node(multiplayer.get_unique_id())
@@ -195,6 +206,15 @@ func drop_node() -> void:
 	
 	if is_multiplayer_authority():
 		interacter.enable()
+
+func attempt_to_hold(node: Node3D) -> void:
+	# Interacting with air or doing something already
+	if not is_holding_node():
+		# TODO: Play an animation to hide response time from server
+		InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), node.get_path())
+		interacted.emit()
+	
+	state &= ~Flags.INTERACTING
 
 func hold(node_path: String) -> void:
 	holder.remote_path = node_path

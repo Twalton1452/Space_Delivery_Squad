@@ -2,7 +2,7 @@ extends Node
 
 ## Autoload
 ## A starting point for Disasters to Trigger
-## Functions return booleans to signify if it was able to start/end
+## Functions return booleans to signify if it was successful in what it set out to do
 
 enum Disasters {
 	AIRLOCK,

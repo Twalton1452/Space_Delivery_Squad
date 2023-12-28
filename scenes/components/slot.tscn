@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh3rmah0q2i03"]
+
+[ext_resource type="Script" path="res://scripts/components/Slot.gd" id="1_obut6"]
+
+[node name="Slot" type="Node3D"]
+script = ExtResource("1_obut6")

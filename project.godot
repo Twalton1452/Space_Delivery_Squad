@@ -120,6 +120,7 @@ crouch={
 3d_physics/layer_3="Interactable"
 3d_physics/layer_4="MovingObject"
 3d_physics/layer_5="Connecter"
+3d_physics/layer_7="Slot"
 
 [rendering]
 
