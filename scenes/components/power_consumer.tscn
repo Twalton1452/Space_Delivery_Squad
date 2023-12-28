@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdpmmjy7j8qs0"]
+
+[ext_resource type="Script" path="res://scripts/components/PowerConsumer.gd" id="1_kqkr1"]
+
+[node name="PowerConsumer" type="Node"]
+script = ExtResource("1_kqkr1")

@@ -28,6 +28,7 @@ AudioManager="*res://scenes/autoloads/AudioManager.tscn"
 InteractionHandler="*res://scripts/autoloads/InteractionHandler.gd"
 PlayerManager="*res://scripts/autoloads/PlayerManager.gd"
 DisasterManager="*res://scripts/autoloads/DisasterManager.gd"
+PowerGrid="*res://scripts/autoloads/PowerGrid.gd"
 
 [file_customization]
 

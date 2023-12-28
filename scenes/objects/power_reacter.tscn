@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcn3ptlxpny60"]
+
+[ext_resource type="PackedScene" uid="uid://hiw0qjxwtpyq" path="res://art/objects/cannister_guard.glb" id="1_078lk"]
+[ext_resource type="PackedScene" uid="uid://dojqtjt2gtn5t" path="res://scenes/components/power_source.tscn" id="2_6mrv3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_txism"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(0.32549, 0.317647, 0.192157, 1)
+emission_energy_multiplier = 10.53
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bu5oe"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.59
+roughness = 0.0
+
+[node name="PowerReacter" instance=ExtResource("1_078lk")]
+
+[node name="Cannister" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_txism")
+surface_material_override/1 = SubResource("StandardMaterial3D_bu5oe")
+
+[node name="PowerSource" parent="." index="1" instance=ExtResource("2_6mrv3")]

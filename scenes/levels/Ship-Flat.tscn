@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=27 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
@@ -14,12 +14,16 @@
 [ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="15_7a5q0"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
+[ext_resource type="PackedScene" uid="uid://cvbaglxpvfnvw" path="res://scenes/objects/generator.tscn" id="18_bx00t"]
+[ext_resource type="PackedScene" uid="uid://ceclhtgrtfobx" path="res://art/objects/pipe-ring-support.glb" id="19_bxt33"]
 [ext_resource type="PackedScene" uid="uid://rre2t2pta62e" path="res://scenes/objects/oxygen_station.tscn" id="19_kukbf"]
 [ext_resource type="Script" path="res://scripts/UI/OxygenDisplay.gd" id="19_wwlcr"]
 [ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="20_70p0j"]
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="20_k18mp"]
+[ext_resource type="PackedScene" uid="uid://bcn3ptlxpny60" path="res://scenes/objects/power_reacter.tscn" id="20_pnxft"]
 [ext_resource type="PackedScene" uid="uid://du8ca56gtfpe8" path="res://art/space interior elements/object_048.glb" id="20_rvhcf"]
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
+[ext_resource type="PackedScene" uid="uid://c1gxlb1j876rg" path="res://scenes/objects/power_source_station.tscn" id="24_3ghmv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_baran"]
 
@@ -79,7 +83,7 @@ shadow_opacity = 0.2
 distance_fade_enabled = true
 distance_fade_begin = 0.1
 distance_fade_shadow = 1.0
-distance_fade_length = 5.0
+distance_fade_length = 8.0
 omni_range = 6.407
 omni_attenuation = 0.450627
 
@@ -92,9 +96,9 @@ light_color = Color(0.85098, 0.890196, 0.913725, 1)
 shadow_enabled = true
 shadow_opacity = 0.2
 distance_fade_enabled = true
-distance_fade_begin = 0.5
+distance_fade_begin = 0.1
 distance_fade_shadow = 1.0
-distance_fade_length = 5.0
+distance_fade_length = 8.0
 omni_range = 8.798
 omni_attenuation = 1.36604
 
@@ -245,6 +249,26 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.
 [node name="OxygenStation" parent="Objects" instance=ExtResource("19_kukbf")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.0618386, -2.12837)
 
+[node name="Power" type="Node3D" parent="Objects"]
+
+[node name="PowerSourceStation" parent="Objects/Power" instance=ExtResource("24_3ghmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.06306, 0.0625, 8.96309)
+
+[node name="generator" parent="Objects/Power" instance=ExtResource("18_bx00t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.293089, 0.0625, 9.05767)
+
+[node name="pipe-ring-support" parent="Objects/Power" instance=ExtResource("19_bxt33")]
+transform = Transform3D(-3.0598e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.0598e-08, 2.84925, 0.0625, 8.97476)
+
+[node name="pipe-ring-support2" parent="Objects/Power" instance=ExtResource("19_bxt33")]
+transform = Transform3D(-3.0598e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.0598e-08, 2.34925, 0.0625, 8.97476)
+
+[node name="PowerReacter" parent="Objects/Power" instance=ExtResource("20_pnxft")]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 3.04256, 0.679849, 8.97375)
+
+[node name="PowerReacter2" parent="Objects/Power" instance=ExtResource("20_pnxft")]
+transform = Transform3D(1.91069e-15, -7.30144e-30, 1, 4.37114e-08, 1, -1.59578e-37, -1, 4.37114e-08, 1.91069e-15, 1.67816, 0.0625367, 8.97375)
+
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh_library = ExtResource("16_b1ic6")
@@ -312,7 +336,6 @@ transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 3.5, 0
 
 [node name="GridMap Ceiling" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-visible = false
 mesh_library = ExtResource("16_b1ic6")
 cell_size = Vector3(1, 1, 1)
 collision_mask = 0
@@ -325,3 +348,5 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48232, 0.235397, 4.44566)
 
 [editable path="Objects/AirlockDoor"]
+[editable path="Objects/Power/PowerSourceStation"]
+[editable path="Objects/Power/PowerSourceStation/Slot"]
