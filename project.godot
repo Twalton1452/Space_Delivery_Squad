@@ -29,6 +29,8 @@ InteractionHandler="*res://scripts/autoloads/InteractionHandler.gd"
 PlayerManager="*res://scripts/autoloads/PlayerManager.gd"
 DisasterManager="*res://scripts/autoloads/DisasterManager.gd"
 PowerGrid="*res://scripts/autoloads/PowerGrid.gd"
+DropHandler="*res://scripts/handlers/DropHandler.gd"
+TickHandler="*res://scripts/handlers/TickHandler.gd"
 
 [file_customization]
 

@@ -64,7 +64,9 @@ var move_speed = WALK_SPEED
 var flat_move_speed_mod = 0.0
 var head_bone_id = -1
 var base_fov = 80.0
-
+var player_id : int : 
+	get:
+		return name.to_int()
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -115,7 +117,7 @@ func _on_state_changed(new_state: int, changed: int) -> void:
 	
 	if changed & Flags.DROPPING:
 		if new_state & Flags.DROPPING:
-			drop()
+			drop_request()
 	
 	if changed & Flags.CROUCHING:
 		if new_state & Flags.CROUCHING:
@@ -193,9 +195,9 @@ func release_node_to(receiving: Node) -> void:
 	
 	InteractionHandler.attempt_release_node_to(multiplayer.get_unique_id(), receiving.get_path())
 
-func drop() -> void:
-	if holder.remote_path != NodePath(""):
-		InteractionHandler.attempt_drop_node(multiplayer.get_unique_id())
+func drop_request() -> void:
+	if is_holding_node():
+		DropHandler.request_drop(self, get_held_node())
 	state &= ~Flags.DROPPING
 
 func drop_node() -> void:
@@ -208,10 +210,9 @@ func drop_node() -> void:
 		interacter.enable()
 
 func attempt_to_hold(node: Node3D) -> void:
-	# Interacting with air or doing something already
 	if not is_holding_node():
 		# TODO: Play an animation to hide response time from server
-		InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), node.get_path())
+		InteractionHandler.attempt_interaction(player_id, node.get_path())
 		interacted.emit()
 	
 	state &= ~Flags.INTERACTING
@@ -225,7 +226,7 @@ func interact() -> void:
 	# Interacting with air or doing something already
 	if interacter.current_interactable != null:
 		# TODO: Play an animation to hide response time from server
-		InteractionHandler.attempt_interaction(multiplayer.get_unique_id(), interacter.current_interactable.get_path())
+		InteractionHandler.attempt_interaction(player_id, interacter.current_interactable.get_path())
 		interacted.emit()
 	
 	state &= ~Flags.INTERACTING

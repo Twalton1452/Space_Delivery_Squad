@@ -6,7 +6,6 @@ signal interacted(interactable: Interactable, interacter: Player)
 
 @export var toggler = false
 @export var interact_display_text = "Interact"
-@export var pickupable = false # TODO: Somehow convert this into a component
 
 @export_category("Internal Scene Stuff")
 @export var mesh_to_highlight : MeshInstance3D

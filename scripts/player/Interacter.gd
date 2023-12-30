@@ -21,6 +21,7 @@ func enable() -> void:
 func disable() -> void:
 	collision_mask = Constants.NON_INTERACTABLE_LAYER
 
+# TODO: Redundant at the moment. The mask already covers this case
 func is_interactable(collided_object: Node3D) -> bool:
 	return collided_object.collision_layer & Constants.INTERACTABLE_LAYER == Constants.INTERACTABLE_LAYER
 

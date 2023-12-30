@@ -9,7 +9,7 @@ class_name Slot
 signal received_node(node: Node)
 signal released_node(node: Node)
 
-@export var holding_node : Node3D
+@export var holding_node : Item
 
 func is_holding_node() -> bool:
 	return holding_node != null
@@ -27,20 +27,28 @@ func _ready():
 		await get_tree().physics_frame
 		receive_node(holding_node)
 
-func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
+func _on_interacted(interactable: Interactable, interacter: Player) -> void:
 	# Take from Player
 	if holding_node == null and interacter.is_holding_node():
 		interacter.release_node_to(self)
-	# Give to Player
+	# Pass on the Interaction to the Item
 	elif holding_node != null and !interacter.is_holding_node():
-		interacter.attempt_to_hold(holding_node)
+		holding_node._on_interacted(interactable, interacter)
+		#interacter.attempt_to_hold(holding_node)
 
-func receive_node(node: Node) -> void:
-	holding_node = node
-	node.global_position = global_position
+func receive_node(item: Item) -> void:
+	holding_node = item
+	if not holding_node.picked_up.is_connected(release_node):
+		item.picked_up.connect(release_node)
+	
+	item.global_position = global_position
+	
 	received_node.emit(holding_node)
 
 func release_node() -> void:
+	if holding_node.picked_up.is_connected(release_node):
+		holding_node.picked_up.disconnect(release_node)
+	
 	var to_be_released = holding_node
 	holding_node = null
 	released_node.emit(to_be_released)

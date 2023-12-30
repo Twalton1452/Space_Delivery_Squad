@@ -2,6 +2,8 @@ extends Node
 
 ## Autoloaded
 
+signal changed_level
+
 var level_store : LevelStore = load("res://resources/StandardLevels.tres")
 
 @onready var level_parent : Node = $Level
@@ -89,6 +91,7 @@ func change_level(scene: PackedScene):
 	if current_level.has_signal("finished_level") and !current_level.finished_level.is_connected(_on_finished_level):
 		current_level.finished_level.connect(_on_finished_level)
 	is_changing_levels = false
+	changed_level.emit()
 
 # The server can restart the level by pressing Home. Mostly for debugging
 func _input(event):

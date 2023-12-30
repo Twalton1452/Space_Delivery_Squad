@@ -3,6 +3,9 @@ class_name Constants
 ## Class for constants that might be reused across scripts
 ## Avoids circular dependencies and centralizes information
 
+# Tick Rates
+const TICK_DROP = 10
+
 # Interactable Constants
 const INTERACTABLE = "Interactable"
 const ACCEPTABLE_INTERACTABLE_DISTANCE_IN_M = 5

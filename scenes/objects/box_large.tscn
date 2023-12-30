@@ -1,19 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://ceoib8msrs7jy"]
+[gd_scene load_steps=5 format=3 uid="uid://ceoib8msrs7jy"]
 
 [ext_resource type="PackedScene" uid="uid://dxttnyq2s1735" path="res://art/objects/box-large.glb" id="1_dnei0"]
+[ext_resource type="Script" path="res://scripts/objects/Item.gd" id="2_obglf"]
+[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="3_0veju"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_papcw"]
-points = PackedVector3Array(-0.5, 0, -0.5, -0.5, 0.499995, -0.5, 0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0.499995, 0.5, 0.5, 0.499995, -0.5, 0.5, 0, 0.5, 0.5, 0.499995, 0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_m0kkj"]
+size = Vector3(0.488525, 0.254272, 0.49707)
 
 [node name="box_large" instance=ExtResource("1_dnei0")]
+script = ExtResource("2_obglf")
 
 [node name="box-large" parent="." index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="Area3D" type="Area3D" parent="." index="1"]
-collision_layer = 4
-collision_mask = 0
+[node name="Interactable" parent="." index="1" instance=ExtResource("3_0veju")]
+interact_display_text = "Pickup"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_papcw")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12616, 0)
+shape = SubResource("BoxShape3D_m0kkj")
