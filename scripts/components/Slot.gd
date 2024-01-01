@@ -42,6 +42,7 @@ func receive_node(item: Item) -> void:
 		item.picked_up.connect(release_node)
 	
 	item.global_position = global_position
+	item.rotation = Vector3.ZERO
 	
 	received_node.emit(holding_node)
 
