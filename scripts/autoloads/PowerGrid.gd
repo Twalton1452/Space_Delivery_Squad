@@ -1,6 +1,7 @@
 extends Node
 
 ## Autoloaded
+
 ## Class to evaluate the Ship's power needs
 ## There is a single source of Power that provides the wattage
 ## The source of Power will be swapped out by players occasionally to refill the grid
@@ -9,7 +10,10 @@ extends Node
 var reserved_kw = 0.0
 var available_power_kw : float : get = get_available_power
 
-var current_power_source : PowerSource
+var current_power_source : PowerSource : 
+	set(value):
+		print("[PowerGrid]: New Power Source: ", value)
+		current_power_source = value
 
 func get_available_power() -> float:
 	return current_power_source.available_power if current_power_source != null else 0.0

@@ -17,7 +17,7 @@ func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
 		if multiplayer.is_server():
 			PickupHandler.request_pickup(interacter, self)
 
-# Called from the InteractionHandler when appropriate
+# Called from the PickupHandler when appropriate
 func on_held() -> void:
 	interactable.disable()
 	picked_up.emit()

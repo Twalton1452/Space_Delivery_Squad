@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcn3ptlxpny60"]
+[gd_scene load_steps=8 format=3 uid="uid://bcn3ptlxpny60"]
 
 [ext_resource type="PackedScene" uid="uid://hiw0qjxwtpyq" path="res://art/objects/cannister_guard.glb" id="1_078lk"]
 [ext_resource type="PackedScene" uid="uid://dojqtjt2gtn5t" path="res://scenes/components/power_source.tscn" id="2_6mrv3"]
+[ext_resource type="Script" path="res://scripts/objects/Item.gd" id="2_piu0x"]
+[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="4_ow848"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_txism"]
 albedo_color = Color(1, 1, 0, 1)
@@ -14,10 +16,19 @@ albedo_color = Color(0, 0, 0, 1)
 metallic_specular = 0.59
 roughness = 0.0
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3xfkx"]
+points = PackedVector3Array(0.186202, 0.028261, 0.0694443, -0.190727, 0.0343149, -0.0466718, -0.192054, 0.0310487, 0.0399937, 0.0279154, 0.99826, 0.0750865, 0.0844763, 0.788357, -0.179466, 0.0844763, 0.0259283, -0.179466, -0.147159, 0.782415, -0.132788, -0.0759327, 0.784917, 0.184913, 0.186202, 0.7869, 0.0694443, 0.0694443, 0.028261, 0.186202, -0.192054, 0.785158, 0.0399937, 0.184913, 0.784917, -0.0759327, -0.0897106, 0.0352626, -0.175966, 0.0694443, 0.7869, 0.186202, -0.102983, 0.0403069, 0.16709, -0.0506232, 0.99826, -0.0663469, 0.184913, 0.0314344, -0.0759327, -0.0466718, 0.783118, -0.190727, 0.0750865, 0.99826, -0.0348995, -0.161468, 0.782305, 0.11139, -0.0663469, 0.99826, 0.0436391, 0.124368, 0.779225, 0.15279, -0.190727, 0.783118, -0.0466718, -0.179466, 0.0259283, 0.0844763, 0.0399937, 0.0310487, -0.192054, -0.147159, 0.0354396, -0.132788, 0.15279, 0.0405464, 0.124368, -0.0759327, 0.0314344, 0.184913, 0.11139, 0.782305, -0.161468, 0.0112997, 0.806454, 0.189253, 0.189254, 0.806454, 0.0112997, 0.0399937, 0.785158, -0.192054)
+
 [node name="PowerReacter" instance=ExtResource("1_078lk")]
+script = ExtResource("2_piu0x")
 
 [node name="Cannister" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_txism")
 surface_material_override/1 = SubResource("StandardMaterial3D_bu5oe")
 
 [node name="PowerSource" parent="." index="1" instance=ExtResource("2_6mrv3")]
+
+[node name="Interactable" parent="." index="2" instance=ExtResource("4_ow848")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" index="0"]
+shape = SubResource("ConvexPolygonShape3D_3xfkx")
