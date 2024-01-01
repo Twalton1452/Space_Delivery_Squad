@@ -1,19 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4b6j2icha5d6"]
+[gd_scene load_steps=5 format=3 uid="uid://d4b6j2icha5d6"]
 
 [ext_resource type="PackedScene" uid="uid://bkyq8gpvedc2x" path="res://art/objects/box-long.glb" id="1_82dr1"]
+[ext_resource type="Script" path="res://scripts/objects/Item.gd" id="2_n8x3p"]
+[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="3_7rsu1"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ivjsa"]
 points = PackedVector3Array(-0.5, 0, -0.25, -0.5, 0.499995, -0.25, 0.5, 0, -0.25, -0.5, 0, 0.25, -0.5, 0.499995, 0.25, 0.5, 0.499995, -0.25, 0.5, 0, 0.25, 0.5, 0.499995, 0.25)
 
 [node name="box_long" instance=ExtResource("1_82dr1")]
+script = ExtResource("2_n8x3p")
 
 [node name="box-long" parent="." index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="Area3D" type="Area3D" parent="." index="1"]
-collision_layer = 4
-collision_mask = 0
+[node name="Interactable" parent="." index="1" instance=ExtResource("3_7rsu1")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_ivjsa")
