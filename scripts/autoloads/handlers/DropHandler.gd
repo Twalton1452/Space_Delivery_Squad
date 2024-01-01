@@ -82,18 +82,18 @@ func drop(dropper: Player, dropped_node: Node3D, dropped_node_position: Vector3)
 	dropped_node.position = dropped_node_position
 	dropped_node.rotation = Vector3.ZERO
 
-func fulfill_drop(request: DropRequest) -> void:
+func fulfill_drop(request: Request) -> void:
 	request.fulfill()
 
-func fail_request(request: DropRequest) -> void:
+func fail_request(request: Request) -> void:
 	request.fail()
 
-func invalidate_request(request: DropRequest) -> void:
+func invalidate_request(request: Request) -> void:
 	request.invalidate()
 
 ## Puts the request in the queue
 ## returns if it was able to put it in the queue
-func queue_request(request: DropRequest) -> bool:
+func queue_request(request: Request) -> bool:
 	sequence_number += 1
 	request.sequence = sequence_number
 	queue.push_back(request)

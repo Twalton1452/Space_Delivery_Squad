@@ -25,12 +25,14 @@ driver/enable_input=true
 Transition="*res://scenes/autoloads/Transition.tscn"
 LevelManager="*res://scenes/autoloads/LevelManager.tscn"
 AudioManager="*res://scenes/autoloads/AudioManager.tscn"
-InteractionHandler="*res://scripts/autoloads/InteractionHandler.gd"
 PlayerManager="*res://scripts/autoloads/PlayerManager.gd"
 DisasterManager="*res://scripts/autoloads/DisasterManager.gd"
 PowerGrid="*res://scripts/autoloads/PowerGrid.gd"
-DropHandler="*res://scripts/handlers/DropHandler.gd"
-TickHandler="*res://scripts/handlers/TickHandler.gd"
+DropHandler="*res://scripts/autoloads/handlers/DropHandler.gd"
+TickHandler="*res://scripts/autoloads/handlers/TickHandler.gd"
+ReleaseHandler="*res://scripts/autoloads/handlers/ReleaseHandler.gd"
+PickupHandler="*res://scripts/autoloads/handlers/PickupHandler.gd"
+InteractHandler="*res://scripts/autoloads/handlers/InteractHandler.gd"
 
 [file_customization]
 

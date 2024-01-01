@@ -113,7 +113,7 @@ func _on_state_changed(new_state: int, changed: int) -> void:
 	
 	if changed & Flags.INTERACTING:
 		if new_state & Flags.INTERACTING:
-			interact()
+			interact_request()
 	
 	if changed & Flags.DROPPING:
 		if new_state & Flags.DROPPING:
@@ -189,12 +189,6 @@ func die() -> void:
 	await t.finished
 	print(name, " has died")
 
-func release_node_to(receiving: Node) -> void:
-	if not is_holding_node():
-		return
-	
-	InteractionHandler.attempt_release_node_to(multiplayer.get_unique_id(), receiving.get_path())
-
 func drop_request() -> void:
 	if is_holding_node():
 		DropHandler.request_drop(self, get_held_node())
@@ -209,24 +203,16 @@ func drop_node() -> void:
 	if is_multiplayer_authority():
 		interacter.enable()
 
-func attempt_to_hold(node: Node3D) -> void:
-	if not is_holding_node():
-		# TODO: Play an animation to hide response time from server
-		InteractionHandler.attempt_interaction(player_id, node.get_path())
-		interacted.emit()
-	
-	state &= ~Flags.INTERACTING
-
 func hold(node_path: String) -> void:
 	holder.remote_path = node_path
 	state = (state & ~Flags.INTERACTING) | Flags.HOLDING
 	holding_something.emit(self, get_held_node())
 
-func interact() -> void:
+func interact_request() -> void:
 	# Interacting with air or doing something already
 	if interacter.current_interactable != null:
 		# TODO: Play an animation to hide response time from server
-		InteractionHandler.attempt_interaction(player_id, interacter.current_interactable.get_path())
+		InteractHandler.request_interaction(self, interacter.current_interactable)
 		interacted.emit()
 	
 	state &= ~Flags.INTERACTING

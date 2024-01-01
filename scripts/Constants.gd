@@ -4,7 +4,10 @@ class_name Constants
 ## Avoids circular dependencies and centralizes information
 
 # Tick Rates
+const TICK_INTERACT = 2
+const TICK_PICKUP = 5
 const TICK_DROP = 10
+const TICK_RELEASE = 10
 
 # Interactable Constants
 const INTERACTABLE = "Interactable"

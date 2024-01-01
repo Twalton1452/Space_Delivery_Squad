@@ -22,6 +22,7 @@ func _on_host_button_pressed():
 	if OS.has_feature("standalone"):
 		upnp_setup()
 	
+	TickHandler.enable()
 	host_or_join()
 
 func _valid_ip_address() -> bool:
@@ -41,6 +42,7 @@ func _on_join_button_pressed():
 	
 	if OS.has_feature("standalone"):
 		enet_peer.create_client(address_entry.text, PORT)
+		# TODO: Check the status of the connection and reload the scene if it takes too long
 	else:
 		enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer

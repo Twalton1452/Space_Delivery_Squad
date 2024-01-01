@@ -14,7 +14,8 @@ func _ready():
 
 func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
 	if not interacter.is_holding_node():
-		interacter.attempt_to_hold(self)
+		if multiplayer.is_server():
+			PickupHandler.request_pickup(interacter, self)
 
 # Called from the InteractionHandler when appropriate
 func on_held() -> void:
