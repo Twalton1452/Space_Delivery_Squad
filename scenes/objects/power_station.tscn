@@ -36,6 +36,7 @@ rotate_sfx = ExtResource("4_7de5l")
 interact_display_text = "Open"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Base/Glass/Rotater/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_ti6pf")
 
 [node name="Slot" parent="." index="2" instance=ExtResource("4_5jnnk")]

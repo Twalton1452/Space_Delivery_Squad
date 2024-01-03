@@ -276,10 +276,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.153497, 0.314862, -0.112237
 mesh = SubResource("BoxMesh_a54y7")
 
 [node name="ChargingStation" parent="Objects/Power" instance=ExtResource("24_2vp5n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.282, 0.0389601, 9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.282, 0.0581396, 9)
 
 [node name="power_station" parent="Objects/Power" instance=ExtResource("22_qtx0h")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.39335, 0, 9)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.39335, 0.0591419, 9)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
