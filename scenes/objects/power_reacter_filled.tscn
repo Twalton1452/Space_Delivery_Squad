@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://br81xjq0nbxge"]
+
+[ext_resource type="PackedScene" uid="uid://b8uoh4har25kw" path="res://art/objects/cannister_guard_filled_mesh_flat_top.glb" id="1_0witx"]
+[ext_resource type="Material" uid="uid://cqvocs4tx3h22" path="res://materials/power.tres" id="2_fv82c"]
+[ext_resource type="Script" path="res://scripts/objects/Item.gd" id="2_tro66"]
+[ext_resource type="PackedScene" uid="uid://dojqtjt2gtn5t" path="res://scenes/components/power_source.tscn" id="3_kgc6d"]
+[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="4_2l4ec"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ne7k1"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_f6uyo"]
+points = PackedVector3Array(-0.2, -4.72106e-05, -3.91603e-05, -0.197807, 0.103079, -0.0112373, -0.184808, -4.72106e-05, -0.0765466, -0.188332, -0.0205088, -3.91603e-05, -0.184808, -4.72106e-05, 0.0765074, -0.2, 0.799919, -3.91603e-05, -0.197807, 0.730022, -0.0112373, -0.141425, -4.72106e-05, -0.141425, -0.133203, -0.0205088, -0.133203, -0.174002, -0.0205088, -0.072083, -0.184808, 0.799919, -0.0765466, -0.174002, -0.0205088, 0.0720439, -0.133203, -0.0205088, 0.133164, -0.141425, -4.72106e-05, 0.141386, -0.184808, 0.799919, 0.0765074, -0.180345, 0.815633, -3.91603e-05, -0.0765466, -4.72106e-05, -0.184808, -0.141425, 0.799919, -0.141425, -0.072083, -0.0205088, -0.174002, -0.166641, 0.815633, -0.069029, -0.127525, 0.815633, -0.127525, -0.072083, -0.0205088, 0.173962, -0.0765466, -4.72106e-05, 0.184769, -0.141425, 0.799919, 0.141386, -0.127525, 0.815633, 0.127486, -0.166641, 0.815633, 0.0689898, -3.91603e-05, -4.72106e-05, -0.2, -3.91603e-05, -0.0205088, -0.188332, -0.0765466, 0.799919, -0.184808, -0.069029, 0.815633, -0.166641, -3.91603e-05, -0.0205088, 0.188293, -3.91603e-05, -4.72106e-05, 0.2, -0.0765466, 0.799919, 0.184769, -0.069029, 0.815633, 0.166601, 0.0111981, 0.103079, -0.197807, 0.0765074, -4.72106e-05, -0.184808, -3.91603e-05, 0.799919, -0.2, 0.0720439, -0.0205088, -0.174002, -3.91603e-05, 0.815633, -0.180345, 0.0720439, -0.0205088, 0.173962, 0.0765074, -4.72106e-05, 0.184769, -3.91603e-05, 0.799919, 0.2, -3.91603e-05, 0.815633, 0.180305, 0.0111981, 0.730022, -0.197807, 0.141386, -4.72106e-05, -0.141425, 0.133164, -0.0205088, -0.133203, 0.0765074, 0.799919, -0.184808, 0.0689898, 0.815633, -0.166641, 0.133164, -0.0205088, 0.133164, 0.141386, -4.72106e-05, 0.141386, 0.0765074, 0.799919, 0.184769, 0.0689898, 0.815633, 0.166601, 0.184769, -4.72106e-05, -0.0765466, 0.141386, 0.799919, -0.141425, 0.173962, -0.0205088, -0.072083, 0.127486, 0.815633, -0.127525, 0.173962, -0.0205088, 0.0720439, 0.184769, -4.72106e-05, 0.0765074, 0.141386, 0.799919, 0.141386, 0.127486, 0.815633, 0.127486, 0.2, -4.72106e-05, -3.91603e-05, 0.184769, 0.799919, -0.0765466, 0.188293, -0.0205088, -3.91603e-05, 0.166601, 0.815633, -0.069029, 0.184769, 0.799919, 0.0765074, 0.166601, 0.815633, 0.0689898, 0.2, 0.799919, -3.91603e-05, 0.180305, 0.815633, -3.91603e-05)
+
+[node name="cannister_guard_filled_mesh_flat_top" instance=ExtResource("1_0witx")]
+script = ExtResource("2_tro66")
+
+[node name="Cannister" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ne7k1")
+
+[node name="Fill" parent="Cannister" index="0"]
+surface_material_override/0 = ExtResource("2_fv82c")
+
+[node name="PowerSource" parent="." index="1" node_paths=PackedStringArray("mesh_for_power_visual") instance=ExtResource("3_kgc6d")]
+max_power = 10.0
+available_power = 10.0
+mesh_for_power_visual = NodePath("../Cannister/Fill")
+
+[node name="Interactable" parent="." index="2" instance=ExtResource("4_2l4ec")]
+interact_display_text = "Large Power Cell"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0234936, 0)
+shape = SubResource("ConvexPolygonShape3D_f6uyo")
