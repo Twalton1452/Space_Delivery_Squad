@@ -13,6 +13,7 @@ size = Vector3(0.623291, 0.852783, 0.523438)
 
 [node name="PowerSourceStation" instance=ExtResource("1_q6gek")]
 script = ExtResource("2_cgj0j")
+drain_power_rate = 1.0
 
 [node name="object_033" parent="." index="0"]
 transform = Transform3D(-0.7, -8.74228e-08, 0, 6.11959e-08, -1, 0, 0, 0, 0.6, 0, 1, 0)

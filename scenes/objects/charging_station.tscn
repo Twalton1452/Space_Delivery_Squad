@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=3 uid="uid://cewc7flo2v4np"]
+
+[ext_resource type="Script" path="res://scripts/objects/RechargingStation.gd" id="1_scspf"]
+[ext_resource type="AudioStream" uid="uid://b420c06edrg3j" path="res://sfx/charging_complete.ogg" id="2_jn2p5"]
+[ext_resource type="PackedScene" uid="uid://bh3rmah0q2i03" path="res://scenes/components/slot.tscn" id="3_rw070"]
+[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="4_tg4ph"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dys4j"]
+size = Vector3(0.738281, 0.102539, 0.728516)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryu21"]
+albedo_color = Color(0.14902, 0.14902, 0.14902, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bjdht"]
+material = SubResource("StandardMaterial3D_ryu21")
+size = Vector3(0.75, 0.1, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hjtph"]
+albedo_color = Color(1, 1, 0.568627, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fqkcg"]
+material = SubResource("StandardMaterial3D_hjtph")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n8oxn"]
+size = Vector3(0.546631, 0.107178, 0.544922)
+
+[node name="ChargingStation" type="Node3D"]
+script = ExtResource("1_scspf")
+finished_charging_sfx = ExtResource("2_jn2p5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.056398, 0)
+shape = SubResource("BoxShape3D_dys4j")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0537124, 0)
+mesh = SubResource("BoxMesh_bjdht")
+skeleton = NodePath("../..")
+
+[node name="Platform" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.119422, 0)
+mesh = SubResource("CylinderMesh_fqkcg")
+
+[node name="Slot" parent="." instance=ExtResource("3_rw070")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.155766, 0)
+
+[node name="Interactable" parent="Slot" instance=ExtResource("4_tg4ph")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slot/Interactable"]
+shape = SubResource("BoxShape3D_n8oxn")

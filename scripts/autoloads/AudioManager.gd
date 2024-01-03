@@ -98,11 +98,12 @@ func play_one_shot_global(sfx: AudioStream) -> void:
 	await sfx_player.finished
 	sfx_player.queue_free()
 
-func play_one_shot_3d(sfx: AudioStream) -> void:
+func play_one_shot_3d(to_parent: Node3D, sfx: AudioStream) -> void:
 	var sfx_player = AudioStreamPlayer3D.new()
 	sfx_player.bus = "SFX"
 	sfx_player.stream = sfx
-	add_child(sfx_player)
+	to_parent.add_child(sfx_player, true)
+	sfx_player.position = Vector3.ZERO
 	sfx_player.play()
 	await sfx_player.finished
 	sfx_player.queue_free()

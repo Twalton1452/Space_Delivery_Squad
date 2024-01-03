@@ -5,9 +5,6 @@ signal open
 signal close
 
 @export var triggers : Array[Interactable]
-# TODO: Would rather a component based approach to power instead of
-# 		a hard set power value on each entity that needs power
-@export var power_cost = 0.0
 
 @export_category("Internal Scene Stuff")
 @export var collision_body : CollisionObject3D
@@ -21,9 +18,6 @@ func _ready() -> void:
 		trigger.interacted.connect(_on_trigger)
 
 func _on_trigger(_interactable: Interactable, _interacter: Player) -> void:
-	if power_cost > 0.0 and PowerGrid.draw_power(power_cost) < power_cost:
-		return
-	
 	# Allows for interupting the animation cleanly
 	var current_seek = 0.0
 	if animation_player.is_playing():

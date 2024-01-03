@@ -1,15 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcn3ptlxpny60"]
+[gd_scene load_steps=9 format=3 uid="uid://bcn3ptlxpny60"]
 
 [ext_resource type="PackedScene" uid="uid://hiw0qjxwtpyq" path="res://art/objects/cannister_guard.glb" id="1_078lk"]
 [ext_resource type="PackedScene" uid="uid://dojqtjt2gtn5t" path="res://scenes/components/power_source.tscn" id="2_6mrv3"]
 [ext_resource type="Script" path="res://scripts/objects/Item.gd" id="2_piu0x"]
+[ext_resource type="Shader" path="res://shaders/fill.gdshader" id="3_132nt"]
 [ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="4_ow848"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_txism"]
-albedo_color = Color(1, 1, 0, 1)
-emission_enabled = true
-emission = Color(0.32549, 0.317647, 0.192157, 1)
-emission_energy_multiplier = 10.53
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71i6s"]
+render_priority = 0
+shader = ExtResource("3_132nt")
+shader_parameter/color = Color(1, 0.992157, 0.341176, 1)
+shader_parameter/emission_color = Color(1, 0.992157, 0.341176, 1)
+shader_parameter/emission_multiplier = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bu5oe"]
 albedo_color = Color(0, 0, 0, 1)
@@ -23,10 +25,15 @@ points = PackedVector3Array(0.186202, 0.028261, 0.0694443, -0.190727, 0.0343149,
 script = ExtResource("2_piu0x")
 
 [node name="Cannister" parent="." index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_txism")
+transform = Transform3D(1.00553, 0, 0, 0, 1.00553, 0, 0, 0, 1.00553, 0, 0, 0)
+instance_shader_parameters/fill = 0.0
+surface_material_override/0 = SubResource("ShaderMaterial_71i6s")
 surface_material_override/1 = SubResource("StandardMaterial3D_bu5oe")
 
-[node name="PowerSource" parent="." index="1" instance=ExtResource("2_6mrv3")]
+[node name="PowerSource" parent="." index="1" node_paths=PackedStringArray("mesh_to_effect") instance=ExtResource("2_6mrv3")]
+max_power = 5.0
+available_power = 5.0
+mesh_to_effect = NodePath("../Cannister")
 
 [node name="Interactable" parent="." index="2" instance=ExtResource("4_ow848")]
 

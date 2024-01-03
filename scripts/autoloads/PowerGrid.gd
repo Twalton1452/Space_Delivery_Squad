@@ -2,24 +2,31 @@ extends Node
 
 ## Autoloaded
 
-## Class to evaluate the Ship's power needs
-## There is a single source of Power that provides the wattage
-## The source of Power will be swapped out by players occasionally to refill the grid
-
-## The grid can store power to allow Players to switch out the Power Source
-var reserved_kw = 0.0
-var available_power_kw : float : get = get_available_power
+signal power_gained
+signal power_lost
 
 var current_power_source : PowerSource : 
 	set(value):
-		print("[PowerGrid]: New Power Source: ", value)
 		current_power_source = value
+		
+		if current_power_source == null:
+			power_lost.emit()
+		elif current_power_source.available_power > 0.0:
+			power_gained.emit()
 
-func get_available_power() -> float:
-	return current_power_source.available_power if current_power_source != null else 0.0
+func notify_power_gained() -> void:
+	power_gained.emit()
+	# TODO: Move to PowerDisaster
+	print("[PowerGrid]: Gained Power!")
+	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
+		(child as Light3D).show()
 
-func reserve_power(kw: float) -> void:
-	reserved_kw += draw_power(kw)
+func notify_power_lost() -> void:
+	power_lost.emit()
+	# TODO: Move to PowerDisaster
+	print("[PowerGrid]: No power!")
+	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
+		(child as Light3D).hide()
 
 ## Draw power from the Grid
 ## returns the attempted amount requested or the last available amount

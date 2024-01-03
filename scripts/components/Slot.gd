@@ -39,10 +39,11 @@ func _on_interacted(interactable: Interactable, interacter: Player) -> void:
 func receive_node(item: Item) -> void:
 	holding_node = item
 	if not holding_node.picked_up.is_connected(release_node):
-		item.picked_up.connect(release_node)
+		holding_node.picked_up.connect(release_node)
 	
-	item.global_position = global_position
-	item.rotation = Vector3.ZERO
+	holding_node.global_position = global_position
+	holding_node.rotation = Vector3.ZERO
+	holding_node.interactable.enable()
 	
 	received_node.emit(holding_node)
 

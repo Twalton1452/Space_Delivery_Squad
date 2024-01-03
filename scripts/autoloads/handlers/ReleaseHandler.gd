@@ -48,7 +48,6 @@ func request_player_release(releaser: Player, releasing: Node3D, released_to: No
 func release_node_to_slot(p_id: int, releasing_path: String, slot_path: String) -> void:
 	var player = PlayerManager.get_player_by_id(p_id)
 	var releasing_node = get_node_or_null(releasing_path)
-	
 	# If the player was still holding it, tell them to drop it
 	if player != null and releasing_node == player.get_held_node():
 		player.drop_node()
