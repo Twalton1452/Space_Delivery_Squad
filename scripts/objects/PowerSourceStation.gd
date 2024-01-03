@@ -3,6 +3,7 @@ class_name PowerSourceStation
 
 @export var drain_power_rate = 2.0
 @export var drain_power_rate_seconds = 1.0
+@export var door : Rotater
 
 @onready var slot : Slot = $Slot
 
@@ -18,6 +19,10 @@ func begin_draining() -> void:
 	drain(power_source)
 
 func drain(power_source: PowerSource) -> void:
+	if door.is_rotated:
+		door.rotate_parent()
+		await door.rotated
+	
 	while slot.is_holding_node() and power_source.has_power():
 		power_source.drain(drain_power_rate)
 		await get_tree().create_timer(drain_power_rate_seconds, false, true).timeout
@@ -25,6 +30,9 @@ func drain(power_source: PowerSource) -> void:
 	stop_draining()
 
 func stop_draining() -> void:
+	if not door.is_rotated:
+		door.rotate_parent()
+	
 	var power_source = get_attached_power_source(slot.holding_node)
 	if power_source == null:
 		return

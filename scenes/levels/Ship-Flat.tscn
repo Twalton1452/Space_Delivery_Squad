@@ -23,8 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="20_k18mp"]
 [ext_resource type="PackedScene" uid="uid://du8ca56gtfpe8" path="res://art/space interior elements/object_048.glb" id="20_rvhcf"]
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
+[ext_resource type="PackedScene" uid="uid://bkxmeoaq2j562" path="res://scenes/objects/power_station.tscn" id="22_qtx0h"]
 [ext_resource type="PackedScene" uid="uid://cewc7flo2v4np" path="res://scenes/objects/charging_station.tscn" id="24_2vp5n"]
-[ext_resource type="PackedScene" uid="uid://c1gxlb1j876rg" path="res://scenes/objects/power_source_station.tscn" id="24_3ghmv"]
 [ext_resource type="PackedScene" uid="uid://br81xjq0nbxge" path="res://scenes/objects/power_reacter_filled.tscn" id="26_viad1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_baran"]
@@ -259,9 +259,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.0
 
 [node name="Power" type="Node3D" parent="Objects"]
 
-[node name="PowerSourceStation" parent="Objects/Power" instance=ExtResource("24_3ghmv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.06306, 0.0625, 8.96309)
-
 [node name="generator" parent="Objects/Power" instance=ExtResource("18_bx00t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.293089, 0.0625, 9.05767)
 
@@ -280,6 +277,9 @@ mesh = SubResource("BoxMesh_a54y7")
 
 [node name="ChargingStation" parent="Objects/Power" instance=ExtResource("24_2vp5n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.282, 0.0389601, 9)
+
+[node name="power_station" parent="Objects/Power" instance=ExtResource("22_qtx0h")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.39335, 0, 9)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -360,8 +360,6 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48232, 0.235397, 4.44566)
 
 [node name="cannister_guard_filled_mesh" parent="." instance=ExtResource("26_viad1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.67835, 0.0625001, 8.95335)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63492, 0.0625001, 8.20335)
 
 [editable path="Objects/AirlockDoor"]
-[editable path="Objects/Power/PowerSourceStation"]
-[editable path="Objects/Power/PowerSourceStation/Slot"]
