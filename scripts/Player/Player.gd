@@ -58,6 +58,7 @@ const FOV_CHANGE = 2.0
 @onready var walking_collider : CollisionShape3D = $WalkingCollisionShape3D
 @onready var crouching_collider : CollisionShape3D = $CrouchingCollisionShape3D
 @onready var stamina_node : Stamina = $Stats/Stamina
+@onready var hud : Control = $Camera3D/HUD
 
 var look_speed = .005
 var move_speed = WALK_SPEED
@@ -149,7 +150,7 @@ func _physics_process(delta):
 		return
 	
 	if state & Flags.BUSY or state & Flags.DEAD:
-		if player_input.interacting or player_input.dropping:
+		if player_input.confirming:
 			state &= ~Flags.BUSY
 		return
 	
