@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cer7jmagct3r6"
-path="res://.godot/imported/rail-holder.glb-200a24a536dbb8bdc9aef7a9f11858a9.scn"
+uid="uid://dmj7stf3ieqy7"
+path="res://.godot/imported/chute.glb-b1408dc2c798865cd4e6c49c145df65b.scn"
 
 [deps]
 
-source_file="res://art/objects/rail-holder.glb"
-dest_files=["res://.godot/imported/rail-holder.glb-200a24a536dbb8bdc9aef7a9f11858a9.scn"]
+source_file="res://art/objects/chute.glb"
+dest_files=["res://.godot/imported/chute.glb-b1408dc2c798865cd4e6c49c145df65b.scn"]
 
 [params]
 
@@ -24,7 +24,7 @@ meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
 skins/use_named_skins=true
-animation/import=false
+animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true

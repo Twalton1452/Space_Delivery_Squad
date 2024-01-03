@@ -10,11 +10,19 @@ signal received_node(node: Node)
 signal released_node(node: Node)
 
 @export var holding_node : Item
+@export var can_move = false
+
+var remote_transform : RemoteTransform3D = null
 
 func is_holding_node() -> bool:
 	return holding_node != null
 
 func _ready():
+	if can_move:
+		remote_transform = RemoteTransform3D.new()
+		remote_transform.name = "RemoteTransform3D"
+		add_child(remote_transform)
+		
 	var interactable = get_node_or_null(Constants.INTERACTABLE)
 	if interactable != null:
 		interactable.interacted.connect(_on_interacted)
@@ -45,6 +53,9 @@ func receive_node(item: Item) -> void:
 	holding_node.rotation = Vector3.ZERO
 	holding_node.interactable.enable()
 	
+	if can_move:
+		remote_transform.remote_path = holding_node.get_path()
+	
 	received_node.emit(holding_node)
 
 func release_node() -> void:
@@ -53,4 +64,6 @@ func release_node() -> void:
 	
 	var to_be_released = holding_node
 	holding_node = null
+	if can_move:
+		remote_transform.remote_path = ""
 	released_node.emit(to_be_released)

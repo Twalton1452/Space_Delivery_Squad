@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=29 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="15_7a5q0"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
-[ext_resource type="PackedScene" uid="uid://cvbaglxpvfnvw" path="res://scenes/objects/generator.tscn" id="18_bx00t"]
 [ext_resource type="PackedScene" uid="uid://ceclhtgrtfobx" path="res://art/objects/pipe-ring-support.glb" id="19_bxt33"]
 [ext_resource type="PackedScene" uid="uid://rre2t2pta62e" path="res://scenes/objects/oxygen_station.tscn" id="19_kukbf"]
 [ext_resource type="Script" path="res://scripts/UI/OxygenDisplay.gd" id="19_wwlcr"]
@@ -25,15 +24,13 @@
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
 [ext_resource type="PackedScene" uid="uid://bkxmeoaq2j562" path="res://scenes/objects/power_station.tscn" id="22_qtx0h"]
 [ext_resource type="PackedScene" uid="uid://cewc7flo2v4np" path="res://scenes/objects/charging_station.tscn" id="24_2vp5n"]
+[ext_resource type="PackedScene" uid="uid://bo77fn5dmix3e" path="res://scenes/objects/cart.tscn" id="26_r1glp"]
 [ext_resource type="PackedScene" uid="uid://br81xjq0nbxge" path="res://scenes/objects/power_reacter_filled.tscn" id="26_viad1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_baran"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jb37y"]
 size = Vector3(0.5, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_a54y7"]
-size = Vector3(0.1, 0.5, 0.1)
 
 [node name="Ship" type="Node3D"]
 
@@ -259,27 +256,23 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.0
 
 [node name="Power" type="Node3D" parent="Objects"]
 
-[node name="generator" parent="Objects/Power" instance=ExtResource("18_bx00t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.293089, 0.0625, 9.05767)
-
 [node name="pipe-ring-support" parent="Objects/Power" instance=ExtResource("19_bxt33")]
 transform = Transform3D(-3.0598e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.0598e-08, 2.84925, 0.0625, 7.22476)
 
 [node name="pipe-ring-support2" parent="Objects/Power" instance=ExtResource("19_bxt33")]
 transform = Transform3D(-3.0598e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.0598e-08, 2.34925, 0.0625, 7.22476)
 
-[node name="PowerDisplay" type="Node3D" parent="Objects/Power"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.75)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Power/PowerDisplay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.153497, 0.314862, -0.112237)
-mesh = SubResource("BoxMesh_a54y7")
-
 [node name="ChargingStation" parent="Objects/Power" instance=ExtResource("24_2vp5n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.282, 0.0581396, 9)
 
 [node name="power_station" parent="Objects/Power" instance=ExtResource("22_qtx0h")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.39335, 0.0591419, 9)
+
+[node name="Slot" parent="Objects/Power/power_station" index="2" node_paths=PackedStringArray("holding_node")]
+holding_node = NodePath("../../../cannister_guard_filled_mesh")
+
+[node name="cannister_guard_filled_mesh" parent="Objects" instance=ExtResource("26_viad1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38492, 0.128007, 8.99065)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -357,9 +350,10 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="object_048" parent="." instance=ExtResource("20_rvhcf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48232, 0.235397, 4.44566)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48232, 0.235397, 3.44566)
 
-[node name="cannister_guard_filled_mesh" parent="." instance=ExtResource("26_viad1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63492, 0.0625001, 8.20335)
+[node name="rail-holder" parent="." instance=ExtResource("26_r1glp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30316, 0.0625, 2.4029)
 
 [editable path="Objects/AirlockDoor"]
+[editable path="Objects/Power/power_station"]

@@ -22,8 +22,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ne7k1")
 surface_material_override/0 = ExtResource("2_fv82c")
 
 [node name="PowerSource" parent="." index="1" node_paths=PackedStringArray("mesh_for_power_visual") instance=ExtResource("3_kgc6d")]
-max_power = 10.0
-available_power = 10.0
 mesh_for_power_visual = NodePath("../Cannister/Fill")
 
 [node name="Interactable" parent="." index="2" instance=ExtResource("4_2l4ec")]
