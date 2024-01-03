@@ -14,6 +14,7 @@ script = ExtResource("2_bqf5s")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="Interactable" parent="." index="1" instance=ExtResource("3_box6s")]
+interact_display_text = "Wide Box"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

@@ -2,8 +2,9 @@ extends Node3D
 class_name RechargingStation
 
 @export var power_recharge_rate := 1.0
-@export var recharge_rate_seconds := 1.0
+@export var recharge_rate_seconds := 2.0
 @export var finished_charging_sfx : AudioStream
+@export var platform : Node3D
 
 @onready var slot : Slot = $Slot
 
@@ -19,10 +20,17 @@ func begin_charging() -> void:
 	charge(power_source)
 
 func charge(power_source: PowerSource) -> void:
+	var t = create_tween()
+	t.set_parallel(true)
+	t.tween_property(platform, "rotation:y", platform.rotation.y + PI * 2, recharge_rate_seconds)
+	t.tween_property(slot.holding_node, "rotation:y", platform.rotation.y + PI * 2, recharge_rate_seconds)
+	t.set_loops()
+	
 	while slot.is_holding_node() and power_source.available_power < power_source.max_power:
 		power_source.recharge(power_recharge_rate)
 		await get_tree().create_timer(recharge_rate_seconds, false, true).timeout
 	
+	t.kill()
 	stop_charging()
 
 func stop_charging() -> void:

@@ -16,17 +16,9 @@ var current_power_source : PowerSource :
 
 func notify_power_gained() -> void:
 	power_gained.emit()
-	# TODO: Move to PowerDisaster
-	print("[PowerGrid]: Gained Power!")
-	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
-		(child as Light3D).show()
 
 func notify_power_lost() -> void:
 	power_lost.emit()
-	# TODO: Move to PowerDisaster
-	print("[PowerGrid]: No power!")
-	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
-		(child as Light3D).hide()
 
 ## Draw power from the Grid
 ## returns the attempted amount requested or the last available amount

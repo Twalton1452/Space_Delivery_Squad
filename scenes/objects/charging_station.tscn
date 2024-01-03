@@ -27,9 +27,10 @@ height = 0.05
 [sub_resource type="BoxShape3D" id="BoxShape3D_n8oxn"]
 size = Vector3(0.546631, 0.107178, 0.544922)
 
-[node name="ChargingStation" type="Node3D"]
+[node name="ChargingStation" type="Node3D" node_paths=PackedStringArray("platform")]
 script = ExtResource("1_scspf")
 finished_charging_sfx = ExtResource("2_jn2p5")
+platform = NodePath("Platform")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -50,6 +51,7 @@ mesh = SubResource("CylinderMesh_fqkcg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.155766, 0)
 
 [node name="Interactable" parent="Slot" instance=ExtResource("4_tg4ph")]
+interact_display_text = "Charging Station"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Slot/Interactable"]
 shape = SubResource("BoxShape3D_n8oxn")

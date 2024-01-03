@@ -31,11 +31,12 @@ surface_material_override/0 = SubResource("ShaderMaterial_71i6s")
 surface_material_override/1 = SubResource("StandardMaterial3D_bu5oe")
 
 [node name="PowerSource" parent="." index="1" node_paths=PackedStringArray("mesh_to_effect") instance=ExtResource("2_6mrv3")]
-max_power = 5.0
-available_power = 5.0
+max_power = 100.0
+available_power = 100.0
 mesh_to_effect = NodePath("../Cannister")
 
 [node name="Interactable" parent="." index="2" instance=ExtResource("4_ow848")]
+interact_display_text = "Reacter"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" index="0"]
 shape = SubResource("ConvexPolygonShape3D_3xfkx")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=30 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ceoib8msrs7jy" path="res://scenes/objects/box_large.tscn" id="4_am4w0"]
 [ext_resource type="Script" path="res://scripts/disasters/Airlock.gd" id="4_etjmd"]
 [ext_resource type="PackedScene" uid="uid://d4b6j2icha5d6" path="res://scenes/objects/box_long.tscn" id="5_bgub2"]
+[ext_resource type="Script" path="res://scripts/disasters/PowerLoss.gd" id="5_lmuhg"]
 [ext_resource type="PackedScene" uid="uid://o8pu2dqcdr7e" path="res://scenes/objects/box_small.tscn" id="6_qy0dp"]
 [ext_resource type="PackedScene" uid="uid://cm7bfr7yfdtk4" path="res://scenes/objects/box_wide.tscn" id="7_rqytm"]
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="8_dnlpq"]
@@ -140,6 +141,9 @@ editor_description = "Children of this Node are listening for specific events to
 script = ExtResource("4_etjmd")
 door_to_airlock = NodePath("../../Objects/DoorToAirlock")
 airlock_door = NodePath("../../Objects/AirlockDoor")
+
+[node name="PowerLoss" type="Node" parent="DisasterListeners"]
+script = ExtResource("5_lmuhg")
 
 [node name="Objects" type="Node3D" parent="."]
 
