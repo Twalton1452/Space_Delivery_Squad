@@ -11,6 +11,9 @@ func _on_power_lost() -> void:
 	
 	for player in PlayerManager.get_players():
 		player.turn_flags_on(Player.Flags.OXYGEN_DEPLETING)
+	
+	for power_consumer in get_tree().get_nodes_in_group(Constants.POWER_CONSUMER_GROUP):
+		(power_consumer as PowerConsumer).turn_off_functionality()
 
 func _on_power_gained() -> void:
 	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
@@ -18,3 +21,6 @@ func _on_power_gained() -> void:
 	
 	for player in PlayerManager.get_players():
 		player.turn_flags_off(Player.Flags.OXYGEN_DEPLETING)
+	
+	for power_consumer in get_tree().get_nodes_in_group(Constants.POWER_CONSUMER_GROUP):
+		(power_consumer as PowerConsumer).turn_on_functionality()

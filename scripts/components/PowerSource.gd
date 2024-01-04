@@ -1,4 +1,4 @@
-@icon("res://art/icons/lightning-bolt.svg")
+@icon("res://art/icons/battery-charge-white.svg")
 extends Node
 class_name PowerSource
 

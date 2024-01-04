@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=34 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bkxmeoaq2j562" path="res://scenes/objects/power_station.tscn" id="22_qtx0h"]
 [ext_resource type="PackedScene" uid="uid://cewc7flo2v4np" path="res://scenes/objects/charging_station.tscn" id="24_2vp5n"]
 [ext_resource type="PackedScene" uid="uid://dqi57b5v05q2o" path="res://scenes/objects/two_sided_door.tscn" id="24_v4jwp"]
+[ext_resource type="PackedScene" uid="uid://cdpmmjy7j8qs0" path="res://scenes/components/power_consumer.tscn" id="26_hl87m"]
 [ext_resource type="PackedScene" uid="uid://bo77fn5dmix3e" path="res://scenes/objects/cart.tscn" id="26_r1glp"]
 [ext_resource type="PackedScene" uid="uid://br81xjq0nbxge" path="res://scenes/objects/power_reacter_filled.tscn" id="26_viad1"]
 [ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="27_wihpu"]
@@ -308,6 +309,8 @@ triggers = [NodePath("TriggerZone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.362061, 0)
 shape = SubResource("BoxShape3D_nh26e")
 
+[node name="PowerConsumer" parent="Objects/two_sided_door/TriggerZone" instance=ExtResource("26_hl87m")]
+
 [node name="two_sided_door2" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("24_v4jwp")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.50272, 0.0737158, -1.55664)
 triggers = [NodePath("TriggerZone")]
@@ -317,6 +320,8 @@ triggers = [NodePath("TriggerZone")]
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/two_sided_door2/TriggerZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.362061, 0)
 shape = SubResource("BoxShape3D_nh26e")
+
+[node name="PowerConsumer" parent="Objects/two_sided_door2/TriggerZone" instance=ExtResource("26_hl87m")]
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Objects"]
 
