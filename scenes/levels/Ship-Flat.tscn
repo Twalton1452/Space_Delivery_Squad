@@ -308,6 +308,16 @@ triggers = [NodePath("TriggerZone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.362061, 0)
 shape = SubResource("BoxShape3D_nh26e")
 
+[node name="two_sided_door2" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("24_v4jwp")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.50272, 0.0737158, -1.55664)
+triggers = [NodePath("TriggerZone")]
+
+[node name="TriggerZone" parent="Objects/two_sided_door2" instance=ExtResource("29_qc550")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/two_sided_door2/TriggerZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.362061, 0)
+shape = SubResource("BoxShape3D_nh26e")
+
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh_library = ExtResource("16_b1ic6")
