@@ -45,7 +45,10 @@ func _physics_process(_delta):
 				
 				if current_interactable is Interactable:
 					if current_interactable.can_interact():
-						interact_label.text = get_current_interact_input() + current_interactable.interact_display_text
+						if current_interactable.display_action_button_before_text:
+							interact_label.text = get_current_interact_input() + current_interactable.interact_display_text
+						else:
+							interact_label.text = current_interactable.interact_display_text
 						interact_label.show()
 					else:
 						interact_label.hide()

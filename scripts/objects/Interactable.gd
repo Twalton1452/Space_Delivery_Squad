@@ -4,7 +4,10 @@ class_name Interactable
 
 signal interacted(interactable: Interactable, interacter: Player)
 
+## If the interactable should visually return to its original state once interacted with
 @export var toggler = false
+## When the player is hovering the Interactable, should it display [E]?
+@export var display_action_button_before_text = true
 @export var interact_display_text = "Interact"
 
 @export_category("Internal Scene Stuff")
