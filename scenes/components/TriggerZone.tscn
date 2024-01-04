@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy5bsf67m2kda"]
+
+[ext_resource type="Script" path="res://scripts/components/TriggerZone.gd" id="1_2333v"]
+
+[node name="TriggerZone" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+input_ray_pickable = false
+script = ExtResource("1_2333v")
