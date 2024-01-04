@@ -44,7 +44,7 @@ const WALK_SPEED = 1.5
 const RUN_SPEED = 2.5
 const CROUCH_SPEED = 0.8
 const JUMP_VELOCITY = 3.0
-const FOV_CHANGE = 2.0
+const FOV_CHANGE = 6.0
 
 @export var crouched_size = 0.5
 @export var uncrouched_size = 1.0
@@ -91,6 +91,7 @@ func _ready():
 	else:
 		set_peer_settings()
 	
+	base_fov = camera.fov
 	# Common between peer/client settings
 	head_bone_id = skeleton_3d.find_bone("Head")
 	state_changed.connect(_on_state_changed)
@@ -133,14 +134,6 @@ func _on_state_changed(new_state: int, changed: int) -> void:
 	elif new_state & Flags.WALKING:
 		move_speed = WALK_SPEED
 
-## Based on the velocity, change the camera's FOV
-## not used at the moment because the x,z velocity don't reset to 0
-## so the fov never changes back once it gets modified unless hitting a wall
-func movement_based_fov_change(delta) -> void:
-	var velocity_clamped = clamp(velocity.length(), 0.5, move_speed * 2)
-	var target_fov = base_fov + FOV_CHANGE * velocity_clamped
-	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
-
 ## Server receives Input from clients and moves them
 func _physics_process(delta):
 	if not is_multiplayer_authority():
@@ -150,6 +143,7 @@ func _physics_process(delta):
 		return
 	
 	if state & Flags.BUSY or state & Flags.DEAD:
+		velocity = Vector3.ZERO
 		if player_input.confirming:
 			state &= ~Flags.BUSY
 		return
@@ -183,6 +177,33 @@ func _physics_process(delta):
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
 	animate()
+
+func move(direction: Vector3, jump: int, delta: float) -> void:
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	
+	# Handle Jump.
+	if jump > 0 and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+	
+	if is_on_floor():
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
+	else:
+		# After a jump, allow the player to influence the direction slightly
+		if direction:
+			velocity.x = lerp(velocity.x, direction.x * move_speed, delta * 2.0)
+			velocity.z = lerp(velocity.z, direction.z * move_speed, delta * 2.0)
+	
+	move_and_slide()
+
+## Based on the velocity, change the camera's FOV
+## not used at the moment because the x,z velocity don't reset to 0
+## so the fov never changes back once it gets modified unless hitting a wall
+func movement_based_fov_change(delta) -> void:
+	var velocity_clamped = clamp(velocity.length(), 0.5, move_speed * 2)
+	var target_fov = base_fov + FOV_CHANGE * velocity_clamped
+	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
 
 func die() -> void:
 	var t = create_tween()
@@ -218,24 +239,6 @@ func interact_request() -> void:
 	
 	state &= ~Flags.INTERACTING
 
-func move(direction: Vector3, jump: int, delta: float) -> void:
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-	
-	# Handle Jump.
-	if jump > 0 and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-	
-	if is_on_floor():
-		velocity.x = direction.x * move_speed
-		velocity.z = direction.z * move_speed
-	else:
-		# After a jump, allow the player to influence the direction slightly
-		if direction:
-			velocity.x = lerp(velocity.x, direction.x * move_speed, delta * 2.0)
-			velocity.z = lerp(velocity.z, direction.z * move_speed, delta * 2.0)
-	
-	move_and_slide()
 
 func peer_animate() -> void:
 	if is_multiplayer_authority():

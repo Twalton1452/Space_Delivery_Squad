@@ -40,7 +40,7 @@ func _unhandled_input(event):
 	
 	if event is InputEventMouseMotion and \
 	Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and \
-	player.is_flag_off(Player.Flags.BUSY):
+	player.is_flag_off(Player.Flags.BUSY) and player.is_flag_off(Player.Flags.DEAD):
 		player.rotate_y(-event.relative.x * player.look_speed)
 		player.camera.rotate_x(-event.relative.y * player.look_speed)
 		player.camera.rotation.x = clamp(player.camera.rotation.x, -PI/2, PI/2)

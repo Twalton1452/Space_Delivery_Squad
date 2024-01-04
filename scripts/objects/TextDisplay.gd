@@ -24,7 +24,7 @@ func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
 	line_edit.grab_focus()
 	(interacter.hud.get_node("Label") as Label).text = "Editing Text"
 	
-	await interacter.state_changed
+	await interacter.no_longer_busy
 	if label.text != line_edit.text:
 		label.text = line_edit.text
 		interactable.interact_display_text = label.text
