@@ -29,14 +29,15 @@ enum Flags {
 	# Interactions
 	BUSY = 1 << 6, # Doing something clientside
 	INTERACTING = 1 << 7,
-	HOLDING = 1 << 8,
-	DROPPING = 1 << 9,
+	INTERACTING_PROGRESS = 1 << 8,
+	HOLDING = 1 << 9,
+	DROPPING = 1 << 10,
 	
 	# States
-	DEAD = 1 << 10,
-	DAMAGED = 1 << 11,
-	OXYGEN_DEPLETING = 1 << 12,
-	OXYGEN_DEPRIVED = 1 << 13,
+	DEAD = 1 << 11,
+	DAMAGED = 1 << 12,
+	OXYGEN_DEPLETING = 1 << 13,
+	OXYGEN_DEPRIVED = 1 << 14,
 	
 }
 
@@ -59,6 +60,7 @@ const FOV_CHANGE = 6.0
 @onready var crouching_collider : CollisionShape3D = $CrouchingCollisionShape3D
 @onready var stamina_node : Stamina = $Stats/Stamina
 @onready var hud : Control = $Camera3D/HUD
+@onready var interact_progress_bar : TextureProgressBar = $Camera3D/HUD/InteractProgressBar
 
 var look_speed = .005
 var move_speed = WALK_SPEED
@@ -95,6 +97,7 @@ func _ready():
 	# Common between peer/client settings
 	head_bone_id = skeleton_3d.find_bone("Head")
 	state_changed.connect(_on_state_changed)
+	interact_progress_bar.hide()
 
 ## Settings for the controlling player on their client
 func set_clientside_settings() -> void:
@@ -156,6 +159,8 @@ func _physics_process(delta):
 		new_state |= Flags.DROPPING
 	if player_input.interacting:
 		new_state = (new_state & ~Flags.BUSY) | Flags.INTERACTING
+	elif player_input.released_interacting:
+		new_state = new_state & ~(Flags.INTERACTING_PROGRESS | Flags.INTERACTING)
 	
 	# Movement States
 	if player_input.sprinting and stamina_node.can_sprint:
@@ -231,14 +236,34 @@ func hold(node_path: String) -> void:
 	holding_something.emit(self, get_held_node())
 
 func interact_request() -> void:
-	# Interacting with air or doing something already
+	# Already interacting
+	if is_flag_on(Flags.INTERACTING_PROGRESS):
+		return
+	
+	# Hold to Interact
+	if interacter.current_interactable is Interactable and interacter.current_interactable.time_to_interact > 0.0:
+		var interact_progress = 0.0
+		var percent_per_frame = interacter.current_interactable.time_to_interact / Engine.physics_ticks_per_second
+		
+		turn_flags_on(Flags.INTERACTING_PROGRESS)
+		interact_progress_bar.show()
+		
+		while is_flag_on(Flags.INTERACTING_PROGRESS) and interact_progress < 1.0:
+			interact_progress += percent_per_frame
+			interact_progress_bar.value = interact_progress
+			await get_tree().physics_frame
+		
+		interact_progress_bar.hide()
+		# Are we still trying to interact after progress has been made
+		if is_flag_off(Flags.INTERACTING_PROGRESS):
+			return
+	
 	if interacter.current_interactable != null:
 		# TODO: Play an animation to hide response time from server
 		InteractHandler.request_interaction(self, interacter.current_interactable)
 		interacted.emit()
 	
 	state &= ~Flags.INTERACTING
-
 
 func peer_animate() -> void:
 	if is_multiplayer_authority():

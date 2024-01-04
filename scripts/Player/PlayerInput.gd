@@ -11,6 +11,7 @@ class_name PlayerInput
 @export var sprinting := 0
 @export var crouching := 0
 @export var interacting := false
+@export var released_interacting := false
 @export var dropping := false
 @export var confirming := false
 @export var neck_look : float
@@ -54,6 +55,7 @@ func _physics_process(_delta):
 	sprinting = Input.is_action_pressed("sprint")
 	crouching = Input.is_action_just_pressed("crouch")
 	interacting = Input.is_action_just_pressed("interact")
+	released_interacting = Input.is_action_just_released("interact")
 	dropping = Input.is_action_pressed("drop")
 	confirming = Input.is_action_just_pressed("confirm")
 
