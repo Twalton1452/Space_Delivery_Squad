@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqi57b5v05q2o"]
+[gd_scene load_steps=9 format=3 uid="uid://dqi57b5v05q2o"]
 
 [ext_resource type="PackedScene" uid="uid://b3sn2qoeja8y" path="res://art/objects/two_sided_door.glb" id="1_kj2yk"]
 [ext_resource type="Script" path="res://scripts/objects/Door.gd" id="2_fek0m"]
+[ext_resource type="AudioStream" uid="uid://d0erb76qxvy1" path="res://sfx/powered_door_open.ogg" id="3_qb7wc"]
+[ext_resource type="AudioStream" uid="uid://clywssj41n1qr" path="res://sfx/powered_door_close.ogg" id="4_lc65j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k3p6a"]
 size = Vector3(0.0544434, 0.628845, 0.785156)
@@ -69,6 +71,8 @@ _data = {
 
 [node name="two_sided_door" node_paths=PackedStringArray("collision_body") instance=ExtResource("1_kj2yk")]
 script = ExtResource("2_fek0m")
+open_sfx = ExtResource("3_qb7wc")
+close_sfx = ExtResource("4_lc65j")
 collision_body = NodePath("StaticBody3D")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="0"]
