@@ -243,7 +243,7 @@ func interact_request() -> void:
 	# Hold to Interact
 	if interacter.current_interactable is Interactable and interacter.current_interactable.time_to_interact > 0.0:
 		var interact_progress = 0.0
-		var percent_per_frame = interacter.current_interactable.time_to_interact / Engine.physics_ticks_per_second
+		var percent_per_frame = 1.0 / Engine.physics_ticks_per_second / interacter.current_interactable.time_to_interact
 		
 		turn_flags_on(Flags.INTERACTING_PROGRESS)
 		interact_progress_bar.show()
@@ -254,6 +254,7 @@ func interact_request() -> void:
 			await get_tree().physics_frame
 		
 		interact_progress_bar.hide()
+		interact_progress_bar.value = 0.0
 		# Are we still trying to interact after progress has been made
 		if is_flag_off(Flags.INTERACTING_PROGRESS):
 			return
