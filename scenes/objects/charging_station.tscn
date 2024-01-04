@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cewc7flo2v4np"]
+[gd_scene load_steps=12 format=3 uid="uid://cewc7flo2v4np"]
 
 [ext_resource type="Script" path="res://scripts/objects/RechargingStation.gd" id="1_scspf"]
 [ext_resource type="AudioStream" uid="uid://b420c06edrg3j" path="res://sfx/charging_complete.ogg" id="2_jn2p5"]
 [ext_resource type="PackedScene" uid="uid://bh3rmah0q2i03" path="res://scenes/components/slot.tscn" id="3_rw070"]
 [ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="4_tg4ph"]
+[ext_resource type="AudioStream" uid="uid://6d3o7q3gcffl" path="res://sfx/charging_hum.ogg" id="5_6in7d"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dys4j"]
 size = Vector3(0.738281, 0.102539, 0.728516)
@@ -115,3 +116,12 @@ shape = SubResource("BoxShape3D_n8oxn")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Slot/Interactable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784728, 0)
 shape = SubResource("BoxShape3D_n8oxn")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_6in7d")
+volume_db = -20.766
+unit_size = 7.0
+pitch_scale = 0.78
+max_distance = 1.5
+bus = &"SFX"
+area_mask = 2

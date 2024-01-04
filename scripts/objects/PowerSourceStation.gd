@@ -6,6 +6,7 @@ class_name PowerSourceStation
 @export var door : Rotater
 
 @onready var slot : Slot = $Slot
+@onready var audio_player_3d : AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 func _ready():
 	slot.received_node.connect(_on_node_received)
@@ -16,6 +17,7 @@ func begin_draining() -> void:
 	if power_source == null:
 		return
 	
+	audio_player_3d.play()
 	drain(power_source)
 
 func drain(power_source: PowerSource) -> void:
@@ -30,6 +32,8 @@ func drain(power_source: PowerSource) -> void:
 	stop_draining()
 
 func stop_draining() -> void:
+	audio_player_3d.stop()
+	
 	if not door.is_rotated:
 		door.rotate_parent()
 	
