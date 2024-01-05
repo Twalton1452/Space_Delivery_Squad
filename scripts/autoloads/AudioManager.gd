@@ -104,12 +104,16 @@ func play_one_shot_global(sfx: AudioStream) -> void:
 	await sfx_player.finished
 	sfx_player.queue_free()
 
-func play_one_shot_3d(to_parent: Node3D, sfx: AudioStream, volume_db: float = 0.0, falloff: AudioFallOff = AudioFallOff.MEDIUM) -> void:
+func play_one_shot_3d(to_parent: Node3D, sfx: AudioStream, rand_pitch: bool = true, volume_db: float = 0.0, falloff: AudioFallOff = AudioFallOff.MEDIUM) -> void:
 	var sfx_player = AudioStreamPlayer3D.new()
 	sfx_player.bus = "SFX"
 	sfx_player.stream = sfx
 	sfx_player.volume_db = volume_db
 	sfx_player.area_mask = Constants.PLAYER_LAYER
+	
+	if rand_pitch:
+		sfx_player.pitch_scale = randf_range(0.9, 1.1)
+	
 	match falloff:
 		AudioFallOff.SHORT:
 			sfx_player.unit_size = 5.0
@@ -117,6 +121,7 @@ func play_one_shot_3d(to_parent: Node3D, sfx: AudioStream, volume_db: float = 0.
 			sfx_player.unit_size = 10.0
 		AudioFallOff.LONG:
 			sfx_player.unit_size = 15.0
+	
 	to_parent.add_child(sfx_player, true)
 	sfx_player.position = Vector3.ZERO
 	sfx_player.play()

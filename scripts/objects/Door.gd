@@ -43,7 +43,7 @@ func _on_trigger(_trigger: Area3D, _interacter: Player) -> void:
 		animation_player.seek(current_seek, true)
 		collision_body.collision_layer = 0
 		opened = true
-		AudioManager.play_one_shot_3d(self, open_sfx, -20.0, AudioManager.AudioFallOff.SHORT)
+		AudioManager.play_one_shot_3d(self, open_sfx, true, -20.0, AudioManager.AudioFallOff.SHORT)
 		open.emit()
 	else:
 		# Need the end of the animation for playing backwards
@@ -54,5 +54,5 @@ func _on_trigger(_trigger: Area3D, _interacter: Player) -> void:
 		animation_player.seek(current_seek, true)
 		collision_body.collision_layer = 1 << 0
 		opened = false
-		AudioManager.play_one_shot_3d(self, close_sfx, -20.0, AudioManager.AudioFallOff.SHORT)
+		AudioManager.play_one_shot_3d(self, close_sfx, true, -20.0, AudioManager.AudioFallOff.SHORT)
 		close.emit()
