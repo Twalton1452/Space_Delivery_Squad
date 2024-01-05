@@ -243,11 +243,10 @@ func interact_request() -> void:
 	# Hold to Interact
 	if interacter.current_interactable is Interactable and interacter.current_interactable.time_to_interact > 0.0:
 		var interact_progress = 0.0
-		var percent_per_frame = 1.0 / Engine.physics_ticks_per_second / interacter.current_interactable.time_to_interact
+		var percent_per_frame = 1.0 / (Engine.physics_ticks_per_second * interacter.current_interactable.time_to_interact)
 		
 		turn_flags_on(Flags.INTERACTING_PROGRESS)
 		interact_progress_bar.show()
-		
 		while is_flag_on(Flags.INTERACTING_PROGRESS) and interact_progress < 1.0:
 			interact_progress += percent_per_frame
 			interact_progress_bar.value = interact_progress
