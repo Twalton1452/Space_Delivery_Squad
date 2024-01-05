@@ -1,12 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqi57b5v05q2o"]
+[gd_scene load_steps=13 format=3 uid="uid://dqi57b5v05q2o"]
 
 [ext_resource type="PackedScene" uid="uid://b3sn2qoeja8y" path="res://art/objects/two_sided_door.glb" id="1_kj2yk"]
 [ext_resource type="Script" path="res://scripts/objects/Door.gd" id="2_fek0m"]
 [ext_resource type="AudioStream" uid="uid://d0erb76qxvy1" path="res://sfx/powered_door_open.ogg" id="3_qb7wc"]
 [ext_resource type="AudioStream" uid="uid://clywssj41n1qr" path="res://sfx/powered_door_close.ogg" id="4_lc65j"]
+[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="5_ji2y6"]
+[ext_resource type="Script" path="res://scripts/components/PowerFallback.gd" id="6_tm6bc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k3p6a"]
 size = Vector3(0.0544434, 0.628845, 0.785156)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lv1oi"]
+points = PackedVector3Array(0.026147, 0.627394, 0.00111127, 0.026147, 0.627394, -0.399582, -0.0267949, 0.627394, 0.00111127, 0.026147, -4.76502e-06, 0.00111127, -0.0267949, 0.627394, -0.399582, 0.026147, -4.76502e-06, -0.399582, -0.0267949, -4.76502e-06, 0.00111127, -0.0267949, -4.76502e-06, -0.399582)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_n6xpt"]
+points = PackedVector3Array(0.026147, 0.627394, 0.399543, 0.026147, 0.627394, -0.00111351, -0.0267949, 0.627394, 0.399543, 0.026147, -4.76502e-06, 0.399543, -0.0267949, 0.627394, -0.00111351, 0.026147, -4.76502e-06, -0.00111351, -0.0267949, -4.76502e-06, 0.399543, -0.0267949, -4.76502e-06, -0.00111351)
 
 [sub_resource type="Animation" id="Animation_pef7k"]
 length = 0.001
@@ -69,8 +77,9 @@ _data = {
 "open": SubResource("Animation_7fnjl")
 }
 
-[node name="two_sided_door" node_paths=PackedStringArray("collision_body") instance=ExtResource("1_kj2yk")]
+[node name="two_sided_door" node_paths=PackedStringArray("triggers", "collision_body") instance=ExtResource("1_kj2yk")]
 script = ExtResource("2_fek0m")
+triggers = [NodePath("DoorLeft/Interactable"), NodePath("DoorRight/Interactable")]
 open_sfx = ExtResource("3_qb7wc")
 close_sfx = ExtResource("4_lc65j")
 collision_body = NodePath("StaticBody3D")
@@ -84,8 +93,30 @@ shape = SubResource("BoxShape3D_k3p6a")
 [node name="DoorLeft" parent="." index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00201699, 2.5034e-06, 0.400872)
 
+[node name="Interactable" parent="DoorLeft" index="0" instance=ExtResource("5_ji2y6")]
+collision_layer = 0
+time_to_interact = 2.0
+interact_display_text = "Door"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorLeft/Interactable" index="0"]
+shape = SubResource("ConvexPolygonShape3D_lv1oi")
+
+[node name="PowerFallback" type="Node" parent="DoorLeft/Interactable" index="1"]
+script = ExtResource("6_tm6bc")
+
 [node name="DoorRight" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00201699, 2.5034e-06, -0.399128)
+
+[node name="Interactable" parent="DoorRight" index="0" instance=ExtResource("5_ji2y6")]
+collision_layer = 0
+time_to_interact = 2.0
+interact_display_text = "Door"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorRight/Interactable" index="0"]
+shape = SubResource("ConvexPolygonShape3D_n6xpt")
+
+[node name="PowerFallback" type="Node" parent="DoorRight/Interactable" index="1"]
+script = ExtResource("6_tm6bc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {

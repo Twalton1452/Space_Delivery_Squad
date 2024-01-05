@@ -14,6 +14,9 @@ func _on_power_lost() -> void:
 	
 	for power_consumer in get_tree().get_nodes_in_group(Constants.POWER_CONSUMER_GROUP):
 		(power_consumer as PowerConsumer).turn_off_functionality()
+	
+	for power_fallback in get_tree().get_nodes_in_group(Constants.POWER_FALLBACK_GROUP):
+		(power_fallback as PowerFallback).turn_on_functionality()
 
 func _on_power_gained() -> void:
 	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
@@ -24,3 +27,6 @@ func _on_power_gained() -> void:
 	
 	for power_consumer in get_tree().get_nodes_in_group(Constants.POWER_CONSUMER_GROUP):
 		(power_consumer as PowerConsumer).turn_on_functionality()
+	
+	for power_fallback in get_tree().get_nodes_in_group(Constants.POWER_FALLBACK_GROUP):
+		(power_fallback as PowerFallback).turn_off_functionality()

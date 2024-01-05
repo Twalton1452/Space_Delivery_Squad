@@ -94,7 +94,7 @@ func change_level(scene: PackedScene):
 	changed_level.emit()
 
 # The server can restart the level by pressing Home. Mostly for debugging
-func _input(event):
+func _unhandled_input(event):
 	if not is_multiplayer_authority() or is_changing_levels:
 		return
 	

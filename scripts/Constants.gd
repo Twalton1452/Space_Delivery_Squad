@@ -26,3 +26,4 @@ const CONNECTER_LAYER = 1 << 0 | 1 << 4
 const POWER_SOURCE = "PowerSource"
 const POWER_SOURCE_GROUP = "PowerSources"
 const POWER_CONSUMER_GROUP = "PowerConsumers"
+const POWER_FALLBACK_GROUP = "PowerFallbacks"

@@ -7,18 +7,18 @@ extends Node
 var disaster_occurring = false
 
 func _ready() -> void:
-	door_to_airlock.open.connect(_on_door_open)
-	airlock_door.open.connect(_on_door_open)
+	door_to_airlock.opened.connect(_on_door_open)
+	airlock_door.opened.connect(_on_door_open)
 	
-	door_to_airlock.close.connect(_on_door_close)
-	airlock_door.close.connect(_on_door_close)
+	door_to_airlock.closed.connect(_on_door_close)
+	airlock_door.closed.connect(_on_door_close)
 
 #region Future DisasterListener class
 func begin_condition() -> bool:
-	return door_to_airlock.opened and airlock_door.opened
+	return door_to_airlock.is_open and airlock_door.is_open
 
 func end_condition() -> bool:
-	return not door_to_airlock.opened or not airlock_door.opened
+	return not door_to_airlock.is_open or not airlock_door.is_open
 
 func begin_disaster() -> void:
 	disaster_occurring = DisasterManager.start_disaster(DisasterManager.Disasters.AIRLOCK)
