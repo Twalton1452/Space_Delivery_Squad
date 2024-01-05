@@ -15,6 +15,9 @@ const ACCEPTABLE_INTERACTABLE_DISTANCE_IN_M = 5
 const INTERACTABLE_LAYER = 1 << 2
 const NON_INTERACTABLE_LAYER = 0
 
+# Static Collision Constants
+const WORLD_LAYER = 1 << 0
+
 # Player Constants
 const PLAYER_LAYER = 1 << 1
 

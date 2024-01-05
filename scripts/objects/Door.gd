@@ -33,7 +33,6 @@ func _on_interactable_interacted(interactable: Interactable, who_interacted: Pla
 	_on_trigger(interactable, who_interacted)
 
 func _on_trigger(_trigger: Area3D, _interacter: Player) -> void:
-	# Allows for interupting the animation cleanly
 	if is_open:
 		close()
 	else:
@@ -43,6 +42,7 @@ func open() -> void:
 	if is_open:
 		return
 	
+	# Allows for interupting the animation cleanly
 	var current_seek = 0.0
 	if animation_player.is_playing():
 		current_seek = animation_player.current_animation_position
@@ -57,16 +57,18 @@ func close() -> void:
 	if not is_open:
 		return
 	
+	# Allows for interupting the animation cleanly
 	var current_seek = 0.0
 	if animation_player.is_playing():
 		current_seek = animation_player.current_animation_position
+	
 	# Need the end of the animation for playing backwards
 	if not animation_player.is_playing():
 		current_seek = animation_player.get_animation("open").length
 	
 	animation_player.play_backwards("open")
 	animation_player.seek(current_seek, true)
-	collision_body.collision_layer = 1 << 0
+	collision_body.collision_layer = Constants.WORLD_LAYER
 	is_open = false
 	AudioManager.play_one_shot_3d(self, close_sfx, true, -20.0, AudioManager.AudioFallOff.SHORT)
 	closed.emit()

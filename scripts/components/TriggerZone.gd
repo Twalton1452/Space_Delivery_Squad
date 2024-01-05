@@ -16,6 +16,9 @@ func _ready() -> void:
 
 func enable() -> void:
 	collision_mask = detecting_mask
+	
+	if get_overlapping_bodies().size() == 0:
+		empty.emit(self, null)
 
 func disable() -> void:
 	collision_mask = 0
