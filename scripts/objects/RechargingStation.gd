@@ -7,6 +7,7 @@ class_name RechargingStation
 
 @onready var slot : Slot = $Slot
 @onready var audio_player_3d : AudioStreamPlayer3D = $AudioStreamPlayer3D
+@onready var charge_particles : GPUParticles3D = $GPUParticles3D
 
 var charging_tween : Tween = null
 
@@ -18,7 +19,10 @@ func begin_charging() -> void:
 	var power_source = get_attached_power_source(slot.holding_node)
 	if power_source == null:
 		return
+	
 	audio_player_3d.play()
+	charge_particles.emitting = true
+	
 	charge(power_source)
 
 func charge(power_source: PowerSource) -> void:
@@ -40,7 +44,10 @@ func charge(power_source: PowerSource) -> void:
 func stop_charging() -> void:
 	if charging_tween != null and charging_tween.is_valid():
 		charging_tween.kill()
+	
+	charge_particles.emitting = false
 	audio_player_3d.stop()
+	
 	var power_source = get_attached_power_source(slot.holding_node)
 	if power_source == null:
 		return

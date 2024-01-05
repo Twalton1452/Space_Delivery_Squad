@@ -1,10 +1,32 @@
-[gd_scene load_steps=12 format=3 uid="uid://cewc7flo2v4np"]
+[gd_scene load_steps=16 format=3 uid="uid://cewc7flo2v4np"]
 
 [ext_resource type="Script" path="res://scripts/objects/RechargingStation.gd" id="1_scspf"]
 [ext_resource type="AudioStream" uid="uid://b420c06edrg3j" path="res://sfx/charging_complete.ogg" id="2_jn2p5"]
 [ext_resource type="PackedScene" uid="uid://bh3rmah0q2i03" path="res://scenes/components/slot.tscn" id="3_rw070"]
+[ext_resource type="Texture2D" uid="uid://17uw5m4p1136" path="res://art/icons/battery-charge-white.svg" id="4_7s1nu"]
 [ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="4_tg4ph"]
 [ext_resource type="AudioStream" uid="uid://6d3o7q3gcffl" path="res://sfx/charging_hum.ogg" id="5_6in7d"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bn7ua"]
+emission_shape = 2
+emission_sphere_radius = 0.33
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.3
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0qjik"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.470588, 1, 0.501961, 1)
+albedo_texture = ExtResource("4_7s1nu")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_mk6ls"]
+material = SubResource("StandardMaterial3D_0qjik")
+size = Vector2(0.07, 0.07)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dys4j"]
 size = Vector3(0.738281, 0.102539, 0.728516)
@@ -86,6 +108,25 @@ size = Vector3(0.546631, 0.107178, 0.544922)
 script = ExtResource("1_scspf")
 finished_charging_sfx = ExtResource("2_jn2p5")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_6in7d")
+volume_db = -20.766
+unit_size = 7.0
+pitch_scale = 0.78
+max_distance = 1.5
+bus = &"SFX"
+area_mask = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.445126, 0)
+emitting = false
+amount = 6
+lifetime = 2.0
+randomness = 1.0
+visibility_aabb = AABB(-0.23035, -0.323775, -0.285342, 0.460699, 0.773527, 0.570685)
+process_material = SubResource("ParticleProcessMaterial_bn7ua")
+draw_pass_1 = SubResource("QuadMesh_mk6ls")
+
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
@@ -116,12 +157,3 @@ shape = SubResource("BoxShape3D_n8oxn")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Slot/Interactable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784728, 0)
 shape = SubResource("BoxShape3D_n8oxn")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("5_6in7d")
-volume_db = -20.766
-unit_size = 7.0
-pitch_scale = 0.78
-max_distance = 1.5
-bus = &"SFX"
-area_mask = 2

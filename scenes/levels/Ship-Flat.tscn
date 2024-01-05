@@ -177,14 +177,17 @@ triggers = [NodePath("../LeverBehind"), NodePath("../LeverInside")]
 [node name="AirlockLever" parent="Objects" instance=ExtResource("10_83m8u")]
 transform = Transform3D(-4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, -1.42109e-14, -7.10543e-15, -8.74228e-08, -1, -3.50101, 0.5, 1.8)
 time_to_interact = 3.0
+interact_display_text = "Space"
 
 [node name="LeverInside" parent="Objects" instance=ExtResource("10_83m8u")]
 transform = Transform3D(-4.37114e-08, 1, 4.65882e-22, 1, 4.37114e-08, 8.74228e-08, 8.74228e-08, 3.82137e-15, -1, -1.501, 0.5, 1.83534)
 time_to_interact = 1.0
+interact_display_text = "Airlock"
 
 [node name="LeverBehind" parent="Objects" instance=ExtResource("10_83m8u")]
 transform = Transform3D(4.37114e-08, -1, -3.82137e-15, 1, 4.37114e-08, -1.74846e-07, 1.74846e-07, 3.82137e-15, 1, -1.618, 0.5, 1.83534)
 time_to_interact = 1.0
+interact_display_text = "Airlock"
 
 [node name="cannister" parent="Objects" instance=ExtResource("15_7a5q0")]
 transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.23463, 0.210307, -4.1869)
@@ -278,7 +281,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.282, 0.0581396, 9)
 [node name="power_station" parent="Objects/Power" instance=ExtResource("22_qtx0h")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.39335, 0.0591419, 9)
 
-[node name="Slot" parent="Objects/Power/power_station" index="2" node_paths=PackedStringArray("holding_node")]
+[node name="Slot" parent="Objects/Power/power_station" index="4" node_paths=PackedStringArray("holding_node")]
 holding_node = NodePath("../../../cannister_guard_filled_mesh")
 
 [node name="cannister_guard_filled_mesh" parent="Objects" instance=ExtResource("26_viad1")]

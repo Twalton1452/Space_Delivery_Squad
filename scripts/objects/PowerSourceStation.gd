@@ -7,6 +7,7 @@ class_name PowerSourceStation
 
 @onready var slot : Slot = $Slot
 @onready var audio_player_3d : AudioStreamPlayer3D = $AudioStreamPlayer3D
+@onready var spark_particles : GPUParticles3D = $GPUParticles3D
 
 func _ready():
 	slot.received_node.connect(_on_node_received)
@@ -18,6 +19,7 @@ func begin_draining() -> void:
 		return
 	
 	audio_player_3d.play()
+	spark_particles.emitting = true
 	drain(power_source)
 
 func drain(power_source: PowerSource) -> void:
@@ -32,6 +34,7 @@ func drain(power_source: PowerSource) -> void:
 	stop_draining()
 
 func stop_draining() -> void:
+	spark_particles.emitting = false
 	audio_player_3d.stop()
 	
 	if not door.is_rotated:
