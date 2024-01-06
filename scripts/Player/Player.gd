@@ -203,8 +203,7 @@ func move(direction: Vector3, jump: int, delta: float) -> void:
 	move_and_slide()
 
 ## Based on the velocity, change the camera's FOV
-## not used at the moment because the x,z velocity don't reset to 0
-## so the fov never changes back once it gets modified unless hitting a wall
+## Gives more "feel" to running around
 func movement_based_fov_change(delta) -> void:
 	var velocity_clamped = clamp(velocity.length(), 0.5, move_speed * 2)
 	var target_fov = base_fov + FOV_CHANGE * velocity_clamped

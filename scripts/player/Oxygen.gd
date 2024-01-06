@@ -7,14 +7,14 @@ class_name Oxygen
 	set(new_value):
 		value = new_value
 		visual_bar.value = value
-@export var recharge_rate_per_frame = 0.2
-@export var consume_rate_per_frame = 0.1
+@export var recharge_rate_per_second = 2.0
+@export var consume_rate_per_second = 1.0
 
 @onready var player : Player = $"../.."
 
 var can_breathe = true : 
 	get:
-		return value > consume_rate_per_frame
+		return value > consume_rate_per_second
 var recharging = true
 var draining = false
 
@@ -45,8 +45,10 @@ func begin_draining_oxygen() -> void:
 	drain_oxygen()
 
 func drain_oxygen() -> void:
+	var percent_per_frame = consume_rate_per_second / Engine.physics_ticks_per_second
 	while draining:
-		value = clampf(value - consume_rate_per_frame, 0.0, max_oxygen)
+		value = clampf(value - percent_per_frame, 0.0, max_oxygen)
+		
 		await get_tree().physics_frame
 		if value <= 0.0:
 			draining = false
@@ -63,11 +65,12 @@ func begin_recharging_oxygen() -> void:
 
 func recharge_oxygen() -> void:
 	player.turn_flags_off(Player.Flags.OXYGEN_DEPLETING)
+	if player.is_flag_on(Player.Flags.OXYGEN_DEPRIVED):
+		player.turn_flags_off(Player.Flags.OXYGEN_DEPRIVED)
 	
+	var percent_per_frame = recharge_rate_per_second / Engine.physics_ticks_per_second
 	while recharging:
-		value = clampf(value + recharge_rate_per_frame, 0.0, max_oxygen)
-		if player.is_flag_on(Player.Flags.OXYGEN_DEPRIVED):
-			player.turn_flags_off(Player.Flags.OXYGEN_DEPRIVED)
+		value = clampf(value + percent_per_frame, 0.0, max_oxygen)
 		
 		await get_tree().physics_frame
 		if value >= max_oxygen:
