@@ -4,35 +4,35 @@ extends Node
 ## A starting point for Disasters to Trigger
 ## Functions return booleans to signify if it was successful in what it set out to do
 
-enum Disasters {
-	AIRLOCK,
-}
+var disasters : Array[DisasterEvent] = [
+	preload("res://resources/disasters/airlock.tres"),
+	preload("res://resources/disasters/power_loss.tres")
+]
 
-func start_disaster(which: Disasters) -> bool:
-	match which:
-		Disasters.AIRLOCK:
-			return begin_airlock_disaster()
-	return false
+func register_listener(listener: DisasterListener) -> void:
+	listener.conditions_met.connect(_on_listener_conditions_met)
+	listener.conditions_unmet.connect(_on_listener_conditions_unmet)
 
-func end_disaster(which: Disasters) -> bool:
-	match which:
-		Disasters.AIRLOCK:
-			return end_airlock_disaster()
-	return false
+func unregister_listener(listener: DisasterListener) -> void:
+	if listener.conditions_met.is_connected(_on_listener_conditions_met):
+		listener.conditions_met.disconnect(_on_listener_conditions_met)
+	if listener.conditions_unmet.is_connected(_on_listener_conditions_unmet):
+		listener.conditions_unmet.disconnect(_on_listener_conditions_unmet)
 
-func begin_airlock_disaster() -> bool:
-	print("[DISASTER] AIRLOCK STARTED")
-	# Instantiate Airlock Disaster Node that handles the Disaster?
+func _on_listener_conditions_met(listener: DisasterListener) -> void:
+	if listener.disaster_event.occurring:
+		return
 	
-	for player in PlayerManager.get_players():
-		player.turn_flags_on(Player.Flags.OXYGEN_DEPLETING)
-		# Apply force to every moveable object toward airlock door
-		# Siren
-	return true
+	start_disaster(listener.disaster_event)
 
-func end_airlock_disaster() -> bool:
-	print("[DISASTER] AIRLOCK ENDED")
-	for player in PlayerManager.get_players():
-		player.turn_flags_off(Player.Flags.OXYGEN_DEPLETING)
-		# End Siren
-	return true
+func _on_listener_conditions_unmet(listener: DisasterListener) -> void:
+	if not listener.disaster_event.occurring:
+		return
+	
+	end_disaster(listener.disaster_event)
+
+func start_disaster(which: DisasterEvent) -> void:
+	which.start()
+
+func end_disaster(which: DisasterEvent) -> void:
+	which.end()

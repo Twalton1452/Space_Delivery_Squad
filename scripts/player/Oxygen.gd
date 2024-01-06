@@ -14,7 +14,7 @@ class_name Oxygen
 
 var can_breathe = true : 
 	get:
-		return value > consume_rate_per_second
+		return value > 0.0
 var recharging = true
 var draining = false
 

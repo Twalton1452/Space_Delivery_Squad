@@ -1,14 +1,17 @@
-[gd_scene load_steps=34 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=37 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
+[ext_resource type="Script" path="res://scripts/Ship.gd" id="1_a12e7"]
 [ext_resource type="Script" path="res://scripts/player/PlayerSpawner.gd" id="2_bk4i6"]
 [ext_resource type="PackedScene" uid="uid://cnsvsg5ll712j" path="res://art/space interior elements/object_073.glb" id="3_uash7"]
 [ext_resource type="PackedScene" uid="uid://ceoib8msrs7jy" path="res://scenes/objects/box_large.tscn" id="4_am4w0"]
 [ext_resource type="Script" path="res://scripts/disasters/Airlock.gd" id="4_etjmd"]
+[ext_resource type="Resource" uid="uid://bu0bvu4hikwic" path="res://resources/disasters/airlock.tres" id="5_61jat"]
 [ext_resource type="PackedScene" uid="uid://d4b6j2icha5d6" path="res://scenes/objects/box_long.tscn" id="5_bgub2"]
 [ext_resource type="Script" path="res://scripts/disasters/PowerLoss.gd" id="5_lmuhg"]
 [ext_resource type="PackedScene" uid="uid://o8pu2dqcdr7e" path="res://scenes/objects/box_small.tscn" id="6_qy0dp"]
 [ext_resource type="PackedScene" uid="uid://cm7bfr7yfdtk4" path="res://scenes/objects/box_wide.tscn" id="7_rqytm"]
+[ext_resource type="Resource" uid="uid://b3c50iyfgfbbg" path="res://resources/disasters/power_loss.tres" id="8_c18hl"]
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="8_dnlpq"]
 [ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_sl58d"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_83m8u"]
@@ -40,6 +43,8 @@ size = Vector3(0.5, 0.5, 0.5)
 size = Vector3(1.02441, 0.778809, 1.08496)
 
 [node name="Ship" type="Node3D"]
+script = ExtResource("1_a12e7")
+power_loss_disaster = ExtResource("8_c18hl")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_2ly15")
@@ -145,9 +150,11 @@ editor_description = "Children of this Node are listening for specific events to
 script = ExtResource("4_etjmd")
 door_to_airlock = NodePath("../../Objects/DoorToAirlock")
 airlock_door = NodePath("../../Objects/AirlockDoor")
+disaster_event = ExtResource("5_61jat")
 
 [node name="PowerLoss" type="Node" parent="DisasterListeners"]
 script = ExtResource("5_lmuhg")
+disaster_event = ExtResource("8_c18hl")
 
 [node name="Objects" type="Node3D" parent="."]
 

@@ -1,4 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://rre2t2pta62e"]
+[gd_scene load_steps=14 format=3 uid="uid://rre2t2pta62e"]
+
+[ext_resource type="PackedScene" uid="uid://cdpmmjy7j8qs0" path="res://scenes/components/power_consumer.tscn" id="1_akyi6"]
+[ext_resource type="Script" path="res://scripts/objects/OxygenStation.gd" id="1_ih78j"]
+[ext_resource type="Resource" uid="uid://bu0bvu4hikwic" path="res://resources/disasters/airlock.tres" id="2_33cli"]
+[ext_resource type="Resource" uid="uid://b3c50iyfgfbbg" path="res://resources/disasters/power_loss.tres" id="3_vbgk0"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_avhae"]
+points = PackedVector3Array(-4.36753e-05, 0.3, 0.257735, 0.223161, 0.3, 0.128817, 0.178547, 0.6, 0.103084, -4.36753e-05, 0.6, 0.206168, -0.17859, 0.6, 0.103084, -0.223205, 0.3, 0.128817, -4.36753e-05, 0.0499804, 0.257735, 0.223161, 0.3, -0.128918, 0.223161, 0.0499804, 0.128817, 0.178547, 0.6, -0.103134, -0.17859, 0.6, -0.103134, -0.223205, 0.3, -0.128918, -0.223205, 0.0499804, 0.128817, -0.173216, 0, 0.0999556, -4.36753e-05, 0, 0.199962, 0.173172, 0, 0.0999556, -4.36753e-05, 0.3, -0.257735, -4.36753e-05, 0.6, -0.206218, 0.223161, 0.0499804, -0.128918, -0.223205, 0.0499804, -0.128918, -0.173216, 0, -0.100006, 0.173172, 0, -0.100006, -4.36753e-05, 0.0499804, -0.257735, -4.36753e-05, 0, -0.200012)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0v683"]
 resource_name = "dark.027"
@@ -172,10 +180,17 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hxg3q")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_avhae"]
-points = PackedVector3Array(-4.36753e-05, 0.3, 0.257735, 0.223161, 0.3, 0.128817, 0.178547, 0.6, 0.103084, -4.36753e-05, 0.6, 0.206168, -0.17859, 0.6, 0.103084, -0.223205, 0.3, 0.128817, -4.36753e-05, 0.0499804, 0.257735, 0.223161, 0.3, -0.128918, 0.223161, 0.0499804, 0.128817, 0.178547, 0.6, -0.103134, -0.17859, 0.6, -0.103134, -0.223205, 0.3, -0.128918, -0.223205, 0.0499804, 0.128817, -0.173216, 0, 0.0999556, -4.36753e-05, 0, 0.199962, 0.173172, 0, 0.0999556, -4.36753e-05, 0.3, -0.257735, -4.36753e-05, 0.6, -0.206218, 0.223161, 0.0499804, -0.128918, -0.223205, 0.0499804, -0.128918, -0.173216, 0, -0.100006, 0.173172, 0, -0.100006, -4.36753e-05, 0.0499804, -0.257735, -4.36753e-05, 0, -0.200012)
+[node name="OxygenStation" type="Node3D"]
+script = ExtResource("1_ih78j")
+airlock_disaster = ExtResource("2_33cli")
+power_loss_disaster = ExtResource("3_vbgk0")
 
-[node name="OxygenStation" type="StaticBody3D"]
+[node name="PowerConsumer" parent="." instance=ExtResource("1_akyi6")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_avhae")
 
 [node name="machine_barrel" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_dfkkp")
@@ -185,6 +200,3 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.023205, 0, 0.15)
 mesh = SubResource("ArrayMesh_op7cf")
 skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_avhae")
