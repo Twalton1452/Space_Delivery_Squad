@@ -35,7 +35,7 @@ func pickup(picker_upper: Player, to_be_picked_up: Item) -> void:
 			pass
 		return
 
-	picker_upper.hold(to_be_picked_up.get_path())
+	picker_upper.hold(to_be_picked_up)
 	to_be_picked_up.on_held()
 
 func request_pickup(picker_upper: Player, to_be_picked_up: Item) -> PickupRequest:

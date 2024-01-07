@@ -144,6 +144,9 @@ collision_mask = 8
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00790405, 0.309357, -0.0032959)
 shape = SubResource("BoxShape3D_iaoc7")
 
+[node name="Holder" type="RemoteTransform3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0.00463852, 0.041026, -0.313967)
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.363378, -0.131)
 fov = 80.0
@@ -169,9 +172,6 @@ collision_mask = 5
 hit_from_inside = true
 collide_with_areas = true
 script = ExtResource("2_0yxy6")
-
-[node name="Holder" type="RemoteTransform3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 0.987881, -0.15521, 0, 0.15521, 0.987881, 0.00463852, -0.322352, -0.142844)
 
 [node name="HUD" type="Control" parent="Camera3D"]
 layout_mode = 3

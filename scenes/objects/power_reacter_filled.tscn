@@ -14,6 +14,7 @@ points = PackedVector3Array(-0.2, -4.72106e-05, -3.91603e-05, -0.197807, 0.10307
 
 [node name="cannister_guard_filled_mesh_flat_top" instance=ExtResource("1_0witx")]
 script = ExtResource("2_tro66")
+picked_up_offset = Vector3(0, 0, -0.1)
 
 [node name="Cannister" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_ne7k1")

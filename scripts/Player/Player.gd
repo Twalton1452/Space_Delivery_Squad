@@ -54,7 +54,7 @@ const FOV_CHANGE = 6.0
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var camera : Camera3D = $Camera3D
 @onready var interacter : Interacter = $Camera3D/Interacter
-@onready var holder : RemoteTransform3D = $Camera3D/Holder
+@onready var holder : RemoteTransform3D = $Holder
 @onready var skeleton_3d : Skeleton3D = $bean_armature/Armature/Skeleton3D
 @onready var walking_collider : CollisionShape3D = $WalkingCollisionShape3D
 @onready var crouching_collider : CollisionShape3D = $CrouchingCollisionShape3D
@@ -223,14 +223,19 @@ func drop_request() -> void:
 func drop_node() -> void:
 	var dropping = get_held_node()
 	holder.remote_path = NodePath("")
+	if dropping is Item:
+		holder.position -= dropping.picked_up_offset
+	holder.rotation.y = 0.0
 	state &= ~(Flags.HOLDING | Flags.DROPPING)
 	dropped_something.emit(self, dropping)
-	
 	if is_multiplayer_authority():
 		interacter.enable()
 
-func hold(node_path: String) -> void:
-	holder.remote_path = node_path
+func hold(node: Node3D) -> void:
+	if node is Item:
+		holder.position += node.picked_up_offset
+		holder.rotation.y = node.picked_up_rotation.y
+	holder.remote_path = node.get_path()
 	state = (state & ~Flags.INTERACTING) | Flags.HOLDING
 	holding_something.emit(self, get_held_node())
 
