@@ -54,6 +54,7 @@ const FOV_CHANGE = 6.0
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var camera : Camera3D = $Camera3D
 @onready var interacter : Interacter = $Camera3D/Interacter
+@onready var anti_clip_wall_ray : RayCast3D = $Camera3D/AntiClipWallRaycast3D
 @onready var holder : RemoteTransform3D = $Holder
 @onready var skeleton_3d : Skeleton3D = $bean_armature/Armature/Skeleton3D
 @onready var walking_collider : CollisionShape3D = $WalkingCollisionShape3D

@@ -167,11 +167,18 @@ skeleton = NodePath("../../..")
 
 [node name="Interacter" type="RayCast3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00148126, 0.114478)
+visible = false
 target_position = Vector3(0, 0, -1)
 collision_mask = 5
 hit_from_inside = true
 collide_with_areas = true
 script = ExtResource("2_0yxy6")
+
+[node name="AntiClipWallRaycast3D" type="RayCast3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.227858)
+target_position = Vector3(0, 0, -0.4)
+collision_mask = 9
+hit_from_inside = true
 
 [node name="HUD" type="Control" parent="Camera3D"]
 layout_mode = 3
