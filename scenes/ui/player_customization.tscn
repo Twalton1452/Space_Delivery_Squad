@@ -1,8 +1,70 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgsdf2kt2gnb2"]
+[gd_scene load_steps=11 format=3 uid="uid://bgsdf2kt2gnb2"]
 
 [ext_resource type="Script" path="res://scripts/ui/PlayerCustomization.gd" id="1_6x66e"]
 [ext_resource type="PackedScene" uid="uid://chnb7t2mpka4m" path="res://art/bean_armature.glb" id="1_nbr34"]
 [ext_resource type="Texture2D" uid="uid://dt4go0dv7a761" path="res://art/white_square_32.png" id="2_ess8b"]
+
+[sub_resource type="Animation" id="Animation_mmnj5"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1.7411, 0.63728, 1.68179),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.015, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9, 2.1, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.274017, 0), Vector3(0, 0.270526, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8bxjb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dvowb"]
+_data = {
+"RESET": SubResource("Animation_8bxjb"),
+"idle": SubResource("Animation_mmnj5")
+}
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mn6xg"]
 shading_mode = 0
@@ -40,6 +102,12 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="PlayerView"]
 size = Vector2i(256, 256)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerView/SubViewport"]
+root_node = NodePath("../bean_armature")
+libraries = {
+"": SubResource("AnimationLibrary_dvowb")
+}
 
 [node name="bean_armature" parent="PlayerView/SubViewport" instance=ExtResource("1_nbr34")]
 

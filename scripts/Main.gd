@@ -8,6 +8,7 @@ extends Node
 const PORT = 9998
 
 func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/HostButton.grab_focus()
 	LevelManager.prepare_first_level_async.call_deferred()
 
@@ -71,6 +72,8 @@ func upnp_setup():
 	print("Success! Join Address: %s" % upnp.query_external_address())
 
 func cleanup_main_menu() -> void:
+	# No way to recover the Main Menu from doing this
+	# Main Menu stuff is tightly coupled to this Script at the moment
 	$CanvasLayer.queue_free()
 
 func host_or_join():

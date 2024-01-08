@@ -14,6 +14,10 @@ var current_level_index = 0
 var current_level: Node = null
 var is_changing_levels = false
 
+@rpc("authority", "call_local", "reliable")
+func notify_everyone_changing_level() -> void:
+	disable_player_syncing()
+
 func _ready():
 	# when exporting, make sure it has the correct levels
 	if OS.has_feature("standalone"):
@@ -53,6 +57,10 @@ func prepare_first_level_async() -> void:
 	prepare_level_async(level_store.levels[0])
 
 func prepare_level_async(scene: PackedScene) -> void:
+	# Already loaded this scene and it's cached
+	if ResourceLoader.load_threaded_get_status(scene.resource_path) == ResourceLoader.THREAD_LOAD_LOADED:
+		return
+	
 	#print("Preparing level: ", scene.resource_path)
 	ResourceLoader.load_threaded_request(scene.resource_path, "PackedScene")
 
@@ -77,40 +85,44 @@ func fetch_level_async(scene: PackedScene) -> PackedScene:
 		
 	return ResourceLoader.load_threaded_get(scene.resource_path)
 
+func clear_level() -> void:
+	# Remove old level if any.
+	if current_level == null:
+		return
+	
+	current_level.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	if current_level.has_signal("finished_level") and current_level.finished_level.is_connected(_on_finished_level):
+		current_level.finished_level.disconnect(_on_finished_level)
+	
+	for c in level_parent.get_children():
+		level_parent.remove_child(c)
+		c.queue_free()
+
+	current_level.queue_free()
+	
+	# Let the game world clean up
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
 # Call this function deferred and only on the main authority (server).
 func change_level(scene: PackedScene):
 	if not is_multiplayer_authority():
 		return
+	
+	if not scene.resource_path in level_spawner._spawnable_scenes:
+		push_warning("You forgot to add ", scene.resource_path, " to the list of spawnable scenes on the LevelSpawner. \
+		It probably won't spawn for peers")
 	
 	notify_everyone_changing_level.rpc()
 	is_changing_levels = true
 	level_change_audio_player.play()
 	
 	# Background loading
-	if ResourceLoader.load_threaded_get_status(scene.resource_path) != ResourceLoader.THREAD_LOAD_LOADED:
-		prepare_level_async(scene)
-	
+	prepare_level_async(scene)
+	# Wait for screen to fade to hide the inner workings from players
 	await Transition.fade_out()
-	
-	if not scene.resource_path in level_spawner._spawnable_scenes:
-		push_warning("You forgot to add ", scene.resource_path, " to the list of spawnable scenes on the LevelSpawner")
-	
-	# Remove old level if any.
-	if current_level != null:
-		current_level.process_mode = Node.PROCESS_MODE_DISABLED
-		
-		if current_level.has_signal("finished_level") and current_level.finished_level.is_connected(_on_finished_level):
-			current_level.finished_level.disconnect(_on_finished_level)
-		
-		for c in level_parent.get_children():
-			level_parent.remove_child(c)
-			c.queue_free()
-	
-		current_level.queue_free()
-	
-	# Let the game world clean up
-	await get_tree().physics_frame
-	await get_tree().physics_frame
+	await clear_level()
 	
 	# Add new level.
 	var next_level = await fetch_level_async(scene)
@@ -157,7 +169,3 @@ func _on_level_spawner_spawned(node):
 
 func disable_player_syncing() -> void:
 	pass
-
-@rpc("authority", "call_local")
-func notify_everyone_changing_level() -> void:
-	disable_player_syncing()
