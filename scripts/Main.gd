@@ -71,13 +71,13 @@ func upnp_setup():
 	print("Success! Join Address: %s" % upnp.query_external_address())
 
 func cleanup_main_menu() -> void:
-	pass
+	$CanvasLayer.queue_free()
 
 func host_or_join():
 	main_menu_audio_player.play()
 	main_menu.hide()
-	cleanup_main_menu()
 	player_customization.store_local_settings()
+	cleanup_main_menu()
 	
 	# Only change level on the server.
 	# Clients will instantiate the level via the spawner.

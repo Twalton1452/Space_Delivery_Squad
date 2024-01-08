@@ -9,8 +9,6 @@ class_name PlayerCustomization
 func _ready() -> void:
 	for child in color_buttons_parent.get_children():
 		(child as TextureButton).pressed.connect(_on_color_button_pressed)
-	await LevelManager.changed_level
-	hide()
 
 func _on_color_button_pressed() -> void:
 	for child in color_buttons_parent.get_children():
