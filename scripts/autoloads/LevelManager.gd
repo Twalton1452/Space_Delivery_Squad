@@ -49,14 +49,14 @@ func reset_level() -> void:
 func _on_finished_level() -> void:
 	go_to_next_level()
 
-func prepare_first_level() -> void:
-	prepare_level(level_store.levels[0])
+func prepare_first_level_async() -> void:
+	prepare_level_async(level_store.levels[0])
 
-func prepare_level(scene: PackedScene) -> void:
+func prepare_level_async(scene: PackedScene) -> void:
 	#print("Preparing level: ", scene.resource_path)
 	ResourceLoader.load_threaded_request(scene.resource_path, "PackedScene")
 
-func fetch_level(scene: PackedScene) -> PackedScene:
+func fetch_level_async(scene: PackedScene) -> PackedScene:
 	#print("Fetching level ", scene.resource_path)
 	if ResourceLoader.has_cached(scene.resource_path):
 		return ResourceLoader.load_threaded_get(scene.resource_path)
@@ -88,7 +88,7 @@ func change_level(scene: PackedScene):
 	
 	# Background loading
 	if ResourceLoader.load_threaded_get_status(scene.resource_path) != ResourceLoader.THREAD_LOAD_LOADED:
-		prepare_level(scene)
+		prepare_level_async(scene)
 	
 	await Transition.fade_out()
 	
@@ -113,7 +113,7 @@ func change_level(scene: PackedScene):
 	await get_tree().physics_frame
 	
 	# Add new level.
-	var next_level = await fetch_level(scene)
+	var next_level = await fetch_level_async(scene)
 	if next_level == null:
 		get_tree().quit(-1)
 		return
