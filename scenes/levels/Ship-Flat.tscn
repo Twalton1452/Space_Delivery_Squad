@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=43 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/Ship.gd" id="1_a12e7"]
@@ -34,6 +34,9 @@
 [ext_resource type="PackedScene" uid="uid://br81xjq0nbxge" path="res://scenes/objects/power_reacter_filled.tscn" id="26_viad1"]
 [ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="27_wihpu"]
 [ext_resource type="PackedScene" uid="uid://cy5bsf67m2kda" path="res://scenes/components/TriggerZone.tscn" id="29_qc550"]
+[ext_resource type="PackedScene" uid="uid://b7mpthg62fwmu" path="res://scenes/objects/radar.tscn" id="35_k4h8i"]
+[ext_resource type="PackedScene" uid="uid://b6aqbw4uyo04e" path="res://art/space interior elements/object_060.glb" id="36_sq7ed"]
+[ext_resource type="Script" path="res://scripts/objects/RadarScreen.gd" id="37_i48fq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_baran"]
 
@@ -42,6 +45,12 @@ size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nh26e"]
 size = Vector3(1.02441, 0.778809, 1.08496)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tko3h"]
+resource_local_to_scene = true
+shading_mode = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ap1jy"]
 
 [node name="Ship" type="Node3D"]
 script = ExtResource("1_a12e7")
@@ -355,8 +364,6 @@ shape = SubResource("BoxShape3D_nh26e")
 
 [node name="PowerConsumer" parent="Objects/two_sided_door2/TriggerZone" instance=ExtResource("26_hl87m")]
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Objects"]
-
 [node name="rail-holder" parent="Objects" instance=ExtResource("26_r1glp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11075, 0.0625, 1.1529)
 
@@ -440,6 +447,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48232, 0.235397, 3.44566)
 
 [node name="power_reacter_filled" parent="." instance=ExtResource("26_viad1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.35055, 0.0625, 1.52456)
+
+[node name="RadarViewport" type="SubViewport" parent="."]
+size = Vector2i(640, 480)
+
+[node name="Radar" parent="RadarViewport" instance=ExtResource("35_k4h8i")]
+
+[node name="RadarScreen_Temp" parent="." node_paths=PackedStringArray("quad_for_viewport", "radar_viewport") instance=ExtResource("36_sq7ed")]
+transform = Transform3D(-0.662777, 0, 0.748817, 0, -1, 0, 0.748817, 0, 0.662777, 6.28887, 0.748189, -0.26975)
+script = ExtResource("37_i48fq")
+quad_for_viewport = NodePath("RadarMesh")
+radar_viewport = NodePath("../RadarViewport")
+
+[node name="RadarMesh" type="MeshInstance3D" parent="RadarScreen_Temp"]
+transform = Transform3D(-4.47035e-08, -0.0694483, 0.350769, 5.02099e-08, -0.297448, -0.0818975, 0.373433, 2.6077e-08, 4.47035e-08, 0.0522299, 0.203158, -0.00385714)
+material_override = SubResource("StandardMaterial3D_tko3h")
+mesh = SubResource("QuadMesh_ap1jy")
+skeleton = NodePath("../..")
 
 [editable path="Objects/AirlockDoor"]
 [editable path="Objects/Power/power_station"]
