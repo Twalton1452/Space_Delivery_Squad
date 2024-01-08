@@ -21,8 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
 [ext_resource type="PackedScene" uid="uid://ceclhtgrtfobx" path="res://art/objects/pipe-ring-support.glb" id="19_bxt33"]
 [ext_resource type="PackedScene" uid="uid://rre2t2pta62e" path="res://scenes/objects/oxygen_station.tscn" id="19_kukbf"]
-[ext_resource type="Script" path="res://scripts/UI/OxygenDisplay.gd" id="19_wwlcr"]
 [ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="20_70p0j"]
+[ext_resource type="Script" path="res://scripts/ui/OxygenDisplay.gd" id="20_d72ou"]
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="20_k18mp"]
 [ext_resource type="PackedScene" uid="uid://du8ca56gtfpe8" path="res://art/space interior elements/object_048.glb" id="20_rvhcf"]
 [ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
@@ -247,7 +247,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17702, 0.0625, 5.95371)
 
 [node name="OxygenDisplay" type="Node3D" parent="Objects"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.25, -2.87598)
-script = ExtResource("19_wwlcr")
+script = ExtResource("20_d72ou")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Objects/OxygenDisplay"]
 

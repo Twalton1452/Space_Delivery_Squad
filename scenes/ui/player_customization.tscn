@@ -1,0 +1,123 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgsdf2kt2gnb2"]
+
+[ext_resource type="Script" path="res://scripts/ui/PlayerCustomization.gd" id="1_6x66e"]
+[ext_resource type="PackedScene" uid="uid://chnb7t2mpka4m" path="res://art/bean_armature.glb" id="1_nbr34"]
+[ext_resource type="Texture2D" uid="uid://dt4go0dv7a761" path="res://art/white_square_32.png" id="2_ess8b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mn6xg"]
+shading_mode = 0
+albedo_color = Color(0.729412, 0.729412, 0.729412, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkpwn"]
+shading_mode = 0
+albedo_color = Color(0.262745, 0.262745, 0.262745, 1)
+
+[sub_resource type="Environment" id="Environment_lvmcd"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_v10di"]
+viewport_path = NodePath("PlayerView/SubViewport")
+
+[node name="PlayerCustomization" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_6x66e")
+
+[node name="PlayerView" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 16.0
+offset_right = 236.0
+offset_bottom = 272.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="PlayerView"]
+size = Vector2i(256, 256)
+
+[node name="bean_armature" parent="PlayerView/SubViewport" instance=ExtResource("1_nbr34")]
+
+[node name="Body" parent="PlayerView/SubViewport/bean_armature/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_mn6xg")
+
+[node name="Eyes" parent="PlayerView/SubViewport/bean_armature/Armature/Skeleton3D" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kkpwn")
+
+[node name="Camera3D" type="Camera3D" parent="PlayerView/SubViewport"]
+transform = Transform3D(-1, 4.44089e-16, 8.74228e-08, 5.04764e-09, 0.998332, 0.0577383, -8.72769e-08, 0.0577383, -0.998332, 0, 0.303852, -1)
+environment = SubResource("Environment_lvmcd")
+fov = 36.1894
+
+[node name="TextureRect" type="TextureRect" parent="PlayerView"]
+layout_mode = 2
+texture = SubResource("ViewportTexture_v10di")
+
+[node name="DisplayName" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 56.0
+offset_right = 194.0
+offset_bottom = 36.0
+
+[node name="LineEdit" type="LineEdit" parent="DisplayName"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Bob"
+placeholder_text = "Name"
+alignment = 1
+max_length = 20
+
+[node name="Colors" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_top = 281.0
+offset_right = 248.0
+offset_bottom = 459.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Colors"]
+layout_mode = 2
+
+[node name="Red" type="TextureButton" parent="Colors/HBoxContainer"]
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_ess8b")
+
+[node name="Orange" type="TextureButton" parent="Colors/HBoxContainer"]
+self_modulate = Color(1, 0.568627, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_ess8b")
+
+[node name="Yellow" type="TextureButton" parent="Colors/HBoxContainer"]
+self_modulate = Color(0.933333, 1, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_ess8b")
+
+[node name="Green" type="TextureButton" parent="Colors/HBoxContainer"]
+self_modulate = Color(0.0313726, 1, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_ess8b")
+
+[node name="Cyan" type="TextureButton" parent="Colors/HBoxContainer"]
+self_modulate = Color(0, 0.94902, 1, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_ess8b")
+
+[node name="Blue" type="TextureButton" parent="Colors/HBoxContainer"]
+self_modulate = Color(0.0666667, 0, 1, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_ess8b")
+
+[node name="Pink" type="TextureButton" parent="Colors/HBoxContainer"]
+self_modulate = Color(1, 0, 0.8, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_ess8b")
+
+[editable path="PlayerView/SubViewport/bean_armature"]
