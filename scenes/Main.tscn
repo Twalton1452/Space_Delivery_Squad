@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://e244a03u5ux3"]
+[gd_scene load_steps=11 format=3 uid="uid://e244a03u5ux3"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3wpj0"]
 [ext_resource type="AudioStream" uid="uid://c710dv8bls4ec" path="res://sfx/click1.ogg" id="2_n2jq0"]
+[ext_resource type="PackedScene" uid="uid://chnb7t2mpka4m" path="res://art/bean_armature.glb" id="3_k4dsv"]
+[ext_resource type="Texture2D" uid="uid://dt4go0dv7a761" path="res://art/white_square_32.png" id="4_gga3i"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_dt77j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_38u1e"]
 font_size = 72
@@ -11,10 +15,26 @@ shadow_size = 13
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(-0.19, 2.45)
 
-[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_dt77j"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mn6xg"]
+shading_mode = 0
+albedo_color = Color(0.729412, 0.729412, 0.729412, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkpwn"]
+shading_mode = 0
+albedo_color = Color(0.262745, 0.262745, 0.262745, 1)
+
+[sub_resource type="Environment" id="Environment_lvmcd"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_v10di"]
+viewport_path = NodePath("CanvasLayer/MainMenu/PlayerView/SubViewport")
 
 [node name="Main" type="Node"]
 script = ExtResource("1_3wpj0")
+
+[node name="PlayerMic" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_dt77j")
+autoplay = true
+bus = &"Mic"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -85,11 +105,95 @@ alignment = 1
 layout_mode = 2
 text = "Quit"
 
-[node name="PlayerMic" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamMicrophone_dt77j")
-autoplay = true
-bus = &"Mic"
+[node name="PlayerView" type="PanelContainer" parent="CanvasLayer/MainMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 229.0
+offset_top = -128.0
+offset_right = 485.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/MainMenu/PlayerView"]
+size = Vector2i(256, 256)
+
+[node name="bean_armature" parent="CanvasLayer/MainMenu/PlayerView/SubViewport" instance=ExtResource("3_k4dsv")]
+
+[node name="Body" parent="CanvasLayer/MainMenu/PlayerView/SubViewport/bean_armature/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_mn6xg")
+
+[node name="Eyes" parent="CanvasLayer/MainMenu/PlayerView/SubViewport/bean_armature/Armature/Skeleton3D" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kkpwn")
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/MainMenu/PlayerView/SubViewport"]
+transform = Transform3D(-1, 4.44089e-16, 8.74228e-08, 5.04764e-09, 0.998332, 0.0577383, -8.72769e-08, 0.0577383, -0.998332, 0, 0.303852, -1)
+environment = SubResource("Environment_lvmcd")
+fov = 36.1894
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MainMenu/PlayerView"]
+layout_mode = 2
+texture = SubResource("ViewportTexture_v10di")
+
+[node name="PlayerCustomization" type="MarginContainer" parent="CanvasLayer/MainMenu"]
+offset_left = 815.0
+offset_top = 491.0
+offset_right = 1051.0
+offset_bottom = 633.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/PlayerCustomization"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Name"
+alignment = 1
+max_length = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer"]
+layout_mode = 2
+
+[node name="Red" type="TextureButton" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer"]
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_gga3i")
+
+[node name="Orange" type="TextureButton" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer"]
+self_modulate = Color(1, 0.568627, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_gga3i")
+
+[node name="Yellow" type="TextureButton" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer"]
+self_modulate = Color(0.933333, 1, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_gga3i")
+
+[node name="Green" type="TextureButton" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer"]
+self_modulate = Color(0.0313726, 1, 0, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_gga3i")
+
+[node name="Cyan" type="TextureButton" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer"]
+self_modulate = Color(0, 0.94902, 1, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_gga3i")
+
+[node name="Blue" type="TextureButton" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer"]
+self_modulate = Color(0.0666667, 0, 1, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_gga3i")
+
+[node name="Pink" type="TextureButton" parent="CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer"]
+self_modulate = Color(1, 0, 0.8, 1)
+layout_mode = 2
+texture_normal = ExtResource("4_gga3i")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+
+[editable path="CanvasLayer/MainMenu/PlayerView/SubViewport/bean_armature"]

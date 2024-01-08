@@ -100,6 +100,10 @@ func _ready():
 	state_changed.connect(_on_state_changed)
 	interact_progress_bar.hide()
 
+func set_display_settings(display_name: String, color: Color) -> void:
+	$bean_armature/DisplayName.text = display_name
+	($bean_armature/Armature/Skeleton3D/Body.get_surface_override_material(0) as StandardMaterial3D).albedo_color = color
+
 ## Settings for the controlling player on their client
 func set_clientside_settings() -> void:
 	$bean_armature/Armature/Skeleton3D/Eyes.hide()

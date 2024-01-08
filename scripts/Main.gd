@@ -3,12 +3,22 @@ extends Node
 @onready var main_menu = $CanvasLayer/MainMenu
 @onready var main_menu_audio_player = $CanvasLayer/MainMenu/AudioStreamPlayer
 @onready var address_entry = $CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/IPAddressEntry
+@onready var player_view_body_mesh = $CanvasLayer/MainMenu/PlayerView/SubViewport/bean_armature/Armature/Skeleton3D/Body
+@onready var player_name_edit = $CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/LineEdit
 
 const PORT = 9998
 
 func _ready():
 	$CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/HostButton.grab_focus()
+	for child in $CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer.get_children():
+		(child as TextureButton).pressed.connect(_on_color_button_pressed)
 	LevelManager.prepare_first_level_async.call_deferred()
+
+func _on_color_button_pressed() -> void:
+	# gnarly
+	for child in $CanvasLayer/MainMenu/PlayerCustomization/VBoxContainer/HBoxContainer.get_children():
+		if (child as TextureButton).button_pressed:
+			(player_view_body_mesh.get_surface_override_material(0) as StandardMaterial3D).albedo_color = (child as TextureButton).self_modulate
 
 func _unhandled_input(event):
 	if event.is_action_pressed("options"):
@@ -76,6 +86,9 @@ func host_or_join():
 	main_menu_audio_player.play()
 	main_menu.hide()
 	cleanup_main_menu()
+	var player_color = (player_view_body_mesh.get_surface_override_material(0) as StandardMaterial3D).albedo_color
+	var player_name = player_name_edit.text
+	PlayerManager.store_local_player_settings(player_name, player_color)
 	
 	# Only change level on the server.
 	# Clients will instantiate the level via the spawner.
