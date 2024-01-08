@@ -103,7 +103,7 @@ func change_level(scene: PackedScene):
 			current_level.finished_level.disconnect(_on_finished_level)
 		
 		for c in level_parent.get_children():
-			remove_child(c)
+			level_parent.remove_child(c)
 			c.queue_free()
 	
 		current_level.queue_free()
