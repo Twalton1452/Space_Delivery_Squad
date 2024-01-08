@@ -49,6 +49,34 @@ func reset_level() -> void:
 func _on_finished_level() -> void:
 	go_to_next_level()
 
+func prepare_first_level() -> void:
+	prepare_level(level_store.levels[0])
+
+func prepare_level(scene: PackedScene) -> void:
+	#print("Preparing level: ", scene.resource_path)
+	ResourceLoader.load_threaded_request(scene.resource_path, "PackedScene")
+
+func fetch_level(scene: PackedScene) -> PackedScene:
+	#print("Fetching level ", scene.resource_path)
+	if ResourceLoader.has_cached(scene.resource_path):
+		return ResourceLoader.load_threaded_get(scene.resource_path)
+	
+	var progress = []
+	while true:
+		var status = ResourceLoader.load_threaded_get_status(scene.resource_path, progress)
+		#print("Loading ", scene.resource_path, " ", progress[0] * 100.0, "%")
+		
+		if status == ResourceLoader.THREAD_LOAD_LOADED:
+			#print("Finished loading ", scene.resource_path)
+			break
+		elif status == ResourceLoader.THREAD_LOAD_FAILED:
+			push_error("Failed to load ", scene.resource_path)
+			return null
+		
+		await get_tree().process_frame
+		
+	return ResourceLoader.load_threaded_get(scene.resource_path)
+
 # Call this function deferred and only on the main authority (server).
 func change_level(scene: PackedScene):
 	if not is_multiplayer_authority():
@@ -57,6 +85,10 @@ func change_level(scene: PackedScene):
 	notify_everyone_changing_level.rpc()
 	is_changing_levels = true
 	level_change_audio_player.play()
+	
+	# Background loading
+	if ResourceLoader.load_threaded_get_status(scene.resource_path) != ResourceLoader.THREAD_LOAD_LOADED:
+		prepare_level(scene)
 	
 	await Transition.fade_out()
 	
@@ -81,7 +113,11 @@ func change_level(scene: PackedScene):
 	await get_tree().physics_frame
 	
 	# Add new level.
-	current_level = scene.instantiate()
+	var next_level = await fetch_level(scene)
+	if next_level == null:
+		get_tree().quit(-1)
+		return
+	current_level = next_level.instantiate()
 	level_parent.add_child(current_level)
 	current_level.show()
 	

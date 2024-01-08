@@ -8,7 +8,7 @@ signal finished
 @onready var transition_texture: TextureRect = $CanvasLayer/TextureRect
 
 const FADE_OUT_DURATION_SECONDS = 0.33
-const FADE_IN_DURATION_SECONDS = 0.15
+const FADE_IN_DURATION_SECONDS = 0.66
 
 var in_progress = false : set = _set_inprogress
 
@@ -19,16 +19,16 @@ func _set_inprogress(value: bool):
 
 func _ready():
 	canvas_layer.hide()
-	transition_texture.modulate = Color(0,0,0,0)
+	transition_texture.modulate.a = 0.0
 
 func fade_out() -> Signal:
 	if in_progress:
 		await finished
 	in_progress = true
 	var tween = create_tween()
-	transition_texture.modulate = Color(0,0,0,0)
+	transition_texture.modulate.a = 0.0
 	canvas_layer.show()
-	tween.tween_property(transition_texture, "modulate", Color(0,0,0,1.0), FADE_OUT_DURATION_SECONDS).set_ease(Tween.EASE_IN)
+	tween.tween_property(transition_texture, "modulate:a", 1.0, FADE_OUT_DURATION_SECONDS).set_ease(Tween.EASE_IN)
 	if multiplayer.is_server():
 		notify_peers_of_fade_out.rpc()
 	wait_for_fade_out_finish(tween)
@@ -43,9 +43,9 @@ func fade_in() -> void:
 		await finished
 	in_progress = true
 	var tween = create_tween()
-	transition_texture.modulate = Color(0,0,0,1.0)
+	transition_texture.modulate.a = 1.0
 	canvas_layer.show()
-	tween.tween_property(transition_texture, "modulate", Color(0,0,0,0.0), FADE_IN_DURATION_SECONDS).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(transition_texture, "modulate:a", 0.0, FADE_IN_DURATION_SECONDS).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	canvas_layer.hide()
 	in_progress = false

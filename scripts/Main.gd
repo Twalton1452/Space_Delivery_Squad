@@ -8,6 +8,7 @@ const PORT = 9998
 
 func _ready():
 	$CanvasLayer/MainMenu/PanelContainer/MarginContainer/VBoxContainer/HostButton.grab_focus()
+	LevelManager.prepare_first_level.call_deferred()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("options"):
