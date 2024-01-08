@@ -54,19 +54,22 @@ func evaluate_drop(p_id: int) -> void:
 	# Dropping object
 	# Raycast below the object to find out where to drop it
 	## TODO: Crouching makes this fail, too close to the ground
-	var down_result = Helpers.ray_cast(player_held_node, Vector3.DOWN, 1000.0)
+	var down_result = Helpers.ray_cast(player.holder, Vector3.DOWN, 1000.0)
 	# No placeable ground
 	if down_result.size() == 0:
 		return
 	
-	var dropped_position = player_held_node.position
+	var dropped_position = player.holder.global_position
 	dropped_position.y = down_result.position.y
 	
 	# Prevent clipping into/past walls
 	player.anti_clip_wall_ray.force_raycast_update()
 	if player.anti_clip_wall_ray.is_colliding():
-		dropped_position.x = player.position.x
-		dropped_position.z = player.position.z
+		dropped_position.x = player.global_position.x
+		dropped_position.z = player.global_position.z
+	
+	#if player_held_node is Item:
+		#dropped_position += player_held_node.picked_up_offset
 	
 	drop(player, player_held_node, dropped_position)
 	
@@ -83,7 +86,7 @@ func drop(dropper: Player, dropped_node: Node3D, dropped_node_position: Vector3)
 	if held_node != dropped_node:
 		return
 	
-	dropped_node.position = dropped_node_position
+	dropped_node.global_position = dropped_node_position
 	dropped_node.global_rotation = dropper.global_rotation
 	
 	if dropped_node is Item:

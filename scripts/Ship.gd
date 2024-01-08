@@ -10,10 +10,6 @@ func _ready() -> void:
 	power_loss_disaster.ended.connect(_on_power_loss_disaster_ended)
 
 func _on_power_loss_disaster_started() -> void:
-	# TODO: ShipLight class in ShipLights group
-	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
-		(child as Light3D).hide()
-	
 	for power_consumer in get_tree().get_nodes_in_group(Constants.POWER_CONSUMER_GROUP):
 		(power_consumer as PowerConsumer).turn_off_functionality()
 	
@@ -21,10 +17,6 @@ func _on_power_loss_disaster_started() -> void:
 		(power_fallback as PowerFallback).turn_on_functionality()
 
 func _on_power_loss_disaster_ended() -> void:
-	# TODO: ShipLight class in ShipLights group
-	for child in get_tree().get_nodes_in_group("Lights").front().get_children():
-		(child as Light3D).show()
-	
 	for power_consumer in get_tree().get_nodes_in_group(Constants.POWER_CONSUMER_GROUP):
 		(power_consumer as PowerConsumer).turn_on_functionality()
 	

@@ -37,7 +37,7 @@ func _ready():
 
 func _on_interacted(interactable: Interactable, interacter: Player) -> void:
 	# Take from Player
-	if holding_node == null and interacter.is_holding_node():
+	if holding_node == null and interacter.is_holding_node() and interacter.get_held_node() != get_parent():
 		if multiplayer.is_server():
 			ReleaseHandler.request_player_release(interacter, interacter.get_held_node(), self)
 	# Pass on the Interaction to the Item

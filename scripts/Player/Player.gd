@@ -224,18 +224,12 @@ func drop_request() -> void:
 func drop_node() -> void:
 	var dropping = get_held_node()
 	holder.remote_path = NodePath("")
-	if dropping is Item:
-		holder.position -= dropping.picked_up_offset
-	holder.rotation.y = 0.0
 	state &= ~(Flags.HOLDING | Flags.DROPPING)
 	dropped_something.emit(self, dropping)
 	if is_multiplayer_authority():
 		interacter.enable()
 
 func hold(node: Node3D) -> void:
-	if node is Item:
-		holder.position += node.picked_up_offset
-		holder.rotation.y = node.picked_up_rotation.y
 	holder.remote_path = node.get_path()
 	state = (state & ~Flags.INTERACTING) | Flags.HOLDING
 	holding_something.emit(self, get_held_node())
