@@ -27,4 +27,5 @@ func store_local_settings() -> void:
 
 func finished_customizing() -> void:
 	for child in viewport.get_children():
-		child.hide()
+		if child is Node3D:
+			child.hide()
