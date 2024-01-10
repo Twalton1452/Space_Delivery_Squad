@@ -1,4 +1,4 @@
-extends OmniLight3D
+extends Light3D
 class_name ShipLight
 
 var original_energy : float

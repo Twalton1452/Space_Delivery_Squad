@@ -10,6 +10,7 @@ signal interacted(interactable: Interactable, interacter: Player)
 ## When the player is hovering the Interactable, should it display [E]?
 @export var display_action_button_before_text = true
 @export var interact_display_text = "Interact"
+@export var interacted_sfx : AudioStream
 
 @export_category("Internal Scene Stuff")
 @export var mesh_to_highlight : MeshInstance3D
@@ -49,5 +50,8 @@ func interact(interacter: Player) -> void:
 			toggled = !toggled
 		else:
 			animation_player.play("activated")
+	
+	if interacted_sfx:
+		AudioManager.play_one_shot_3d(self, interacted_sfx)
 	
 	interacted.emit(self, interacter)

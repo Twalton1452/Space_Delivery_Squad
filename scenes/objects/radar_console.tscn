@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://d022i57dmjcuf"]
+
+[ext_resource type="PackedScene" uid="uid://b6aqbw4uyo04e" path="res://art/space interior elements/object_060.glb" id="1_fee3v"]
+[ext_resource type="Script" path="res://scripts/objects/RadarConsole.gd" id="1_ir8ph"]
+[ext_resource type="PackedScene" uid="uid://b7mpthg62fwmu" path="res://scenes/objects/radar.tscn" id="3_odvbf"]
+[ext_resource type="PackedScene" uid="uid://bfgygi86ulf0c" path="res://scenes/objects/arrow_button.tscn" id="4_nlutv"]
+[ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="5_j1jfi"]
+[ext_resource type="Script" path="res://scripts/components/PowerConsumer.gd" id="6_jqsoi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xg3uk"]
+size = Vector3(0.5, 0.2, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cpf5h"]
+points = PackedVector3Array(-0.25, -0.1, -0.25, -0.25, 0.1, -0.25, 0.25, -0.1, -0.25, -0.25, -0.1, 0.25, -0.25, 0.1, 0.25, 0.25, 0.1, -0.25, 0.25, -0.1, 0.25, 0.25, 0.1, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mn4se"]
+resource_local_to_scene = true
+shading_mode = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ww8a1"]
+
+[node name="RadarConsole" type="Node3D" node_paths=PackedStringArray("quad_for_viewport", "radar_viewport")]
+script = ExtResource("1_ir8ph")
+quad_for_viewport = NodePath("object_060/RadarMesh")
+radar_viewport = NodePath("RadarViewport")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.101742, 0.103425, 0)
+mesh = SubResource("BoxMesh_xg3uk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Base"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_cpf5h")
+
+[node name="object_060" parent="." instance=ExtResource("1_fee3v")]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0.0322863, 0.607968, 0)
+
+[node name="RadarMesh" type="MeshInstance3D" parent="object_060"]
+transform = Transform3D(-4.47035e-08, -0.0694483, 0.350769, 5.02099e-08, -0.297448, -0.0818975, 0.373433, 2.6077e-08, 4.47035e-08, 0.0522299, 0.203158, -0.00385714)
+material_override = SubResource("StandardMaterial3D_mn4se")
+mesh = SubResource("QuadMesh_ww8a1")
+skeleton = NodePath("../..")
+
+[node name="RadarViewport" type="SubViewport" parent="."]
+size = Vector2i(256, 256)
+
+[node name="Radar" parent="RadarViewport" instance=ExtResource("3_odvbf")]
+
+[node name="LeftArrow" parent="." instance=ExtResource("4_nlutv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.190183, 0.202342, -0.0637446)
+interact_display_text = "Left"
+
+[node name="RightArrow" parent="." instance=ExtResource("4_nlutv")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -0.190183, 0.202342, 0.0664019)
+interact_display_text = "Right"
+
+[node name="EditableTextDisplay" parent="." instance=ExtResource("5_j1jfi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0770306, 0.617448, 0)
+
+[node name="Label3D" parent="EditableTextDisplay" index="1"]
+text = "Radar"
+
+[node name="PowerConsumer" type="Node" parent="."]
+script = ExtResource("6_jqsoi")
+
+[editable path="EditableTextDisplay"]
