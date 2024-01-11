@@ -19,10 +19,23 @@ shading_mode = 0
 
 [sub_resource type="QuadMesh" id="QuadMesh_ww8a1"]
 
-[node name="RadarConsole" type="Node3D" node_paths=PackedStringArray("quad_for_viewport", "radar_viewport")]
+[node name="RadarConsole" type="Node3D" node_paths=PackedStringArray("quad_for_viewport", "radar_viewport", "left_arrow_button", "right_arrow_button")]
 script = ExtResource("1_ir8ph")
 quad_for_viewport = NodePath("object_060/RadarMesh")
 radar_viewport = NodePath("RadarViewport")
+left_arrow_button = NodePath("LeftArrow")
+right_arrow_button = NodePath("RightArrow")
+
+[node name="PowerConsumer" type="Node" parent="."]
+script = ExtResource("6_jqsoi")
+
+[node name="LeftArrow" parent="." instance=ExtResource("4_nlutv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.190183, 0.202342, -0.0637446)
+interact_display_text = "Left"
+
+[node name="RightArrow" parent="." instance=ExtResource("4_nlutv")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -0.190183, 0.202342, 0.0664019)
+interact_display_text = "Right"
 
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.101742, 0.103425, 0)
@@ -47,21 +60,10 @@ size = Vector2i(256, 256)
 
 [node name="Radar" parent="RadarViewport" instance=ExtResource("3_odvbf")]
 
-[node name="LeftArrow" parent="." instance=ExtResource("4_nlutv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.190183, 0.202342, -0.0637446)
-interact_display_text = "Left"
-
-[node name="RightArrow" parent="." instance=ExtResource("4_nlutv")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -0.190183, 0.202342, 0.0664019)
-interact_display_text = "Right"
-
 [node name="EditableTextDisplay" parent="." instance=ExtResource("5_j1jfi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0770306, 0.617448, 0)
 
 [node name="Label3D" parent="EditableTextDisplay" index="1"]
 text = "Radar"
-
-[node name="PowerConsumer" type="Node" parent="."]
-script = ExtResource("6_jqsoi")
 
 [editable path="EditableTextDisplay"]

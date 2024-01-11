@@ -166,6 +166,7 @@ func _on_level_spawner_spawned(node):
 	# Show the level since the screen should be faded out by this point
 	current_level.show()
 	Transition.fade_in()
+	changed_level.emit()
 
 func disable_player_syncing() -> void:
 	pass

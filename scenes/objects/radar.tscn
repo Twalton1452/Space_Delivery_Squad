@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7mpthg62fwmu"]
+[gd_scene load_steps=4 format=3 uid="uid://b7mpthg62fwmu"]
 
 [ext_resource type="Script" path="res://scripts/objects/Radar.gd" id="1_uvrxk"]
 [ext_resource type="Texture2D" uid="uid://dt4go0dv7a761" path="res://art/white_square_32.png" id="2_quck7"]
-[ext_resource type="Texture2D" uid="uid://cu247nl3sgojg" path="res://art/icons/white-circle.svg" id="2_wcb72"]
 [ext_resource type="Texture2D" uid="uid://didmxoidtetlw" path="res://art/sprites/playerShip1_green.png" id="3_jblv5"]
 
 [node name="Radar" type="Node2D"]
@@ -17,75 +16,8 @@ texture = ExtResource("2_quck7")
 [node name="Galaxies" type="Node2D" parent="."]
 modulate = Color(0, 0.745098, 0, 1)
 
-[node name="StartingGalaxy" type="Sprite2D" parent="Galaxies"]
-position = Vector2(130, 242)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy" type="Sprite2D" parent="Galaxies"]
-position = Vector2(303, 61)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy2" type="Sprite2D" parent="Galaxies"]
-position = Vector2(170, 139)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy3" type="Sprite2D" parent="Galaxies"]
-position = Vector2(393, 189)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy4" type="Sprite2D" parent="Galaxies"]
-position = Vector2(52, 29)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy5" type="Sprite2D" parent="Galaxies"]
-position = Vector2(365, -117)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy6" type="Sprite2D" parent="Galaxies"]
-position = Vector2(631, -336)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy7" type="Sprite2D" parent="Galaxies"]
-position = Vector2(244, -443)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy8" type="Sprite2D" parent="Galaxies"]
-position = Vector2(-62, -615)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy9" type="Sprite2D" parent="Galaxies"]
-position = Vector2(-207, -393)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy10" type="Sprite2D" parent="Galaxies"]
-position = Vector2(746, -9)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy11" type="Sprite2D" parent="Galaxies"]
-position = Vector2(993, -323)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="Galaxy12" type="Sprite2D" parent="Galaxies"]
-position = Vector2(925, -602)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
-
-[node name="DestinationGalaxy" type="Sprite2D" parent="Galaxies"]
-position = Vector2(515, -588)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_wcb72")
+[node name="Planets" type="Node2D" parent="."]
+modulate = Color(0, 0.745098, 0, 1)
 
 [node name="Ship" type="Sprite2D" parent="."]
 self_modulate = Color(0, 0.745098, 0, 1)

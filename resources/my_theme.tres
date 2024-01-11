@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://po0l0sihtw6n"]
+
+[ext_resource type="FontFile" uid="uid://6j5xf6n7lhb4" path="res://fonts/Kenney High Square.ttf" id="1_mq2r8"]
+
+[resource]
+default_font = ExtResource("1_mq2r8")
+default_font_size = 32
+HeaderLarge/base_type = &"Label"
+HeaderLarge/font_sizes/font_size = 64

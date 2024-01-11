@@ -33,6 +33,7 @@ TickHandler="*res://scripts/autoloads/handlers/TickHandler.gd"
 ReleaseHandler="*res://scripts/autoloads/handlers/ReleaseHandler.gd"
 PickupHandler="*res://scripts/autoloads/handlers/PickupHandler.gd"
 InteractHandler="*res://scripts/autoloads/handlers/InteractHandler.gd"
+Universe="*res://scripts/autoloads/Universe.gd"
 
 [file_customization]
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://e244a03u5ux3"]
+[gd_scene load_steps=7 format=3 uid="uid://e244a03u5ux3"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3wpj0"]
+[ext_resource type="Theme" uid="uid://po0l0sihtw6n" path="res://resources/my_theme.tres" id="2_8n7hr"]
 [ext_resource type="AudioStream" uid="uid://c710dv8bls4ec" path="res://sfx/click1.ogg" id="2_n2jq0"]
 [ext_resource type="PackedScene" uid="uid://bgsdf2kt2gnb2" path="res://scenes/ui/player_customization.tscn" id="3_257vn"]
 
@@ -31,6 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_8n7hr")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/MainMenu"]
 stream = ExtResource("2_n2jq0")
@@ -46,6 +48,7 @@ offset_top = 34.0
 offset_right = 372.0
 offset_bottom = 133.0
 grow_horizontal = 2
+theme_type_variation = &"HeaderLarge"
 text = "Space Delivery Squad"
 label_settings = SubResource("LabelSettings_38u1e")
 
