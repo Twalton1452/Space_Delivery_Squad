@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=32 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/Ship.gd" id="1_a12e7"]
@@ -25,7 +25,9 @@
 [ext_resource type="PackedScene" uid="uid://cdpmmjy7j8qs0" path="res://scenes/components/power_consumer.tscn" id="26_hl87m"]
 [ext_resource type="PackedScene" uid="uid://bo77fn5dmix3e" path="res://scenes/objects/cart.tscn" id="26_r1glp"]
 [ext_resource type="PackedScene" uid="uid://br81xjq0nbxge" path="res://scenes/objects/power_reacter_filled.tscn" id="26_viad1"]
+[ext_resource type="PackedScene" uid="uid://b5rs61nvw3hj6" path="res://scenes/objects/announcement_board.tscn" id="27_miyvf"]
 [ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="27_wihpu"]
+[ext_resource type="PackedScene" uid="uid://orykij4tc3e2" path="res://art/space interior elements/object_058.glb" id="28_u2fo6"]
 [ext_resource type="PackedScene" uid="uid://cy5bsf67m2kda" path="res://scenes/components/TriggerZone.tscn" id="29_qc550"]
 [ext_resource type="PackedScene" uid="uid://d022i57dmjcuf" path="res://scenes/objects/ship_navigation_console.tscn" id="32_hpl5b"]
 
@@ -266,7 +268,13 @@ shape = SubResource("BoxShape3D_nh26e")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11075, 0.0625, 1.1529)
 
 [node name="ShipNavigationConsole" parent="Objects" instance=ExtResource("32_hpl5b")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.16843, 0.0529052, 2.62666)
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 6.21979, 0.0529052, 3.37104)
+
+[node name="AnnouncementBoard" parent="Objects" instance=ExtResource("27_miyvf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6.32768, 0, 2.56901)
+
+[node name="object_058" parent="Objects" instance=ExtResource("28_u2fo6")]
+transform = Transform3D(1, 0, 0, 0, 0.682466, 0, 0, 0, 1, 4.37628, 0.0564111, 2.56704)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

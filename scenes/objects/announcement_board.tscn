@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5rs61nvw3hj6"]
+
+[ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="1_ake40"]
+[ext_resource type="FontFile" uid="uid://6j5xf6n7lhb4" path="res://fonts/Kenney High Square.ttf" id="2_c3jla"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_72itf"]
+size = Vector3(1, 0.7, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4yml5"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_8b68d"]
+size = Vector2(0.895, 0.565)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0qvst"]
+size = Vector3(1.05, 0.1, 0.2)
+
+[node name="AnnouncementBoard" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42103, 0)
+mesh = SubResource("BoxMesh_72itf")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0424845, 0.0503211)
+material_override = SubResource("StandardMaterial3D_4yml5")
+mesh = SubResource("QuadMesh_8b68d")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107562, 0)
+mesh = SubResource("BoxMesh_0qvst")
+
+[node name="EditableTextDisplay" parent="." instance=ExtResource("1_ake40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784952, 0)
+
+[node name="Label3D" parent="EditableTextDisplay" index="1"]
+text = "Announcement Board"
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.489274, 0.0553169)
+text = "Standby"
+font = ExtResource("2_c3jla")
+
+[editable path="EditableTextDisplay"]
