@@ -51,7 +51,8 @@ class Package extends Node:
 #endregion Component
 
 @rpc("authority", "call_local", "reliable")
-func broadcast_seed_to_players(game_seed: int) -> void:
+func broadcast_seed_to_players(server_game_seed: int) -> void:
+	game_seed = server_game_seed
 	seed(game_seed)
 	generate()
 	print(multiplayer.get_unique_id(), " set seed to ", game_seed)
