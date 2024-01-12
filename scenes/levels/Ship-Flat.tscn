@@ -34,7 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://br81xjq0nbxge" path="res://scenes/objects/power_reacter_filled.tscn" id="26_viad1"]
 [ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="27_wihpu"]
 [ext_resource type="PackedScene" uid="uid://cy5bsf67m2kda" path="res://scenes/components/TriggerZone.tscn" id="29_qc550"]
-[ext_resource type="PackedScene" uid="uid://d022i57dmjcuf" path="res://scenes/objects/radar_console.tscn" id="32_hpl5b"]
+[ext_resource type="PackedScene" uid="uid://d022i57dmjcuf" path="res://scenes/objects/ship_navigation_console.tscn" id="32_hpl5b"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_baran"]
 
@@ -359,7 +359,7 @@ shape = SubResource("BoxShape3D_nh26e")
 [node name="rail-holder" parent="Objects" instance=ExtResource("26_r1glp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11075, 0.0625, 1.1529)
 
-[node name="RadarConsole" parent="Objects" instance=ExtResource("32_hpl5b")]
+[node name="ShipNavigationConsole" parent="Objects" instance=ExtResource("32_hpl5b")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 6.16843, 0.0529052, -0.153064)
 
 [node name="GridMap Floor" type="GridMap" parent="."]

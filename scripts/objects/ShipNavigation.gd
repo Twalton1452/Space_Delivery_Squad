@@ -1,5 +1,5 @@
 extends Node2D
-class_name Radar
+class_name ShipNavigation
 
 ## Visual Representation of where the players are at in the Universe
 
@@ -54,7 +54,7 @@ func remap_position_to_screen(galaxy: Universe.Galaxy) -> Vector2:
 	return Vector2(x_pos, y_pos)
 
 func update_visuals() -> void:
-	var galaxy_scene = load("res://scenes/objects/radar/galaxy.tscn")
+	var galaxy_scene = load("res://scenes/objects/navigation/galaxy.tscn")
 	for i in range(Universe.galaxies.size()):
 		var visual_galaxy = galaxy_scene.instantiate()
 		var physical_galaxy = Universe.galaxies[i]
