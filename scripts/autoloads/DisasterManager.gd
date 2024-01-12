@@ -4,7 +4,7 @@ extends Node
 ## A starting point for Disasters to Trigger
 ## Functions return booleans to signify if it was successful in what it set out to do
 
-var disasters : Array[DisasterEvent] = [
+var disasters : Array[Event] = [
 	preload("res://resources/disasters/airlock.tres"),
 	preload("res://resources/disasters/power_loss.tres")
 ]
@@ -53,8 +53,8 @@ func _on_listener_conditions_unmet(listener: DisasterListener) -> void:
 		var disaster_index = disasters.find(listener.disaster_event)
 		broadcast_disaster_event_end.rpc(disaster_index)
 
-func start_disaster(which: DisasterEvent) -> void:
+func start_disaster(which: Event) -> void:
 	which.start()
 
-func end_disaster(which: DisasterEvent) -> void:
+func end_disaster(which: Event) -> void:
 	which.end()

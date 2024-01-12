@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="DisasterEvent" load_steps=2 format=3 uid="uid://bu0bvu4hikwic"]
 
-[ext_resource type="Script" path="res://scripts/resources/DisasterEvent.gd" id="1_j5t5h"]
+[ext_resource type="Script" path="res://scripts/resources/Event.gd" id="1_j5t5h"]
 
 [resource]
 script = ExtResource("1_j5t5h")

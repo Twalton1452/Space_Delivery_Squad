@@ -46,7 +46,6 @@ size = Vector3(1.02441, 0.778809, 1.08496)
 
 [node name="Ship" type="Node3D"]
 script = ExtResource("1_a12e7")
-power_loss_disaster = ExtResource("8_c18hl")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_2ly15")

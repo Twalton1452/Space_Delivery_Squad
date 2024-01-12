@@ -1,9 +1,11 @@
 extends Resource
-class_name DisasterEvent
+class_name Event
+
+## Generic Multipurpose Event Resource
+## Create Disaster Events, Navigation Events, Player Events
 
 signal started
 signal ended
-
 
 var occurring : bool = false : 
 	set(value):

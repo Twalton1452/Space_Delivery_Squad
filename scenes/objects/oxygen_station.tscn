@@ -1,9 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://rre2t2pta62e"]
+[gd_scene load_steps=12 format=3 uid="uid://rre2t2pta62e"]
 
 [ext_resource type="PackedScene" uid="uid://cdpmmjy7j8qs0" path="res://scenes/components/power_consumer.tscn" id="1_akyi6"]
 [ext_resource type="Script" path="res://scripts/objects/OxygenStation.gd" id="1_ih78j"]
-[ext_resource type="Resource" uid="uid://bu0bvu4hikwic" path="res://resources/disasters/airlock.tres" id="2_33cli"]
-[ext_resource type="Resource" uid="uid://b3c50iyfgfbbg" path="res://resources/disasters/power_loss.tres" id="3_vbgk0"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_avhae"]
 points = PackedVector3Array(-4.36753e-05, 0.3, 0.257735, 0.223161, 0.3, 0.128817, 0.178547, 0.6, 0.103084, -4.36753e-05, 0.6, 0.206168, -0.17859, 0.6, 0.103084, -0.223205, 0.3, 0.128817, -4.36753e-05, 0.0499804, 0.257735, 0.223161, 0.3, -0.128918, 0.223161, 0.0499804, 0.128817, 0.178547, 0.6, -0.103134, -0.17859, 0.6, -0.103134, -0.223205, 0.3, -0.128918, -0.223205, 0.0499804, 0.128817, -0.173216, 0, 0.0999556, -4.36753e-05, 0, 0.199962, 0.173172, 0, 0.0999556, -4.36753e-05, 0.3, -0.257735, -4.36753e-05, 0.6, -0.206218, 0.223161, 0.0499804, -0.128918, -0.223205, 0.0499804, -0.128918, -0.173216, 0, -0.100006, 0.173172, 0, -0.100006, -4.36753e-05, 0.0499804, -0.257735, -4.36753e-05, 0, -0.200012)
@@ -182,8 +180,6 @@ shadow_mesh = SubResource("ArrayMesh_hxg3q")
 
 [node name="OxygenStation" type="Node3D"]
 script = ExtResource("1_ih78j")
-airlock_disaster = ExtResource("2_33cli")
-power_loss_disaster = ExtResource("3_vbgk0")
 
 [node name="PowerConsumer" parent="." instance=ExtResource("1_akyi6")]
 

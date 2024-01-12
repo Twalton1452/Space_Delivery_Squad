@@ -3,7 +3,7 @@ class_name Ship
 
 ## Class for some generic Ship Management things that need to be propagated around
 
-@export var power_loss_disaster : DisasterEvent
+var power_loss_disaster : Event = load("res://resources/disasters/power_loss.tres")
 
 func _ready() -> void:
 	power_loss_disaster.started.connect(_on_power_loss_disaster_started)

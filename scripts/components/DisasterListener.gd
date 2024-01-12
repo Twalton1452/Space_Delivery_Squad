@@ -7,7 +7,7 @@ class_name DisasterListener
 signal conditions_met(listener: DisasterListener)
 signal conditions_unmet(listener: DisasterListener)
 
-@export var disaster_event : DisasterEvent
+@export var disaster_event : Event
 
 func _enter_tree() -> void:
 	DisasterManager.register_listener(self)
