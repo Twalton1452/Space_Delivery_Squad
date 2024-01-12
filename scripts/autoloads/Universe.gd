@@ -11,6 +11,7 @@ var max_galaxy_id = 9999999
 var boundaries = Vector4() # (x: min_x, y: max_x, z: min_y, w: max_y)
 var galaxies : Array[Galaxy] = []
 var generated = false
+var game_seed : int
 
 #region Space
 class Galaxy:
@@ -49,13 +50,26 @@ class Package extends Node:
 	var special_instructions : Array[PackageInstruction]
 #endregion Component
 
-func _ready():
-	# TODO: Wait for game to signal it has started
-	await LevelManager.changed_level
-	
-	# TODO: Recieve seed from server
-	#seed(Time.get_date_string_from_system().hash())
+@rpc("authority", "call_local", "reliable")
+func broadcast_seed_to_players(game_seed: int) -> void:
+	seed(game_seed)
 	generate()
+	print(multiplayer.get_unique_id(), " set seed to ", game_seed)
+
+func _on_peer_connected(p_id: int) -> void:
+	if multiplayer.is_server():
+		broadcast_seed_to_players.rpc_id(p_id, game_seed)
+
+func _ready():
+	multiplayer.peer_connected.connect(_on_peer_connected)
+	
+	# TODO: Wait for game to signal it has started
+	# This is a temporary workaround
+	await LevelManager.changed_level
+	if multiplayer.is_server():
+		game_seed = Time.get_time_string_from_system().hash()
+		broadcast_seed_to_players.rpc(game_seed)
+	
 	#debug_print()
 
 func debug_print() -> void:
