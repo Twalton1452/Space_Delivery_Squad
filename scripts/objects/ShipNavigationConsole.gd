@@ -8,14 +8,18 @@ class_name ShipNavigationConsole
 @export var left_arrow_button : Interactable
 @export var right_arrow_button : Interactable
 @export var lock_in_button : Interactable
+@export var landing_lever : Interactable
 @export var ship_navigation : ShipNavigation
 @export var highlight_mat : StandardMaterial3D
+
+var enter_galaxy_event : Event = load("res://resources/events/navigation/enter_galaxy.tres")
 
 func _ready() -> void:
 	(quad_for_viewport.material_override as StandardMaterial3D).albedo_texture = navigation_viewport.get_texture()
 	left_arrow_button.interacted.connect(_on_left_button_pressed)
 	right_arrow_button.interacted.connect(_on_right_button_pressed)
 	lock_in_button.interacted.connect(_on_lock_in_button_pressed)
+	landing_lever.interacted.connect(_on_landing_lever_activated)
 	ship_navigation.reached_destination.connect(_on_reached_destination)
 	
 	enable()
@@ -41,3 +45,6 @@ func _on_right_button_pressed(_interactable: Interactable, _interacter: Player) 
 func _on_lock_in_button_pressed(interactable: Interactable, _interacter: Player) -> void:
 	ship_navigation.lock_in_path()
 	interactable.add_highlight(highlight_mat)
+
+func _on_landing_lever_activated(_interactable: Interactable, _interacter: Player) -> void:
+	EventManager.request_event_start(enter_galaxy_event)

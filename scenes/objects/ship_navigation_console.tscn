@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d022i57dmjcuf"]
+[gd_scene load_steps=16 format=3 uid="uid://d022i57dmjcuf"]
 
 [ext_resource type="PackedScene" uid="uid://b6aqbw4uyo04e" path="res://art/space interior elements/object_060.glb" id="1_fee3v"]
 [ext_resource type="Script" path="res://scripts/objects/ShipNavigationConsole.gd" id="1_ir8ph"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/components/PowerConsumer.gd" id="6_jqsoi"]
 [ext_resource type="AudioStream" uid="uid://c710dv8bls4ec" path="res://sfx/click1.ogg" id="6_wyw1y"]
 [ext_resource type="PackedScene" uid="uid://dhsuhcelso85c" path="res://scenes/objects/button.tscn" id="7_nncys"]
+[ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_07q83"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_b8xrt"]
 size = Vector3(0.125, 0.02, 0.1)
@@ -25,18 +26,24 @@ shading_mode = 0
 
 [sub_resource type="QuadMesh" id="QuadMesh_ww8a1"]
 
-[node name="ShipNavigationConsole" type="Node3D" node_paths=PackedStringArray("quad_for_viewport", "navigation_viewport", "left_arrow_button", "right_arrow_button", "lock_in_button", "ship_navigation")]
+[node name="ShipNavigationConsole" type="Node3D" node_paths=PackedStringArray("quad_for_viewport", "navigation_viewport", "left_arrow_button", "right_arrow_button", "lock_in_button", "landing_lever", "ship_navigation")]
 script = ExtResource("1_ir8ph")
 quad_for_viewport = NodePath("object_060/NavigationViewportMesh")
 navigation_viewport = NodePath("NavigationViewport")
 left_arrow_button = NodePath("LeftArrow")
 right_arrow_button = NodePath("RightArrow")
 lock_in_button = NodePath("LockInButton")
+landing_lever = NodePath("LandingGear")
 ship_navigation = NodePath("NavigationViewport/Navigation")
 highlight_mat = ExtResource("2_yw084")
 
 [node name="PowerConsumer" type="Node" parent="."]
 script = ExtResource("6_jqsoi")
+
+[node name="LandingGear" parent="." instance=ExtResource("10_07q83")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138369, 0, 0.417768)
+time_to_interact = 1.0
+interact_display_text = "Enter Galaxy"
 
 [node name="LeftArrow" parent="." instance=ExtResource("4_nlutv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.190183, 0.202342, -0.095115)

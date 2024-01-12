@@ -1,6 +1,6 @@
-extends DisasterListener
+extends EventListener
 
-@export_category("Disaster Cause")
+@export_category("Event Cause")
 @export var door_to_airlock : Door
 @export var airlock_door : Door
 

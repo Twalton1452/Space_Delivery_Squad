@@ -7,12 +7,12 @@ class_name PowerConsumer
 func _ready():
 	add_to_group(Constants.POWER_CONSUMER_GROUP)
 
-# Called from PowerLoss Disaster
+# Called from PowerLoss Event
 func turn_on_functionality() -> void:
 	if get_parent().has_method("enable"):
 		get_parent().call("enable")
 
-# Called from PowerLoss Disaster
+# Called from PowerLoss Event
 func turn_off_functionality() -> void:
 	if get_parent().has_method("disable"):
 		get_parent().call("disable")

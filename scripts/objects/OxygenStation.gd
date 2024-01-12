@@ -6,8 +6,8 @@ class_name OxygenStation
 signal enabled
 signal disabled
 
-var airlock_disaster : Event = load("res://resources/disasters/airlock.tres")
-var power_loss_disaster : Event = load("res://resources/disasters/power_loss.tres")
+var airlock_disaster : Event = load("res://resources/events/disasters/airlock.tres")
+var power_loss_disaster : Event = load("res://resources/events/disasters/power_loss.tres")
 
 func _ready() -> void:
 	airlock_disaster.started.connect(_on_airlock_disaster_started)

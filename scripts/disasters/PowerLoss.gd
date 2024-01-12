@@ -1,4 +1,4 @@
-extends DisasterListener
+extends EventListener
 
 
 func _ready() -> void:
