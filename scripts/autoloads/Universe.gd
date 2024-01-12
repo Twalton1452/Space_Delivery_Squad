@@ -168,7 +168,7 @@ func generate() -> void:
 	boundaries = get_formation_boundaries(galaxy_formation)
 	# TODO: Resource with UniverseParams for varying difficulties
 	
-	var galaxy_count = 4 # TODO: based on Formation? More difficult formations have more galaxies
+	var galaxy_count = 5 # TODO: based on Formation? More difficult formations have more galaxies
 	
 	for i in range(galaxy_count):
 		var new_galaxy = generate_galaxy()

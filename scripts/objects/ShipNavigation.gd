@@ -5,16 +5,22 @@ class_name ShipNavigation
 
 signal reached_destination
 
+const NOT_SELECTED_PATH_WIDTH = 10
+const SELECTED_PATH_WIDTH = 30
+
 @onready var screen = $ScreenFilter
 @onready var galaxies_parent = $ScreenFilter/Galaxies
 @onready var planets_parent = $ScreenFilter/Planets
 @onready var paths_parent = $ScreenFilter/Paths
 @onready var ship = $Ship
 
+var path_scene = load("res://scenes/objects/navigation/connecter_line2d.tscn")
+var distance_to_draw_path = 150.0
 var target_location : Node2D
 var current_location : Node2D
 var speed = 5.0
 var moving_tween : Tween
+var selected_path = -1
 
 func _ready():
 	if OS.has_feature("editor"):
@@ -99,32 +105,94 @@ func draw_paths(nodes: Array[Node2D]) -> void:
 	for existing_path in paths_parent.get_children():
 		existing_path.queue_free()
 	await get_tree().physics_frame
+	await get_tree().physics_frame
 	
-	# half the viewport's size + buffer, should draw lines to everything visible
-	var distance_to_draw_path = 136.0
-	var path_scene = load("res://scenes/objects/navigation/connecter_line2d.tscn")
-	for node in nodes:
-		if node == current_location:
-			continue
-		
-		var dist = current_location.position.distance_to(node.position)
-		#print(node.name, " distance to ship ", dist)
-		if dist < distance_to_draw_path:
-			var path : Line2D = path_scene.instantiate()
-			path.add_point(current_location.position)
-			path.add_point(node.position)
-			path.name = node.name
-			paths_parent.add_child(path)
+	# Get all the in range nodes
+	# Then sort them clockwise
+	# This will let us march through the children from a 0 index easily
+	
+	# March the Quadrants of the screen clockwise using the current_location as the center point
+	# Once inside the Quadrant, sort the nodes from closest to farthest
+	# This will put the paths in clockwise order to make scrolling them as simple as +/- 1 index on the children
+	var in_range_nodes : Array[Node2D] = nodes.filter(func(node: Node2D): return node.position.distance_to(current_location.position) < distance_to_draw_path and node != current_location)
+	
+	# Top Right Quadrant
+	var top_right_nodes = in_range_nodes.filter(func(node: Node2D):
+		return \
+		node.position.x >= current_location.position.x and \
+		node.position.y <= current_location.position.y
+	)
+	top_right_nodes.sort_custom(func(a, b): return a.position.x < b.position.x and a.position.y < b.position.y)
+	for node in top_right_nodes:
+		draw_path_to(node)
+	
+	# Bottom Right Quadrant
+	var bottom_right_nodes = in_range_nodes.filter(func(node: Node2D):
+		return \
+		node.position.x >= current_location.position.x and \
+		node.position.y >= current_location.position.y
+	)
+	bottom_right_nodes.sort_custom(func(a, b): return a.position.y < b.position.y and a.position.x > b.position.x)
+	for node in bottom_right_nodes:
+		draw_path_to(node)
+	
+	# Bottom Left Quadrant
+	var bottom_left_nodes = in_range_nodes.filter(func(node: Node2D):
+		return \
+		node.position.x <= current_location.position.x and \
+		node.position.y >= current_location.position.y
+	)
+	bottom_left_nodes.sort_custom(func(a, b): return a.position.x > b.position.x and a.position.y > b.position.y)
+	for node in bottom_left_nodes:
+		draw_path_to(node)
+	
+	# Top Left Quadrant
+	var top_left_nodes = in_range_nodes.filter(func(node: Node2D):
+		return \
+		node.position.x <= current_location.position.x and \
+		node.position.y <= current_location.position.y
+	)
+	top_left_nodes.sort_custom(func(a, b): return a.position.x < b.position.x)
+	for node in top_left_nodes:
+		draw_path_to(node)
+	
+	selected_path = -1
+	select_path(0)
+
+func draw_path_to(node: Node2D) -> void:
+	# Make sure the path doesn't exist already
+	if paths_parent.get_node_or_null(NodePath(node.name)) != null:
+		return
+	
+	var path : Line2D = path_scene.instantiate()
+	path.add_point(current_location.position)
+	path.add_point(node.position)
+	path.name = node.name
+	paths_parent.add_child(path)
+
+func select_path(index : int) -> void:
+	if selected_path != -1:
+		var previous_path : Line2D = paths_parent.get_children()[selected_path]
+		previous_path.width = NOT_SELECTED_PATH_WIDTH
+	
+	selected_path = index % paths_parent.get_child_count()
+	
+	var next_path : Line2D = paths_parent.get_children()[selected_path]
+	next_path.width = SELECTED_PATH_WIDTH
 
 func select_next_right_path() -> void:
-	pass
+	select_path(selected_path + 1)
 
 func select_next_left_path() -> void:
-	pass
+	# Lines were not getting reset correctly
+	# I think because negative indexing is allowed similar to python
+	# Just manually wrap it around for now
+	var next_left = paths_parent.get_child_count() - 1 if selected_path - 1 < 0 else selected_path - 1
+	select_path(next_left)
 
 func lock_in_path() -> void:
-	var next = galaxies_parent.get_children().pick_random()
-	while next == current_location:
-		next = galaxies_parent.get_children().pick_random()
-	# TODO: Path based?
-	travel_to(next)
+	var selected_path_name = paths_parent.get_children()[selected_path].name
+	for galaxy in galaxies_parent.get_children():
+		if galaxy.name == selected_path_name:
+			travel_to(galaxy)
+			return
