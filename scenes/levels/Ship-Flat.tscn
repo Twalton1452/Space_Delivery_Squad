@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=30 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/Ship.gd" id="1_a12e7"]
@@ -16,16 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="8_dnlpq"]
 [ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_sl58d"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_83m8u"]
-[ext_resource type="PackedScene" uid="uid://bmhbobfkwc3fu" path="res://art/objects/cannister.glb" id="15_7a5q0"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
-[ext_resource type="PackedScene" uid="uid://ceclhtgrtfobx" path="res://art/objects/pipe-ring-support.glb" id="19_bxt33"]
 [ext_resource type="PackedScene" uid="uid://rre2t2pta62e" path="res://scenes/objects/oxygen_station.tscn" id="19_kukbf"]
-[ext_resource type="PackedScene" uid="uid://colieh8g41pbv" path="res://scenes/components/Interactable.tscn" id="20_70p0j"]
-[ext_resource type="Script" path="res://scripts/ui/OxygenDisplay.gd" id="20_d72ou"]
-[ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="20_k18mp"]
-[ext_resource type="PackedScene" uid="uid://du8ca56gtfpe8" path="res://art/space interior elements/object_048.glb" id="20_rvhcf"]
-[ext_resource type="PackedScene" uid="uid://rxr4s6swkxbc" path="res://art/objects/breaker_box.glb" id="20_xv1bn"]
 [ext_resource type="PackedScene" uid="uid://bkxmeoaq2j562" path="res://scenes/objects/power_station.tscn" id="22_qtx0h"]
 [ext_resource type="PackedScene" uid="uid://cewc7flo2v4np" path="res://scenes/objects/charging_station.tscn" id="24_2vp5n"]
 [ext_resource type="PackedScene" uid="uid://dqi57b5v05q2o" path="res://scenes/objects/two_sided_door.tscn" id="24_v4jwp"]
@@ -35,11 +28,6 @@
 [ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="27_wihpu"]
 [ext_resource type="PackedScene" uid="uid://cy5bsf67m2kda" path="res://scenes/components/TriggerZone.tscn" id="29_qc550"]
 [ext_resource type="PackedScene" uid="uid://d022i57dmjcuf" path="res://scenes/objects/ship_navigation_console.tscn" id="32_hpl5b"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_baran"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jb37y"]
-size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nh26e"]
 size = Vector3(1.02441, 0.778809, 1.08496)
@@ -51,7 +39,7 @@ script = ExtResource("1_a12e7")
 environment = ExtResource("1_2ly15")
 
 [node name="SpawnLocation" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.50528, 0.172416, 2)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.16765, 0.172416, 2.66093)
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_location")]
 _spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
@@ -215,92 +203,10 @@ transform = Transform3D(4.37114e-08, -1, -3.82137e-15, 1, 4.37114e-08, -1.74846e
 time_to_interact = 1.0
 interact_display_text = "Airlock"
 
-[node name="cannister" parent="Objects" instance=ExtResource("15_7a5q0")]
-transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.23463, 0.210307, -4.1869)
-
-[node name="cannister2" parent="Objects" instance=ExtResource("15_7a5q0")]
-transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.62794, 0.210307, -4.1869)
-
-[node name="cannister3" parent="Objects" instance=ExtResource("15_7a5q0")]
-transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 5.01375, 0.210307, -4.1869)
-
-[node name="cannister4" parent="Objects" instance=ExtResource("15_7a5q0")]
-transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.4083, 0.542432, -4.1869)
-
-[node name="cannister6" parent="Objects" instance=ExtResource("15_7a5q0")]
-transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.58406, 0.857488, -4.1869)
-
-[node name="cannister5" parent="Objects" instance=ExtResource("15_7a5q0")]
-transform = Transform3D(-7.8107e-15, -2.78182e-08, 1, 1, -8.74228e-08, 5.22385e-15, 8.74228e-08, 1, 2.78182e-08, 4.80313, 0.542432, -4.1869)
-
-[node name="breaker_box" parent="Objects" instance=ExtResource("20_xv1bn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17702, 0.0625, 5.95371)
-
-[node name="OxygenDisplay" type="Node3D" parent="Objects"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.25, -2.87598)
-script = ExtResource("20_d72ou")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Objects/OxygenDisplay"]
-visible = false
-
-[node name="Background" type="TextureRect" parent="Objects/OxygenDisplay/CanvasLayer"]
-self_modulate = Color(0.0745098, 0.0823529, 0.0823529, 1)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_k18mp")
-
-[node name="Label" type="Label" parent="Objects/OxygenDisplay/CanvasLayer/Background"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -27.0
-offset_top = 624.0
-offset_right = 27.0
-offset_bottom = 647.0
-grow_horizontal = 2
-text = "Airlock"
-
-[node name="Screen" type="TextureRect" parent="Objects/OxygenDisplay/CanvasLayer"]
-self_modulate = Color(0.207843, 0.294118, 0.223529, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -300.0
-offset_right = 400.0
-offset_bottom = 300.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_k18mp")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/OxygenDisplay"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("BoxMesh_baran")
-
-[node name="Interactable" parent="Objects/OxygenDisplay" instance=ExtResource("20_70p0j")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/OxygenDisplay/Interactable"]
-shape = SubResource("BoxShape3D_jb37y")
-
-[node name="ViewingPosition" type="Marker3D" parent="Objects/OxygenDisplay"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.151934, -0.583449)
-
 [node name="OxygenStation" parent="Objects" instance=ExtResource("19_kukbf")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.0618386, -2.12837)
 
 [node name="Power" type="Node3D" parent="Objects"]
-
-[node name="pipe-ring-support" parent="Objects/Power" instance=ExtResource("19_bxt33")]
-transform = Transform3D(-3.0598e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.0598e-08, 2.84925, 0.0625, 7.22476)
-
-[node name="pipe-ring-support2" parent="Objects/Power" instance=ExtResource("19_bxt33")]
-transform = Transform3D(-3.0598e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.0598e-08, 2.34925, 0.0625, 7.22476)
 
 [node name="ChargingStation" parent="Objects/Power" instance=ExtResource("24_2vp5n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.282, 0.0581396, 9)
@@ -360,7 +266,7 @@ shape = SubResource("BoxShape3D_nh26e")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11075, 0.0625, 1.1529)
 
 [node name="ShipNavigationConsole" parent="Objects" instance=ExtResource("32_hpl5b")]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 6.16843, 0.0529052, -0.153064)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.16843, 0.0529052, 2.62666)
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -437,11 +343,8 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="delete_later2" parent="." instance=ExtResource("20_rvhcf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48232, 0.235397, 3.44566)
-
 [node name="delete_later" parent="." instance=ExtResource("26_viad1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.35055, 0.0625, 1.52456)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.13776, 0.0625, 9.12037)
 
 [editable path="Objects/AirlockDoor"]
 [editable path="Objects/Power/power_station"]

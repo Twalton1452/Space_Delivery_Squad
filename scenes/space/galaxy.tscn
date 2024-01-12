@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbl4lik0775ht"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_guhgk"]
+radius = 20.0
+height = 35.742
+radial_segments = 8
+rings = 8
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.58248, 0)
+mesh = SubResource("SphereMesh_guhgk")

@@ -154,13 +154,14 @@ func generate() -> void:
 	# TODO: Resource with UniverseParams for varying difficulties
 	
 	var galaxy_count = 4 # TODO: based on Formation? More difficult formations have more galaxies
+	
 	for i in range(galaxy_count):
 		var new_galaxy = generate_galaxy()
 		galaxy_formation_path.progress_ratio = float(i) / float(galaxy_count)
 		var spawn_position = galaxy_formation_path.position
 		new_galaxy.position = Vector3(spawn_position.x, spawn_position.y, 0.0)
 		galaxies.push_back(new_galaxy)
-	
+		
 	# Always put the Package Company (IPP) at 0,0,0
 	var package_company_galaxy = Galaxy.new()
 	package_company_galaxy.display_name = "I.P.P"

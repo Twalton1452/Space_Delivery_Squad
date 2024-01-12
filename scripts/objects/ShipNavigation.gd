@@ -10,13 +10,10 @@ signal reached_destination
 @onready var ship = $ScreenFilter/Ship
 
 var target_destination : Node2D
-var speed = 3.0
+var speed = 15.0
 var moving_tween : Tween
 
 func _ready():
-	if OS.has_feature("editor"):
-		speed = 10.0
-	
 	if not Universe.generated:
 		await Universe.finished_generation
 	update_visuals()
