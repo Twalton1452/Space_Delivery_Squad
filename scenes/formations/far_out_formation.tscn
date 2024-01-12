@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://2k246hkt4ymj"]
+
+[sub_resource type="Curve2D" id="Curve2D_xslf2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -80.798, 0, 0, 0, 0, 197, 1, 0, 0, 0, 0, 312, -81, 0, 0, 0, 0, 280, -175, 0, 0, 0, 0, 473, -127, 0, 0, 0, 0, 452, 13, 0, 0, 0, 0, 430, 96, 0, 0, 0, 0, 595, 48, 0, 0, 0, 0, 638, 2)
+}
+point_count = 9
+
+[node name="FarOut" type="Path2D"]
+position = Vector2(0, 6.4666)
+scale = Vector2(0.438871, 0.711238)
+curve = SubResource("Curve2D_xslf2")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(0, -80.798)
+rotation = 0.393556

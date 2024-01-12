@@ -13,14 +13,15 @@ position = Vector2(130, 130)
 scale = Vector2(8, 8)
 texture = ExtResource("2_quck7")
 
-[node name="Galaxies" type="Node2D" parent="."]
+[node name="ScreenFilter" type="Node2D" parent="."]
+editor_description = "This Node is just to apply a Green Color to all the children"
 modulate = Color(0, 0.745098, 0, 1)
 
-[node name="Planets" type="Node2D" parent="."]
-modulate = Color(0, 0.745098, 0, 1)
+[node name="Galaxies" type="Node2D" parent="ScreenFilter"]
 
-[node name="Ship" type="Sprite2D" parent="."]
-self_modulate = Color(0, 0.745098, 0, 1)
-position = Vector2(130, 236)
-scale = Vector2(0.439999, 0.51971)
+[node name="Planets" type="Node2D" parent="ScreenFilter"]
+
+[node name="Ship" type="Sprite2D" parent="ScreenFilter"]
+position = Vector2(130, 128)
+scale = Vector2(0.22, 0.26)
 texture = ExtResource("3_jblv5")

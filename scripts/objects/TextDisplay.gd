@@ -28,7 +28,6 @@ func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
 	if label.text != line_edit.text:
 		label.text = line_edit.text
 		interactable.interact_display_text = label.text
-		# Using MultiplayerSynchronizer to distribute the new label
 		if not multiplayer.is_server():
 			notify_server_text_changed.rpc_id(1, label.text)
 	
@@ -37,5 +36,6 @@ func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
 
 @rpc("any_peer", "call_remote", "unreliable")
 func notify_server_text_changed(new_label: String) -> void:
+	# Server changes the text and the MultiplayerSynchronizer node propagates it
 	label.text = new_label
 	interactable.interact_display_text = label.text

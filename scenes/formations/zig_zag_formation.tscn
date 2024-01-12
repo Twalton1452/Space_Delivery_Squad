@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://chppo08iaioa1"]
+
+[sub_resource type="Curve2D" id="Curve2D_p3rrt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -66.8963, -1.39056, 0, 0, 0, 0, -64, -73, 0, 0, 0, 0, 42, -124, 0, 0, 0, 0, -64, -160, 0, 0, 0, 0, 49, -198, 0, 0, 0, 0, -71, -271, 0, 0, 0, 0, 65, -325, 0, 0, 0, 0, 116, -232, 0, 0, 0, 0, 62, -159, 0, 0, 0, 0, 136, -121, 0, 0, 0, 0, 35, -71)
+}
+point_count = 11
+
+[node name="ZigZag" type="Path2D"]
+scale = Vector2(0.792271, 0.719136)
+curve = SubResource("Curve2D_p3rrt")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(-66.8963, -1.39056)
+rotation = -1.53037

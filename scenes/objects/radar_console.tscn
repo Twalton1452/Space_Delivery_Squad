@@ -1,11 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://d022i57dmjcuf"]
+[gd_scene load_steps=14 format=3 uid="uid://d022i57dmjcuf"]
 
 [ext_resource type="PackedScene" uid="uid://b6aqbw4uyo04e" path="res://art/space interior elements/object_060.glb" id="1_fee3v"]
 [ext_resource type="Script" path="res://scripts/objects/RadarConsole.gd" id="1_ir8ph"]
+[ext_resource type="Material" uid="uid://sfmvayuthrt1" path="res://materials/button-glow.tres" id="2_yw084"]
 [ext_resource type="PackedScene" uid="uid://b7mpthg62fwmu" path="res://scenes/objects/radar.tscn" id="3_odvbf"]
 [ext_resource type="PackedScene" uid="uid://bfgygi86ulf0c" path="res://scenes/objects/arrow_button.tscn" id="4_nlutv"]
 [ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="5_j1jfi"]
 [ext_resource type="Script" path="res://scripts/components/PowerConsumer.gd" id="6_jqsoi"]
+[ext_resource type="PackedScene" uid="uid://dhsuhcelso85c" path="res://scenes/objects/button.tscn" id="7_nncys"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8xrt"]
+size = Vector3(0.125, 0.02, 0.1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xg3uk"]
 size = Vector3(0.5, 0.2, 0.5)
@@ -19,23 +24,34 @@ shading_mode = 0
 
 [sub_resource type="QuadMesh" id="QuadMesh_ww8a1"]
 
-[node name="RadarConsole" type="Node3D" node_paths=PackedStringArray("quad_for_viewport", "radar_viewport", "left_arrow_button", "right_arrow_button")]
+[node name="RadarConsole" type="Node3D" node_paths=PackedStringArray("quad_for_viewport", "radar_viewport", "left_arrow_button", "right_arrow_button", "lock_in_button", "radar")]
 script = ExtResource("1_ir8ph")
 quad_for_viewport = NodePath("object_060/RadarMesh")
 radar_viewport = NodePath("RadarViewport")
 left_arrow_button = NodePath("LeftArrow")
 right_arrow_button = NodePath("RightArrow")
+lock_in_button = NodePath("LockInButton")
+radar = NodePath("RadarViewport/Radar")
+highlight_mat = ExtResource("2_yw084")
 
 [node name="PowerConsumer" type="Node" parent="."]
 script = ExtResource("6_jqsoi")
 
 [node name="LeftArrow" parent="." instance=ExtResource("4_nlutv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.190183, 0.202342, -0.0637446)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.190183, 0.202342, -0.095115)
 interact_display_text = "Left"
 
 [node name="RightArrow" parent="." instance=ExtResource("4_nlutv")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -0.190183, 0.202342, 0.0664019)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -0.190183, 0.202342, 0.0934543)
 interact_display_text = "Right"
+
+[node name="LockInButton" parent="." instance=ExtResource("7_nncys")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.190403, 0.205429, -0.000673622)
+interact_display_text = "Lock In"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LockInButton"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.0455e-10, -0.00239184)
+mesh = SubResource("BoxMesh_b8xrt")
 
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.101742, 0.103425, 0)

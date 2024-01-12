@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://nu385rulfccd"]
+
+[sub_resource type="Curve2D" id="Curve2D_hasmk"]
+_data = {
+"points": PackedVector2Array(-50.3968, -46.6171, 50.3968, 46.6171, 129, -91, 18.8988, -37.1677, -18.8988, 37.1677, 149, 81, 50.3968, 0, -50.3968, 0, 9, 157, 17.6389, 31.498, -17.6389, -31.498, -138, 99, -49.1369, 51.0268, 49.1369, -51.0268, -127, -80, 0, 0, 0, 0, 1, -148, -74.6437, -46.5822, 74.6437, 46.5822, 129, -92)
+}
+point_count = 7
+
+[node name="Circular" type="Path2D"]
+position = Vector2(0.993761, 1.18478)
+scale = Vector2(0.450637, 0.480978)
+curve = SubResource("Curve2D_hasmk")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(129, -91)
+rotation = 0.746457

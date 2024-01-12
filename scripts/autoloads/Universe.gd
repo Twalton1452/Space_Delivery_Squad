@@ -8,6 +8,7 @@ signal finished_generation
 
 var min_galaxy_id = 1
 var max_galaxy_id = 9999999
+var boundaries = Vector4() # (x: min_x, y: max_x, z: min_y, w: max_y)
 var galaxies : Array[Galaxy] = []
 var generated = false
 
@@ -69,17 +70,10 @@ func debug_print() -> void:
 
 func generate_galaxy() -> Galaxy:
 	var new_galaxy := Galaxy.new()
-	
 	new_galaxy.id = randi_range(min_galaxy_id, max_galaxy_id)
 	# Make the galaxies names appear large and mystical
 	# Players could still find Galaxy_0000001 which would be exciting
 	new_galaxy.display_name = "Galaxy_" + str(new_galaxy.id).lpad(7, "0")
-	
-	# Get a position for the Galaxy based on the generated ID
-	#var remapped_id = remap(new_galaxy.id, min_galaxy_id, max_galaxy_id, 0.0, 256.0)
-	var x_pos = new_galaxy.id
-	var y_pos = new_galaxy.id
-	new_galaxy.position = Vector3(x_pos, y_pos, 0.0)
 	
 	var min_planets_per_galaxy = 2
 	var max_planets_per_galaxy = 7
@@ -125,18 +119,58 @@ func generate_resident() -> Resident:
 	new_resident.display_name = "Resident_" + str(new_resident.id).lpad(7, "0")
 	return new_resident
 
+func get_formation_boundaries(formation: Path2D) -> Vector4:
+	var formation_boundaries = Vector4(0.0, 0.0, 0.0, 0.0)
+	for point in formation.curve.get_baked_points():
+		formation_boundaries.x = min(formation_boundaries.x, point.x)
+		formation_boundaries.y = max(formation_boundaries.y, point.x)
+		formation_boundaries.z = min(formation_boundaries.z, point.y)
+		formation_boundaries.w = max(formation_boundaries.w, point.y)
+	return formation_boundaries
+
 func generate() -> void:
 	if generated:
 		return
 	
-	# TODO: Resource with UniverseParams for varying difficulties
-	var min_galaxies := 5
-	var max_galaxies := 10
+	var formations : Array[Path2D] = [
+		load("res://scenes/formations/circular_formation.tscn").instantiate(),
+		load("res://scenes/formations/diamond_formation.tscn").instantiate(),
+		load("res://scenes/formations/far_out_formation.tscn").instantiate(),
+		load("res://scenes/formations/zig_zag_formation.tscn").instantiate(),
+		load("res://scenes/formations/spiral_formation.tscn").instantiate(),
+	]
 	
-	var galaxy_count = randi_range(min_galaxies, max_galaxies)
-	for _galaxy_i in range(galaxy_count):
+	# Have to add the Path nodes to the scene tree to sample the paths
+	for formation in formations:
+		formation.hide()
+		add_child(formation)
+	
+	var galaxy_formation_i : int = randi_range(0, formations.size() - 1)
+	var galaxy_formation : Path2D = formations[galaxy_formation_i]
+	var galaxy_formation_path : PathFollow2D = galaxy_formation.get_node("PathFollow2D")
+	
+	print("[Universe]: Using Galaxy Formation: ", galaxy_formation.name)
+	boundaries = get_formation_boundaries(galaxy_formation)
+	# TODO: Resource with UniverseParams for varying difficulties
+	
+	var galaxy_count = 4 # TODO: based on Formation? More difficult formations have more galaxies
+	for i in range(galaxy_count):
 		var new_galaxy = generate_galaxy()
+		galaxy_formation_path.progress_ratio = float(i) / float(galaxy_count)
+		var spawn_position = galaxy_formation_path.position
+		new_galaxy.position = Vector3(spawn_position.x, spawn_position.y, 0.0)
 		galaxies.push_back(new_galaxy)
+	
+	# Always put the Package Company (IPP) at 0,0,0
+	var package_company_galaxy = Galaxy.new()
+	package_company_galaxy.display_name = "I.P.P"
+	package_company_galaxy.position = Vector3.ZERO
+	galaxies.push_front(package_company_galaxy)
 	
 	generated = true
 	finished_generation.emit()
+	
+	# Cleanup
+	for formation in formations:
+		remove_child(formation)
+		formation.queue_free()
