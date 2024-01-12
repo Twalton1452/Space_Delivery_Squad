@@ -33,7 +33,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107562, 0)
 mesh = SubResource("BoxMesh_0qvst")
 
 [node name="EditableTextDisplay" parent="." instance=ExtResource("1_ake40")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784952, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784952, 0.0121888)
 
 [node name="Label3D" parent="EditableTextDisplay" index="1"]
 text = "Announcement Board"
