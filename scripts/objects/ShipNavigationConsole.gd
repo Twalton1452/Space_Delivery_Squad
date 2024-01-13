@@ -43,11 +43,14 @@ func _on_right_button_pressed(_interactable: Interactable, _interacter: Player) 
 	lock_in_button.remove_highlight()
 
 func _on_lock_in_button_pressed(interactable: Interactable, _interacter: Player) -> void:
-	ship_navigation.lock_in_path()
 	interactable.add_highlight(highlight_mat)
+	ship_navigation.lock_in_path()
 
 func _on_landing_lever_activated(_interactable: Interactable, _interacter: Player) -> void:
+	lock_in_button.remove_highlight()
 	if enter_galaxy_event.occurring:
+		landing_lever.interact_display_text = "Enter Galaxy"
 		EventManager.request_event_end(enter_galaxy_event)
 	else:
+		landing_lever.interact_display_text = "Exit Galaxy"
 		EventManager.request_event_start(enter_galaxy_event)

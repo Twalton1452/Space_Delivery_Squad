@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c03tuwts8clwh"]
+
+[ext_resource type="Texture2D" uid="uid://dos6a5s68jvuk" path="res://art/icons/planet.svg" id="1_f7nwf"]
+[ext_resource type="Theme" uid="uid://po0l0sihtw6n" path="res://resources/my_theme.tres" id="2_m4x6r"]
+
+[node name="Planet" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_f7nwf")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -59.0
+offset_top = -53.0
+offset_right = 70.0
+offset_bottom = -25.0
+theme = ExtResource("2_m4x6r")
+text = "Planet Name"
+horizontal_alignment = 1
+vertical_alignment = 1

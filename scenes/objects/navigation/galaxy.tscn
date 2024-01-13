@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://ddupwcti4jxr1"]
 
-[ext_resource type="Texture2D" uid="uid://cu247nl3sgojg" path="res://art/icons/white-circle.svg" id="1_r8oxq"]
+[ext_resource type="Texture2D" uid="uid://batndxv36dmhy" path="res://art/icons/galaxy.svg" id="1_xn0kf"]
 [ext_resource type="Theme" uid="uid://po0l0sihtw6n" path="res://resources/my_theme.tres" id="2_od4in"]
 
 [node name="Galaxy" type="Sprite2D"]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_r8oxq")
+texture = ExtResource("1_xn0kf")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -66.0
