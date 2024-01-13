@@ -47,4 +47,7 @@ func _on_lock_in_button_pressed(interactable: Interactable, _interacter: Player)
 	interactable.add_highlight(highlight_mat)
 
 func _on_landing_lever_activated(_interactable: Interactable, _interacter: Player) -> void:
-	EventManager.request_event_start(enter_galaxy_event)
+	if enter_galaxy_event.occurring:
+		EventManager.request_event_end(enter_galaxy_event)
+	else:
+		EventManager.request_event_start(enter_galaxy_event)

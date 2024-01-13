@@ -71,6 +71,7 @@ var base_fov = 80.0
 var player_id : int : 
 	get:
 		return name.to_int()
+var impulse_factor = 0.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -108,6 +109,10 @@ func set_display_settings(display_name: String, color: Color) -> void:
 func set_clientside_settings() -> void:
 	$bean_armature/Armature/Skeleton3D/Eyes.hide()
 	base_fov = camera.fov
+	# TODO: Camera script that listens for impulses
+	var galaxy_event : Event = load("res://resources/events/navigation/enter_galaxy.tres")
+	galaxy_event.started.connect(func(): impulse_factor = 1.0)
+	galaxy_event.ended.connect(func(): impulse_factor = 1.0)
 
 ## Settings for the spawned player peers
 func set_peer_settings() -> void:
@@ -186,6 +191,7 @@ func _physics_process(delta):
 	move_speed += flat_move_speed_mod
 	move(direction, player_input.jumping, delta)
 	movement_based_fov_change(delta)
+	camera_impulse()
 	animate()
 
 func move(direction: Vector3, jump: int, delta: float) -> void:
@@ -206,6 +212,13 @@ func move(direction: Vector3, jump: int, delta: float) -> void:
 			velocity.z = lerp(velocity.z, direction.z * move_speed, delta * 2.0)
 	
 	move_and_slide()
+
+# TODO: Camera script that listens for impulses
+func camera_impulse() -> void:
+	var next_pos_x = randf_range(-0.1, 0.1)
+	camera.position = Vector3(next_pos_x * impulse_factor, camera.position.y, camera.position.z)
+	impulse_factor -= 0.016
+	impulse_factor = clampf(impulse_factor, 0.0, 10.0)
 
 ## Based on the velocity, change the camera's FOV
 ## Gives more "feel" to running around
