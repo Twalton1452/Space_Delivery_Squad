@@ -172,14 +172,15 @@ func _physics_process(delta):
 		new_state = new_state & ~(Flags.INTERACTING_PROGRESS | Flags.INTERACTING)
 	
 	# Movement States
-	if player_input.sprinting and stamina_node.can_sprint:
+	var moving = direction.length() > 0
+	if player_input.sprinting and stamina_node.can_sprint and moving:
 		new_state = (new_state & ~(Flags.CROUCHING | Flags.WALKING)) | Flags.SPRINTING
 	elif player_input.crouching:
 		if not new_state & Flags.CROUCHING:
 			new_state = (new_state & ~Flags.SPRINTING) | Flags.CROUCHING
 		else:
 			new_state &= ~Flags.CROUCHING
-	elif direction.length() > 0:
+	elif moving:
 		new_state = (new_state & ~Flags.SPRINTING) | Flags.WALKING
 	else:
 		new_state = new_state & ~(Flags.SPRINTING | Flags.WALKING)
