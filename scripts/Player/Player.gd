@@ -107,6 +107,7 @@ func set_display_settings(display_name: String, color: Color) -> void:
 ## Settings for the controlling player on their client
 func set_clientside_settings() -> void:
 	$bean_armature/Armature/Skeleton3D/Eyes.hide()
+	$bean_armature/DisplayName.hide()
 	base_fov = camera.fov
 	# TODO: Camera script that listens for impulses
 	var galaxy_event : Event = load("res://resources/events/navigation/enter_galaxy.tres")
