@@ -372,7 +372,6 @@ tint_under = Color(0.286275, 0.286275, 0.286275, 1)
 tint_progress = Color(0, 0.905882, 0.964706, 1)
 
 [node name="PackageLabel" type="PanelContainer" parent="Camera3D/HUD"]
-visible = false
 texture_repeat = 2
 layout_mode = 1
 anchors_preset = 1
@@ -381,7 +380,7 @@ anchor_right = 1.0
 offset_left = -240.0
 offset_top = 17.0
 offset_right = -20.0
-offset_bottom = 285.0
+offset_bottom = 365.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxTexture_nr2nu")
 
@@ -400,6 +399,25 @@ layout_mode = 2
 text = "Package"
 label_settings = SubResource("LabelSettings_5elvw")
 horizontal_alignment = 1
+
+[node name="Recipient" type="TextureRect" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("6_u41ad")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer/Recipient"]
+layout_mode = 2
+offset_left = 65.0
+offset_top = 17.0
+offset_right = 193.0
+offset_bottom = 38.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Glorbo"
+label_settings = SubResource("LabelSettings_2p3bo")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Galaxy" type="TextureRect" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer"]
 self_modulate = Color(0, 0, 0, 1)

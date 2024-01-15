@@ -90,7 +90,7 @@ func drop(dropper: Player, dropped_node: Node3D, dropped_node_position: Vector3)
 	dropped_node.global_rotation = dropper.global_rotation
 	
 	if dropped_node is Item:
-		dropped_node.on_dropped()
+		dropped_node.on_dropped(dropper)
 
 func fulfill_drop(request: Request) -> void:
 	request.fulfill()

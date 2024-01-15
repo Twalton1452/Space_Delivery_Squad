@@ -18,11 +18,11 @@ func _on_interacted(_interactable: Interactable, interacter: Player) -> void:
 			PickupHandler.request_pickup(interacter, self)
 
 # Called from the PickupHandler when appropriate
-func on_held() -> void:
+func on_held(picker_upper: Player) -> void:
 	interactable.disable()
-	picked_up.emit()
+	picked_up.emit(picker_upper)
 
 # Called from the DropHandler when appropriate
-func on_dropped() -> void:
+func on_dropped(dropper: Player) -> void:
 	interactable.enable()
-	dropped.emit()
+	dropped.emit(dropper)

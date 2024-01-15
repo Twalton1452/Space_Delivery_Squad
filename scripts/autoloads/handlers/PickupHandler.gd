@@ -36,7 +36,7 @@ func pickup(picker_upper: Player, to_be_picked_up: Item) -> void:
 		return
 
 	picker_upper.hold(to_be_picked_up)
-	to_be_picked_up.on_held()
+	to_be_picked_up.on_held(picker_upper)
 
 func request_pickup(picker_upper: Player, to_be_picked_up: Item) -> PickupRequest:
 	var request = PickupRequest.new()
