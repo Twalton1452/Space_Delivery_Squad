@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=33 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/Ship.gd" id="1_a12e7"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="8_dnlpq"]
 [ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_sl58d"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_83m8u"]
+[ext_resource type="Script" path="res://scripts/objects/Package.gd" id="14_x7cnr"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
 [ext_resource type="PackedScene" uid="uid://rre2t2pta62e" path="res://scenes/objects/oxygen_station.tscn" id="19_kukbf"]
@@ -175,6 +176,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18659, 0.0875, 2.30453)
 
 [node name="box_small" parent="Objects" instance=ExtResource("6_qy0dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3153, 0.0875, 2.5901)
+
+[node name="Package" type="Node" parent="Objects/box_small"]
+script = ExtResource("14_x7cnr")
 
 [node name="box_wide" parent="Objects" instance=ExtResource("7_rqytm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)

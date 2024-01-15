@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://7188haek1n73"]
+[gd_scene load_steps=33 format=3 uid="uid://7188haek1n73"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_hldcd"]
 [ext_resource type="Script" path="res://scripts/player/Interacter.gd" id="2_0yxy6"]
@@ -7,13 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://c7q1fhjg15ufq" path="res://art/WhiteSquare.png" id="3_isc5x"]
 [ext_resource type="Material" uid="uid://bcara7emet014" path="res://materials/player-mat.tres" id="3_wtvyi"]
 [ext_resource type="FontFile" uid="uid://6j5xf6n7lhb4" path="res://fonts/Kenney High Square.ttf" id="4_a77o5"]
+[ext_resource type="Theme" uid="uid://po0l0sihtw6n" path="res://resources/my_theme.tres" id="6_h27ep"]
 [ext_resource type="Texture2D" uid="uid://baik0cjespmin" path="res://art/icons/run.svg" id="6_u41ad"]
+[ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="7_miwrk"]
 [ext_resource type="Texture2D" uid="uid://dronyf43vs2pg" path="res://art/icons/oxygen.svg" id="7_qomcv"]
 [ext_resource type="Texture2D" uid="uid://7uawfbno32qj" path="res://art/icons/heart.svg" id="8_iutcd"]
 [ext_resource type="Texture2D" uid="uid://cu247nl3sgojg" path="res://art/icons/white-circle.svg" id="9_iypvg"]
 [ext_resource type="Script" path="res://scripts/player/Stamina.gd" id="10_40wdu"]
 [ext_resource type="Script" path="res://scripts/player/Oxygen.gd" id="10_bisgl"]
 [ext_resource type="Script" path="res://scripts/player/Health.gd" id="12_m4y5c"]
+[ext_resource type="Texture2D" uid="uid://batndxv36dmhy" path="res://art/icons/galaxy.svg" id="12_xu87k"]
+[ext_resource type="Texture2D" uid="uid://dos6a5s68jvuk" path="res://art/icons/planet.svg" id="13_qlb2x"]
+[ext_resource type="Texture2D" uid="uid://jnknb38pntha" path="res://art/icons/time.svg" id="14_i6bop"]
 
 [sub_resource type="Animation" id="Animation_2yhjd"]
 length = 0.001
@@ -65,11 +70,33 @@ height = 0.233
 size = Vector3(0.303162, 0.381287, 0.267822)
 
 [sub_resource type="LabelSettings" id="LabelSettings_w7x1j"]
-font_size = 24
+font_size = 36
 outline_size = 6
 outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(2, 2)
+
+[sub_resource type="Gradient" id="Gradient_ct3oo"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.237705)
+colors = PackedColorArray(0.881937, 0.881937, 0.881936, 1, 0.912289, 0.912289, 0.912289, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2s37i"]
+gradient = SubResource("Gradient_ct3oo")
+width = 23
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nr2nu"]
+texture = SubResource("GradientTexture1D_2s37i")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_5elvw"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2p3bo"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_23l6a"]
 properties/0/path = NodePath(".:position")
@@ -176,6 +203,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("6_h27ep")
+script = ExtResource("7_miwrk")
 
 [node name="Reticle" type="TextureRect" parent="Camera3D/HUD"]
 visible = false
@@ -194,7 +223,7 @@ grow_vertical = 2
 texture = ExtResource("3_isc5x")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="Camera3D/HUD"]
+[node name="InteractLabel" type="Label" parent="Camera3D/HUD"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -341,6 +370,93 @@ texture_under = ExtResource("9_iypvg")
 texture_progress = ExtResource("9_iypvg")
 tint_under = Color(0.286275, 0.286275, 0.286275, 1)
 tint_progress = Color(0, 0.905882, 0.964706, 1)
+
+[node name="PackageLabel" type="PanelContainer" parent="Camera3D/HUD"]
+visible = false
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 17.0
+offset_right = -20.0
+offset_bottom = 285.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_nr2nu")
+
+[node name="MarginContainer" type="MarginContainer" parent="Camera3D/HUD/PackageLabel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/HUD/PackageLabel/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Package"
+label_settings = SubResource("LabelSettings_5elvw")
+horizontal_alignment = 1
+
+[node name="Galaxy" type="TextureRect" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("12_xu87k")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer/Galaxy"]
+layout_mode = 2
+offset_left = 65.0
+offset_top = 17.0
+offset_right = 193.0
+offset_bottom = 38.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Galaxy-5456456"
+label_settings = SubResource("LabelSettings_2p3bo")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Planet" type="TextureRect" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("13_qlb2x")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer/Planet"]
+layout_mode = 2
+offset_left = 65.0
+offset_top = 17.0
+offset_right = 193.0
+offset_bottom = 38.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Planet-5456456"
+label_settings = SubResource("LabelSettings_2p3bo")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Time" type="TextureRect" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("14_i6bop")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Camera3D/HUD/PackageLabel/MarginContainer/VBoxContainer/Time"]
+layout_mode = 2
+offset_left = 65.0
+offset_top = 17.0
+offset_right = 193.0
+offset_bottom = 38.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "3 days"
+label_settings = SubResource("LabelSettings_2p3bo")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_23l6a")

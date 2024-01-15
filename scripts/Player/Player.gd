@@ -60,8 +60,7 @@ const FOV_CHANGE = 6.0
 @onready var walking_collider : CollisionShape3D = $WalkingCollisionShape3D
 @onready var crouching_collider : CollisionShape3D = $CrouchingCollisionShape3D
 @onready var stamina_node : Stamina = $Stats/Stamina
-@onready var hud : Control = $Camera3D/HUD
-@onready var interact_progress_bar : TextureProgressBar = $Camera3D/HUD/InteractProgressBar
+@onready var hud : HUD = $Camera3D/HUD
 
 var look_speed = .005
 var move_speed = WALK_SPEED
@@ -99,7 +98,7 @@ func _ready():
 	# Common between peer/client settings
 	head_bone_id = skeleton_3d.find_bone("Head")
 	state_changed.connect(_on_state_changed)
-	interact_progress_bar.hide()
+	hud.interact_bar.hide()
 
 func set_display_settings(display_name: String, color: Color) -> void:
 	$bean_armature/DisplayName.text = display_name
@@ -116,7 +115,7 @@ func set_clientside_settings() -> void:
 
 ## Settings for the spawned player peers
 func set_peer_settings() -> void:
-	$Camera3D/HUD.hide()
+	hud.hide()
 
 func _on_state_changed(new_state: int, changed: int) -> void:
 	if changed & Flags.BUSY and not new_state & Flags.BUSY:
@@ -262,14 +261,14 @@ func interact_request() -> void:
 		var percent_per_frame = 1.0 / (Engine.physics_ticks_per_second * interacter.current_interactable.time_to_interact)
 		
 		turn_flags_on(Flags.INTERACTING_PROGRESS)
-		interact_progress_bar.show()
+		hud.interact_bar.show()
 		while is_flag_on(Flags.INTERACTING_PROGRESS) and interact_progress < 1.0:
 			interact_progress += percent_per_frame
-			interact_progress_bar.value = interact_progress
+			hud.interact_bar.value = interact_progress
 			await get_tree().physics_frame
 		
-		interact_progress_bar.hide()
-		interact_progress_bar.value = 0.0
+		hud.interact_bar.hide()
+		hud.interact_bar.value = 0.0
 		# Are we still trying to interact after progress has been made
 		if is_flag_off(Flags.INTERACTING_PROGRESS):
 			return

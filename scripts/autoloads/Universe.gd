@@ -39,17 +39,7 @@ class Resident:
 	var display_name : String
 	var address : String
 	var planet : Planet
-
-class PackageInstruction:
-	pass
 #endregion Person
-
-#region Component
-class Package extends Node:
-	var time_to_deliver : float
-	var recipient : Resident
-	var special_instructions : Array[PackageInstruction]
-#endregion Component
 
 @rpc("authority", "call_local", "reliable")
 func broadcast_seed_to_players(server_game_seed: int) -> void:
