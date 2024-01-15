@@ -20,6 +20,7 @@ var draining = false
 
 func _ready() -> void:
 	player.state_changed.connect(_on_player_state_changed)
+	idle_visual()
 
 func _on_player_state_changed(flags: int, changed: int) -> void:
 	if changed & Player.Flags.OXYGEN_DEPLETING:
@@ -35,13 +36,19 @@ func _on_player_state_changed(flags: int, changed: int) -> void:
 		else:
 			pass
 
+func idle_visual() -> void:
+	visual_bar.tint_progress.a = 0.4
+
+func active_visual() -> void:
+	visual_bar.tint_progress.a = 1.0
+
 func begin_draining_oxygen() -> void:
 	if draining:
 		return
 	
 	recharging = false
 	draining = true
-	visual_bar.tint_progress.a = 1.0
+	active_visual()
 	drain_oxygen()
 
 func drain_oxygen() -> void:
@@ -60,7 +67,7 @@ func begin_recharging_oxygen() -> void:
 	
 	draining = false
 	recharging = true
-	visual_bar.tint_progress.a = 0.4
+	idle_visual()
 	recharge_oxygen()
 
 func recharge_oxygen() -> void:

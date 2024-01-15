@@ -20,6 +20,7 @@ var draining = false
 
 func _ready() -> void:
 	player.state_changed.connect(_on_player_state_changed)
+	idle_visual()
 
 func _on_player_state_changed(flags: int, _changed: int) -> void:
 	if flags & Player.Flags.SPRINTING:
@@ -29,12 +30,18 @@ func _on_player_state_changed(flags: int, _changed: int) -> void:
 		stop_draining_stamina()
 		begin_recharge_stamina()
 
+func idle_visual() -> void:
+	visual_bar.tint_progress.a = 0.4
+
+func active_visual() -> void:
+	visual_bar.tint_progress.a = 1.0
+
 func begin_draining_stamina() -> void:
 	if draining:
 		return
 	
 	draining = true
-	visual_bar.tint_progress.a = 1.0
+	active_visual()
 	drain_stamina()
 
 func drain_stamina() -> void:
@@ -53,7 +60,7 @@ func begin_recharge_stamina() -> void:
 		return
 	
 	recharging = true
-	visual_bar.tint_progress.a = 0.4
+	idle_visual()
 	recharge_stamina()
 
 func recharge_stamina() -> void:
