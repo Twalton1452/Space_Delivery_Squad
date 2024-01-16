@@ -118,6 +118,8 @@ func generate_galaxy() -> Galaxy:
 	new_galaxy.display_name = "Galaxy_" + str(new_galaxy.id).lpad(7, "0")
 	var planet_system_formation : Path2D = pick_random_formation()
 	new_galaxy.planets = generate_planet_system(planet_system_formation)
+	for planet in new_galaxy.planets:
+		planet.galaxy = new_galaxy
 	new_galaxy.boundaries = get_formation_boundaries(planet_system_formation)
 	
 	return new_galaxy

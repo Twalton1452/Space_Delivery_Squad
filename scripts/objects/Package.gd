@@ -23,6 +23,12 @@ func _ready() -> void:
 	
 	test_package_data()
 
+# Unused
+func assign_to(resident: Universe.Resident) -> void:
+	recipient = resident
+	destination_planet = resident.planet
+	destination_galaxy = destination_planet.galaxy
+
 func test_package_data() -> void:
 	if not Universe.generated:
 		await Universe.finished_generation
