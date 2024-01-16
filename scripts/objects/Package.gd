@@ -33,9 +33,11 @@ func test_package_data() -> void:
 	if not Universe.generated:
 		await Universe.finished_generation
 	
-	destination_galaxy = Universe.galaxies.pick_random()
-	destination_planet = destination_galaxy.planets.pick_random()
-	recipient = destination_planet.residents.pick_random()
+	var random_recipient : Universe.Resident = Universe.get_random_resident()
+	
+	recipient = random_recipient
+	destination_planet = random_recipient.planet
+	destination_galaxy = destination_planet.galaxy
 	
 	time_to_deliver = randi_range(1, 10)
 	time_left_to_deliver = time_to_deliver

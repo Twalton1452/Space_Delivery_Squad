@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://c7k6vlmyfocba" path="res://scenes/objects/door1.tscn" id="8_dnlpq"]
 [ext_resource type="Material" uid="uid://dmwf3jrprevr3" path="res://materials/airlock-door.tres" id="9_sl58d"]
 [ext_resource type="PackedScene" uid="uid://dtxyjlio41upf" path="res://scenes/objects/lever.tscn" id="10_83m8u"]
-[ext_resource type="Script" path="res://scripts/objects/Package.gd" id="14_x7cnr"]
+[ext_resource type="PackedScene" uid="uid://bgnvqc2wqm2o2" path="res://scenes/components/Package.tscn" id="12_hwkld"]
 [ext_resource type="MeshLibrary" uid="uid://b1djqtj8bbxho" path="res://resources/SpaceInteriorElementsLibrary.tres" id="16_b1ic6"]
 [ext_resource type="PackedScene" uid="uid://sk4aooslupmc" path="res://art/space interior elements/object_007_stripe.glb" id="17_0h6r1"]
 [ext_resource type="PackedScene" uid="uid://rre2t2pta62e" path="res://scenes/objects/oxygen_station.tscn" id="19_kukbf"]
@@ -171,17 +171,22 @@ event = ExtResource("8_c18hl")
 [node name="box_large" parent="Objects" instance=ExtResource("4_am4w0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11414, 0.0875, 1.90105)
 
+[node name="Package" parent="Objects/box_large" instance=ExtResource("12_hwkld")]
+
 [node name="box_long" parent="Objects" instance=ExtResource("5_bgub2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18659, 0.0875, 2.30453)
+
+[node name="Package" parent="Objects/box_long" instance=ExtResource("12_hwkld")]
 
 [node name="box_small" parent="Objects" instance=ExtResource("6_qy0dp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3153, 0.0875, 2.5901)
 
-[node name="Package" type="Node" parent="Objects/box_small"]
-script = ExtResource("14_x7cnr")
+[node name="Package" parent="Objects/box_small" instance=ExtResource("12_hwkld")]
 
 [node name="box_wide" parent="Objects" instance=ExtResource("7_rqytm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)
+
+[node name="Package" parent="Objects/box_wide" instance=ExtResource("12_hwkld")]
 
 [node name="AirlockDoor" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("8_dnlpq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 2.5)

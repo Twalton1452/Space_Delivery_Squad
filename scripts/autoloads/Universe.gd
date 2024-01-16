@@ -100,6 +100,12 @@ func get_galaxy_by_name(galaxy_name: String) -> Galaxy:
 			return galaxy
 	return null
 
+func get_random_resident() -> Resident:
+	# Skip IPP at index 0
+	var galaxy = Universe.galaxies[randi_range(1, Universe.galaxies.size() - 1)]
+	var planet = galaxy.planets.pick_random()
+	return planet.residents.pick_random()
+
 func debug_print() -> void:
 	print(multiplayer.get_unique_id())
 	for galaxy in galaxies:

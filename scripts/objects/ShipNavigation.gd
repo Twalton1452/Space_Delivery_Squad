@@ -41,6 +41,14 @@ func _ready():
 		await Universe.finished_generation
 	update_visuals()
 
+func pause_travel() -> void:
+	if moving_tween != null and moving_tween.is_valid():
+		moving_tween.pause()
+
+func unpause_travel() -> void:
+	if moving_tween != null and moving_tween.is_valid():
+		moving_tween.play()
+
 #func _physics_process(delta):
 	#if Input.is_action_just_pressed("ui_left"):
 		#screen.position += Vector2(25.0, 0.0)
@@ -82,6 +90,7 @@ func _on_enter_galaxy() -> void:
 	# TODO: more deterministic, current_location could be desyncd from clients
 	var entered_galaxy : Universe.Galaxy = Universe.get_galaxy_by_name(current_location.name)
 	galaxies_parent.hide()
+	print("Now Entering Galaxy ", entered_galaxy.display_name, " Planet count: ", entered_galaxy.planets.size())
 	draw_planets_in(entered_galaxy)
 	planets_parent.show()
 

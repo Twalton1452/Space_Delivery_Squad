@@ -26,10 +26,20 @@ func _ready() -> void:
 
 func enable() -> void:
 	(quad_for_viewport.material_override as StandardMaterial3D).albedo_color = Color.WHITE
+	ship_navigation.unpause_travel()
+	landing_lever.enable()
+	left_arrow_button.enable()
+	right_arrow_button.enable()
+	lock_in_button.enable()
 
 func disable() -> void:
 	(quad_for_viewport.material_override as StandardMaterial3D).albedo_color = Color.BLACK
 	lock_in_button.remove_highlight()
+	ship_navigation.pause_travel()
+	landing_lever.disable()
+	left_arrow_button.disable()
+	right_arrow_button.disable()
+	lock_in_button.disable()
 
 func _on_reached_destination() -> void:
 	lock_in_button.remove_highlight()
