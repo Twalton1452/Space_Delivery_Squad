@@ -50,7 +50,7 @@ func open() -> void:
 	animation_player.seek(current_seek, true)
 	collision_body.collision_layer = 0
 	is_open = true
-	AudioManager.play_one_shot_3d(self, open_sfx, true, -20.0, AudioManager.AudioFallOff.SHORT)
+	AudioManager.play_one_shot_3d(self, open_sfx, true, -20.0)
 	opened.emit()
 
 func close() -> void:
@@ -70,5 +70,5 @@ func close() -> void:
 	animation_player.seek(current_seek, true)
 	collision_body.collision_layer = Constants.WORLD_LAYER
 	is_open = false
-	AudioManager.play_one_shot_3d(self, close_sfx, true, -20.0, AudioManager.AudioFallOff.SHORT)
+	AudioManager.play_one_shot_3d(self, close_sfx, true, -20.0)
 	closed.emit()

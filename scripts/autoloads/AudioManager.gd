@@ -104,7 +104,7 @@ func play_one_shot_global(sfx: AudioStream) -> void:
 	await sfx_player.finished
 	sfx_player.queue_free()
 
-func play_one_shot_3d(to_parent: Node3D, sfx: AudioStream, rand_pitch: bool = true, volume_db: float = 0.0, falloff: AudioFallOff = AudioFallOff.MEDIUM) -> void:
+func play_one_shot_3d(to_parent: Node3D, sfx: AudioStream, rand_pitch: bool = true, volume_db: float = 0.0, falloff: AudioFallOff = AudioFallOff.SHORT) -> void:
 	var sfx_player = AudioStreamPlayer3D.new()
 	sfx_player.bus = "SFX"
 	sfx_player.stream = sfx

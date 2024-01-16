@@ -2,8 +2,8 @@
 extends Node3D
 class_name Item
 
-signal picked_up
-signal dropped
+signal picked_up(picker_upper: Player)
+signal dropped(dropper: Player)
 
 var interactable : Interactable
 

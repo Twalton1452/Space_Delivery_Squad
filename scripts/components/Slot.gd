@@ -10,6 +10,7 @@ signal received_node(node: Node)
 signal released_node(node: Node)
 
 @export var holding_node : Item
+## Ex: Slots on a pushable Cart can move
 @export var can_move = false
 
 var remote_transform : RemoteTransform3D = null
@@ -58,7 +59,7 @@ func receive_node(item: Item) -> void:
 	
 	received_node.emit(holding_node)
 
-func release_node() -> void:
+func release_node(_picker_upper: Player) -> void:
 	if holding_node.picked_up.is_connected(release_node):
 		holding_node.picked_up.disconnect(release_node)
 	
