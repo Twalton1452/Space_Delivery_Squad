@@ -15,13 +15,13 @@ func _ready() -> void:
 	detecting_mask = collision_mask
 
 func enable() -> void:
-	collision_mask = detecting_mask
+	collision_mask |= detecting_mask
 	
 	if get_overlapping_bodies().size() == 0:
 		empty.emit(self, null)
 
 func disable() -> void:
-	collision_mask = 0
+	collision_mask &= ~detecting_mask
 
 func _on_trigger_zone_entered(body) -> void:
 	if get_overlapping_bodies().size() == 1:

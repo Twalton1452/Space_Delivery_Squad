@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bq63jkhda8241"]
+[gd_scene load_steps=36 format=3 uid="uid://bq63jkhda8241"]
 
 [ext_resource type="Environment" uid="uid://dxipancqbujtn" path="res://resources/ShipEnvironment.tres" id="1_2ly15"]
 [ext_resource type="Script" path="res://scripts/Ship.gd" id="1_a12e7"]
@@ -30,6 +30,9 @@
 [ext_resource type="PackedScene" uid="uid://dmu6ugjdmewr2" path="res://scenes/objects/editable_text_display.tscn" id="27_wihpu"]
 [ext_resource type="PackedScene" uid="uid://orykij4tc3e2" path="res://art/space interior elements/object_058.glb" id="28_u2fo6"]
 [ext_resource type="PackedScene" uid="uid://cy5bsf67m2kda" path="res://scenes/components/TriggerZone.tscn" id="29_qc550"]
+[ext_resource type="PackedScene" uid="uid://54nrauoig3b4" path="res://scenes/delivery/delivery_zone.tscn" id="30_453gj"]
+[ext_resource type="PackedScene" uid="uid://dhsuhcelso85c" path="res://scenes/objects/button.tscn" id="31_u0s86"]
+[ext_resource type="PackedScene" uid="uid://c0gqy2nf4mac6" path="res://scenes/PackageConsole.tscn" id="32_2guny"]
 [ext_resource type="PackedScene" uid="uid://d022i57dmjcuf" path="res://scenes/objects/ship_navigation_console.tscn" id="32_hpl5b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nh26e"]
@@ -52,6 +55,32 @@ script = ExtResource("2_bk4i6")
 spawn_location = NodePath("../SpawnLocation")
 
 [node name="Players" type="Node3D" parent="."]
+
+[node name="PackageSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/objects/box_large.tscn", "res://scenes/objects/box_long.tscn", "res://scenes/objects/box_small.tscn", "res://scenes/objects/box_wide.tscn")
+spawn_path = NodePath("../Packages")
+
+[node name="Packages" type="Node3D" parent="."]
+
+[node name="box_large" parent="Packages" instance=ExtResource("4_am4w0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11414, 0.0875, 1.90105)
+
+[node name="Package" parent="Packages/box_large" instance=ExtResource("12_hwkld")]
+
+[node name="box_long" parent="Packages" instance=ExtResource("5_bgub2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18659, 0.0875, 2.30453)
+
+[node name="Package" parent="Packages/box_long" instance=ExtResource("12_hwkld")]
+
+[node name="box_small" parent="Packages" instance=ExtResource("6_qy0dp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3153, 0.0875, 2.5901)
+
+[node name="Package" parent="Packages/box_small" instance=ExtResource("12_hwkld")]
+
+[node name="box_wide" parent="Packages" instance=ExtResource("7_rqytm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)
+
+[node name="Package" parent="Packages/box_wide" instance=ExtResource("12_hwkld")]
 
 [node name="Lights" type="Node3D" parent="."]
 
@@ -168,26 +197,6 @@ event = ExtResource("8_c18hl")
 
 [node name="Objects" type="Node3D" parent="."]
 
-[node name="box_large" parent="Objects" instance=ExtResource("4_am4w0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11414, 0.0875, 1.90105)
-
-[node name="Package" parent="Objects/box_large" instance=ExtResource("12_hwkld")]
-
-[node name="box_long" parent="Objects" instance=ExtResource("5_bgub2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18659, 0.0875, 2.30453)
-
-[node name="Package" parent="Objects/box_long" instance=ExtResource("12_hwkld")]
-
-[node name="box_small" parent="Objects" instance=ExtResource("6_qy0dp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3153, 0.0875, 2.5901)
-
-[node name="Package" parent="Objects/box_small" instance=ExtResource("12_hwkld")]
-
-[node name="box_wide" parent="Objects" instance=ExtResource("7_rqytm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28666, 0.0875, 3.03667)
-
-[node name="Package" parent="Objects/box_wide" instance=ExtResource("12_hwkld")]
-
 [node name="AirlockDoor" parent="Objects" node_paths=PackedStringArray("triggers") instance=ExtResource("8_dnlpq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 2.5)
 triggers = [NodePath("AirlockLever")]
@@ -284,6 +293,16 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6.2809
 
 [node name="object_058" parent="Objects" instance=ExtResource("28_u2fo6")]
 transform = Transform3D(1, 0, 0, 0, 0.682466, 0, 0, 0, 1, 4.37628, 0.0564111, 2.56704)
+
+[node name="DeliveryZone" parent="Objects" node_paths=PackedStringArray("delivery_lever") instance=ExtResource("30_453gj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.37494, 0, 2.46537)
+delivery_lever = NodePath("../AirlockDoor/AirlockLever")
+
+[node name="Button" parent="Objects" instance=ExtResource("31_u0s86")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.85855, 0.417414, 7.49958)
+interact_display_text = "Super Secret Button"
+
+[node name="PackageConsole" parent="Objects" instance=ExtResource("32_2guny")]
 
 [node name="GridMap Floor" type="GridMap" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

@@ -29,10 +29,10 @@ func remove_highlight() -> void:
 	mesh_to_highlight.set_surface_override_material(0, null)
 
 func enable() -> void:
-	collision_layer = Constants.INTERACTABLE_LAYER
+	collision_layer |= Constants.INTERACTABLE_LAYER
 
 func disable() -> void:
-	collision_layer = Constants.NON_INTERACTABLE_LAYER
+	collision_layer &= ~Constants.INTERACTABLE_LAYER
 
 func can_interact() -> bool:
 	return animation_player == null or not animation_player.is_playing()

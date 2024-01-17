@@ -81,6 +81,7 @@ mesh = SubResource("QuadMesh_ww8a1")
 skeleton = NodePath("../..")
 
 [node name="NavigationViewport" type="SubViewport" parent="."]
+disable_3d = true
 size = Vector2i(256, 256)
 size_2d_override = Vector2i(256, 256)
 size_2d_override_stretch = true

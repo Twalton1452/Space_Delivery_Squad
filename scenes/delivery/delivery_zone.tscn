@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://54nrauoig3b4"]
+
+[ext_resource type="Script" path="res://scripts/delivery/DeliveryZone.gd" id="1_biofw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1k571"]
+size = Vector3(1.35858, 1.39215, 1)
+
+[node name="DeliveryZone" type="Node3D"]
+script = ExtResource("1_biofw")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 6
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0554504, 0.646759, 0)
+shape = SubResource("BoxShape3D_1k571")
