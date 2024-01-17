@@ -9,8 +9,8 @@ class_name Package
 class PackageInstruction:
 	var description : String
 
-var destination_galaxy : Universe.Galaxy
-var destination_planet : Universe.Planet
+var destination_galaxy : Galaxy
+var destination_planet : Planet
 var time_to_deliver : float
 var time_left_to_deliver : float
 
@@ -30,8 +30,8 @@ func assign_to(resident: Universe.Resident) -> void:
 	destination_galaxy = destination_planet.galaxy
 
 func test_package_data() -> void:
-	if not Universe.generated:
-		await Universe.finished_generation
+	if not Universe.is_generated:
+		await Universe.generated
 	
 	var random_recipient : Universe.Resident = Universe.get_random_resident()
 	

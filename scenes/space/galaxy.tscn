@@ -1,11 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbl4lik0775ht"]
+[gd_scene load_steps=5 format=3 uid="uid://cbl4lik0775ht"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_guhgk"]
-radius = 20.0
-height = 35.742
-radial_segments = 8
-rings = 8
+[ext_resource type="Texture2D" uid="uid://batndxv36dmhy" path="res://art/icons/galaxy.svg" id="1_ayk5e"]
+[ext_resource type="Script" path="res://scripts/space/Galaxy.gd" id="1_h7j6w"]
 
-[node name="MeshInstance3D" type="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.58248, 0)
-mesh = SubResource("SphereMesh_guhgk")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d1gqw"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_ayk5e")
+emission_enabled = true
+emission = Color(0.894118, 0.835294, 0.631373, 1)
+emission_energy_multiplier = 1.9
+
+[sub_resource type="QuadMesh" id="QuadMesh_nix2l"]
+size = Vector2(20, 20)
+
+[node name="Galaxy" type="Node3D" node_paths=PackedStringArray("planets_parent")]
+script = ExtResource("1_h7j6w")
+planets_parent = NodePath("Planets")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_d1gqw")
+mesh = SubResource("QuadMesh_nix2l")
+
+[node name="Planets" type="Node3D" parent="."]

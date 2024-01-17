@@ -4,6 +4,7 @@ class_name ShipNavigation
 ## Visual Representation of where the players are at in the Universe
 
 signal reached_destination
+signal locked_in_destination(destination: Node3D)
 
 const NOT_SELECTED_PATH_WIDTH = 10
 const SELECTED_PATH_WIDTH = 30
@@ -37,9 +38,9 @@ func _ready():
 	enter_galaxy_event.ended.connect(_on_exit_galaxy)
 	if OS.has_feature("editor"):
 		speed = 50.0
-	if not Universe.generated:
-		await Universe.finished_generation
-	update_visuals()
+	if not Universe.is_generated:
+		await Universe.generated
+	draw_galaxies()
 
 func pause_travel() -> void:
 	if moving_tween != null and moving_tween.is_valid():
@@ -88,7 +89,7 @@ func travel_to(location: Node2D) -> void:
 func _on_enter_galaxy() -> void:
 	inside_galaxy = current_location
 	# TODO: more deterministic, current_location could be desyncd from clients
-	var entered_galaxy : Universe.Galaxy = Universe.get_galaxy_by_name(current_location.name)
+	var entered_galaxy : Galaxy = Universe.get_galaxy_by_name(current_location.name)
 	galaxies_parent.hide()
 	print("Now Entering Galaxy ", entered_galaxy.display_name, " Planet count: ", entered_galaxy.planets.size())
 	draw_planets_in(entered_galaxy)
@@ -161,10 +162,10 @@ func lock_in_path() -> void:
 
 func remap_position_to_screen(pos: Vector3, boundaries: Vector4) -> Vector2:
 	var x_pos = remap(pos.x, boundaries.x, boundaries.y, 0.0, 256.0)
-	var y_pos = remap(pos.y, boundaries.z, boundaries.w, 0.0, 256.0)
+	var y_pos = remap(pos.z, boundaries.z, boundaries.w, 0.0, 256.0)
 	return Vector2(x_pos, y_pos)
 
-func draw_planets_in(galaxy: Universe.Galaxy) -> void:
+func draw_planets_in(galaxy: Galaxy) -> void:
 	for child in planets_parent.get_children():
 		planets_parent.remove_child(child)
 		child.queue_free()
@@ -183,10 +184,10 @@ func draw_planets_in(galaxy: Universe.Galaxy) -> void:
 		nodes.push_back(planet)
 	draw_paths_clockwise(nodes)
 
-func update_visuals() -> void:
+func draw_galaxies() -> void:
 	# Manually draw the Package Company because it's special
 	var visual_package_company : Node2D = load("res://scenes/objects/navigation/package_company.tscn").instantiate()
-	var physical_package_company : Universe.Galaxy = Universe.get_package_company()
+	var physical_package_company : Galaxy = Universe.get_package_company()
 	visual_package_company.position = remap_position_to_screen(physical_package_company.position, Universe.boundaries)
 	visual_package_company.name = physical_package_company.display_name
 	visual_package_company.get_node("Label").text = physical_package_company.display_name

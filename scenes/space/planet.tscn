@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpnc0mby2ggsx"]
+
+[ext_resource type="Script" path="res://scripts/space/Planet.gd" id="1_c3kya"]
+[ext_resource type="Texture2D" uid="uid://dos6a5s68jvuk" path="res://art/icons/planet.svg" id="1_jmdas"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qiumo"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_jmdas")
+emission_enabled = true
+emission = Color(0.839216, 0.686275, 0.541176, 1)
+emission_energy_multiplier = 2.26
+
+[sub_resource type="QuadMesh" id="QuadMesh_thidb"]
+size = Vector2(15, 15)
+
+[node name="Planet" type="Node3D"]
+script = ExtResource("1_c3kya")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_qiumo")
+mesh = SubResource("QuadMesh_thidb")

@@ -19,6 +19,9 @@ func _ready():
 func update_interact_text_to(new_text: String) -> void:
 	interact_label.text = new_text
 
+# Called from Package.gd
+# Could hook up to the Player's picked_up signal instead
+# That would mean we check every item they pick up for a "Package" component though
 func update_package_label(package: Package) -> void:
 	if package_label_tween != null and package_label_tween.is_valid():
 		package_label_tween.kill()
