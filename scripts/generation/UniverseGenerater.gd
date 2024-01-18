@@ -6,6 +6,7 @@ signal finished_generation
 var min_galaxy_id = 1
 var max_galaxy_id = 9999999
 var galaxy_distance_multiplier = 10.0
+var planet_distance_multiplier = 2.5
 var galaxies : Array[Galaxy] = []
 
 var min_planet_id = 1
@@ -72,7 +73,7 @@ func generate_galaxy() -> Galaxy:
 	new_galaxy.planets = generate_planet_system(planet_system_formation)
 	for planet in new_galaxy.planets:
 		planet.galaxy = new_galaxy
-	new_galaxy.boundaries = get_formation_boundaries(planet_system_formation)
+	new_galaxy.boundaries = get_formation_boundaries(planet_system_formation) * planet_distance_multiplier
 	
 	return new_galaxy
 
@@ -87,7 +88,7 @@ func generate_planet_system(formation: Path2D) -> Array[Planet]:
 		var new_planet = generate_planet()
 		planet_formation_path.progress_ratio = float(i) / float(planets_count)
 		var spawn_position = planet_formation_path.position
-		new_planet.position = Vector3(spawn_position.x, 1.0, spawn_position.y)
+		new_planet.position = Vector3(spawn_position.x, 0.0, spawn_position.y) * planet_distance_multiplier
 		planets.push_back(new_planet)
 	
 	return planets
@@ -126,7 +127,7 @@ func get_formation_boundaries(formation: Path2D) -> Vector4:
 		formation_boundaries.y = max(formation_boundaries.y, point.x)
 		formation_boundaries.z = min(formation_boundaries.z, point.y)
 		formation_boundaries.w = max(formation_boundaries.w, point.y)
-	return formation_boundaries * galaxy_distance_multiplier
+	return formation_boundaries
 
 func pick_random_formation() -> Path2D:
 	return formations_parent.get_children().pick_random()
@@ -136,7 +137,7 @@ func generate() -> void:
 	var galaxy_formation_path : PathFollow2D = galaxy_formation.get_node("PathFollow2D")
 	
 	print("[Universe]: Using Galaxy Formation: ", galaxy_formation.name)
-	boundaries = get_formation_boundaries(galaxy_formation)
+	boundaries = get_formation_boundaries(galaxy_formation) * galaxy_distance_multiplier
 	# TODO: Resource with UniverseParams for varying difficulties
 	
 	var galaxy_count = 5 # TODO: based on Formation? More difficult formations have more galaxies
@@ -145,14 +146,14 @@ func generate() -> void:
 		var new_galaxy = generate_galaxy()
 		galaxy_formation_path.progress_ratio = float(i) / float(galaxy_count)
 		var spawn_position = galaxy_formation_path.position * galaxy_distance_multiplier
-		new_galaxy.position = Vector3(spawn_position.x, 1.0, spawn_position.y)
+		new_galaxy.position = Vector3(spawn_position.x, 0.0, spawn_position.y)
 		galaxies.push_back(new_galaxy)
 	
 	# Always put the Package Company (IPP) at 0,0,0
 	var package_company_galaxy : Galaxy = galaxy_scene.instantiate()
 	package_company_galaxy.name = "IPP"
 	package_company_galaxy.display_name = "IPP"
-	package_company_galaxy.position = Vector3(-15.0, 1.0, 0.0)
+	package_company_galaxy.position = Vector3(0.0, 0.0, 0.0)
 	var company_planets : Array[Planet] = [] # [store, warehouse, jail, etc]
 	package_company_galaxy.planets = company_planets
 	galaxies.push_front(package_company_galaxy)

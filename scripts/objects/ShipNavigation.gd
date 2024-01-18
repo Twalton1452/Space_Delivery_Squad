@@ -1,7 +1,7 @@
 extends Node2D
 class_name ShipNavigation
 
-## Visual Representation of where the players are at in the Universe
+## Visual Representation of where the players are at in the Universe without going outside
 
 signal reached_destination
 signal locked_in_destination(destination: Node3D)
@@ -24,7 +24,7 @@ var speed = 5.0
 var moving_tween : Tween
 var selected_path = 0
 var inside_galaxy : Node2D = null
-## Since we always have the Galaxies loaded, I've separated the parent for Planets out
+## Since the Galaxies are always loaded, I've separated the parents for Galaxies/Planets out from the Screen
 ## Use the Planets parent if we're inside a Galaxy otherwise operate on the Galaxies parent
 var contextual_parent : Node2D : 
 	get:
@@ -60,14 +60,24 @@ func unpause_travel() -> void:
 	#if Input.is_action_just_pressed("ui_down"):
 		#screen.position += Vector2(0.0, -25.0)
 
-func travel_to(location: Node2D) -> void:
+func begin_traveling(seconds_to_destination: float, seconds_to_rotate: float) -> void:
+	var destination : Node2D
+	var selected_path_name = paths_parent.get_children()[selected_path].name
+	for child in contextual_parent.get_children():
+		if child.name == selected_path_name:
+			destination = child
+	if destination == null:
+		return
+	
+	travel_to(destination, seconds_to_destination, seconds_to_rotate)
+
+func travel_to(location: Node2D, seconds_to_destination: float, seconds_to_rotate: float) -> void:
 	if moving_tween != null and moving_tween.is_valid():
 		moving_tween.kill()
 	target_location = location
 	
 	# The ship is the Focal point of the screen
 	var target_position = ship.global_position - target_location.position
-	var distance = screen.position.distance_to(target_position)
 	
 	# Animate the ship rotating
 	# TODO: Learn to calculate rotations
@@ -79,12 +89,11 @@ func travel_to(location: Node2D) -> void:
 	
 	# Rotate the Ship first for a slower feel
 	# Then move the screen to make it look like the Ship is traveling
-	var time_to_destination_seconds : float = clampf(floor(distance / speed), 1.0, 1000.0)
 	moving_tween = create_tween()
-	moving_tween.tween_property(ship, "rotation", target_rotation, 1.0).set_ease(Tween.EASE_IN)
-	moving_tween.tween_property(screen, "position", target_position, time_to_destination_seconds)
+	moving_tween.tween_property(ship, "rotation", target_rotation, seconds_to_rotate).set_ease(Tween.EASE_IN)
+	moving_tween.tween_property(screen, "position", target_position, seconds_to_destination)
 	moving_tween.tween_callback(_on_reached_destination)
-	print("Traveling to %s. ETA %s seconds" % [target_location.name, time_to_destination_seconds])
+	print("Traveling to %s. ETA %s seconds" % [target_location.name, seconds_to_destination])
 
 func _on_enter_galaxy() -> void:
 	inside_galaxy = current_location
@@ -93,6 +102,7 @@ func _on_enter_galaxy() -> void:
 	galaxies_parent.hide()
 	print("Now Entering Galaxy ", entered_galaxy.display_name, " Planet count: ", entered_galaxy.planets.size())
 	draw_planets_in(entered_galaxy)
+	entered_galaxy.on_entered()
 	planets_parent.show()
 
 func _on_exit_galaxy() -> void:
@@ -149,16 +159,17 @@ func select_next_left_path() -> void:
 	var next_left = paths_parent.get_child_count() - 1 if selected_path - 1 < 0 else selected_path - 1
 	select_path(next_left)
 
-func lock_in_path() -> void:
+func lock_in_path() -> String:
 	if paths_parent.get_child_count() == 0:
 		reached_destination.emit()
-		return
+		return ""
 	
 	var selected_path_name = paths_parent.get_children()[selected_path].name
 	for child in contextual_parent.get_children():
 		if child.name == selected_path_name:
-			travel_to(child)
-			return
+			return selected_path_name
+	
+	return ""
 
 func remap_position_to_screen(pos: Vector3, boundaries: Vector4) -> Vector2:
 	var x_pos = remap(pos.x, boundaries.x, boundaries.y, 0.0, 256.0)
@@ -212,6 +223,9 @@ func draw_galaxies() -> void:
 		nodes.push_back(galaxy)
 	draw_paths_clockwise(nodes)
 
+func get_in_range_nodes(nodes: Array[Node2D], max_distance: float) -> Array[Node2D]:
+	return nodes.filter(func(node: Node2D): return node.position.distance_to(current_location.position) < max_distance and node != current_location)
+
 ## Gets all the nodes in range of the current location then sorts them in clockwise order
 ## Adding them in that order as children of the Paths Parent
 func draw_paths_clockwise(nodes: Array[Node2D]) -> void:
@@ -222,7 +236,10 @@ func draw_paths_clockwise(nodes: Array[Node2D]) -> void:
 	# First: March the Quadrants of the screen clockwise using the current_location as the center point
 	# Second: Once inside the Quadrant, sort the nodes from closest to farthest
 	# This will put the paths in clockwise order to make scrolling them as simple as +/- 1 index on the children
-	var in_range_nodes : Array[Node2D] = nodes.filter(func(node: Node2D): return node.position.distance_to(current_location.position) < distance_to_draw_path and node != current_location)
+	var in_range_nodes : Array[Node2D] = get_in_range_nodes(nodes, 10000.0)
+	#var in_range_nodes : Array[Node2D] = get_in_range_nodes(nodes, distance_to_draw_path)
+	#if in_range_nodes.size() == 0:
+		#in_range_nodes = get_in_range_nodes(nodes, distance_to_draw_path * 2)
 	
 	# Top Right Quadrant
 	var top_right_nodes = in_range_nodes.filter(func(node: Node2D):

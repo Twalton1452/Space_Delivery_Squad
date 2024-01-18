@@ -3,6 +3,9 @@ class_name ShipNavigationConsole
 
 ## Physical object the Players interact with to affect the Path the Ship takes
 
+signal enter_galaxy_lever_pulled
+signal locked_in
+
 @export var quad_for_viewport : MeshInstance3D
 @export var navigation_viewport : SubViewport
 @export var left_arrow_button : Interactable
@@ -21,8 +24,16 @@ func _ready() -> void:
 	lock_in_button.interacted.connect(_on_lock_in_button_pressed)
 	landing_lever.interacted.connect(_on_landing_lever_activated)
 	ship_navigation.reached_destination.connect(_on_reached_destination)
+	enter_galaxy_event.started.connect(_on_enter_galaxy)
+	enter_galaxy_event.ended.connect(_on_exit_galaxy)
 	
 	enable()
+
+func _on_enter_galaxy() -> void:
+	landing_lever.interact_display_text = "Enter Galaxy"
+
+func _on_exit_galaxy() -> void:
+	landing_lever.interact_display_text = "Exit Galaxy"
 
 func enable() -> void:
 	(quad_for_viewport.material_override as StandardMaterial3D).albedo_color = Color.WHITE
@@ -54,13 +65,10 @@ func _on_right_button_pressed(_interactable: Interactable, _interacter: Player) 
 
 func _on_lock_in_button_pressed(interactable: Interactable, _interacter: Player) -> void:
 	interactable.add_highlight(highlight_mat)
-	ship_navigation.lock_in_path()
+	var destination_name = ship_navigation.lock_in_path()
+	locked_in.emit(destination_name)
 
 func _on_landing_lever_activated(_interactable: Interactable, _interacter: Player) -> void:
+	enter_galaxy_lever_pulled.emit()
 	lock_in_button.remove_highlight()
-	if enter_galaxy_event.occurring:
-		landing_lever.interact_display_text = "Enter Galaxy"
-		EventManager.request_event_end(enter_galaxy_event)
-	else:
-		landing_lever.interact_display_text = "Exit Galaxy"
-		EventManager.request_event_start(enter_galaxy_event)
+

@@ -7,9 +7,11 @@ extends Node
 signal generated
 
 var boundaries = Vector4() # (x: min_x, y: max_x, z: min_y, w: max_y)
+var galaxies_parent : Node3D
 var galaxies : Array[Galaxy] = []
 var game_seed : int
 var is_generated = false
+var outside_ship_position = Vector3(-15.0, -5.0, 0.0)
 
 #region Person
 class Resident:
@@ -31,6 +33,9 @@ func _on_peer_connected(p_id: int) -> void:
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
+	galaxies_parent = Node3D.new()
+	galaxies_parent.name = "Galaxies_Parent"
+	add_child(galaxies_parent)
 	
 	# TODO: Wait for game to signal it has started
 	# This is a temporary workaround
@@ -43,8 +48,8 @@ func _ready():
 func generate_universe() -> void:
 	is_generated = false
 	# Allow for regenerating the Universe, likely only a debugging thing
-	for child in get_children():
-		remove_child(child)
+	for child in galaxies_parent.get_children():
+		galaxies_parent.remove_child(child)
 		child.queue_free()
 	await get_tree().physics_frame
 	
@@ -60,7 +65,7 @@ func generate_universe() -> void:
 	boundaries = generater.boundaries
 	galaxies = generater.galaxies
 	for galaxy in galaxies:
-		add_child(galaxy)
+		galaxies_parent.add_child(galaxy)
 	
 	# End Generation
 	# Let a frame pass for setup/tear down reasons
@@ -68,6 +73,7 @@ func generate_universe() -> void:
 	generater.queue_free()
 	await get_tree().physics_frame
 	
+	galaxies_parent.position = outside_ship_position
 	print("[%s]: %s Finished Generation (seed: %s)" % [name, multiplayer.get_unique_id(), game_seed])
 	is_generated = true
 	generated.emit()
