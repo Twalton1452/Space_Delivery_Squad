@@ -58,21 +58,20 @@ func _on_locked_in_destination(destination_name: String) -> void:
 		return
 	
 	travel_to(destination)
-
+	
 func travel_to(node: Node3D) -> void:
 	if moving_tween != null and moving_tween.is_valid():
 		moving_tween.kill()
 	
 	moving_tween = create_tween()
+	# Rotate the universe Y until aligned with outside of ship location
+	# Move the galaxies X to outside the Ship
 	var to_move = Universe.galaxies_parent
 	
-	var target_position = to_move.global_position + outside_ship_location.global_position - node.global_position
-	var distance = Universe.galaxies_parent.position.distance_to(target_position)
-	var time_to_destination_seconds : float = clampf(floor(distance / speed), 1.0, 1000.0)
-	var time_to_rotate = 1.0 # TODO: rotation
-	
-	moving_tween.tween_property(to_move, "rotation", to_move.rotation, time_to_rotate).set_ease(Tween.EASE_IN_OUT)
-	moving_tween.tween_property(to_move, "position", target_position, time_to_destination_seconds).set_ease(Tween.EASE_IN_OUT)
+	var target_position = outside_ship_location.global_position - node.position
+	var distance = target_position.length()
+	var time_to_destination_seconds : float = clampf(floor(distance / speed), 1.0, 5.0)
+	moving_tween.tween_property(to_move, "global_position", target_position, time_to_destination_seconds).set_ease(Tween.EASE_IN_OUT)
 	moving_tween.tween_callback(func():
 		if node is Galaxy:
 			current_galaxy = node
@@ -81,7 +80,7 @@ func travel_to(node: Node3D) -> void:
 		# TODO: RPC that tells clients about the result
 		#	    Also tells the navigation system to finish
 	)
-	navigation_console.ship_navigation.begin_traveling(time_to_destination_seconds, time_to_rotate)
+	navigation_console.ship_navigation.begin_traveling(time_to_destination_seconds, 0.2)
 
 func _on_power_loss_disaster_started() -> void:
 	for power_consumer in get_tree().get_nodes_in_group(Constants.POWER_CONSUMER_GROUP):
