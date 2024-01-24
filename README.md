@@ -25,7 +25,7 @@
 	- Music
 	- SFX
    	- Mic
-     	- Ambience
+	- Ambience
   - Has an `AudioStreamPlayer` for music by default with no music attached
   - Unmutes the Audio Buses when exported, so you can edit in peace and quiet
 - `PlayerManager.gd`
@@ -36,14 +36,14 @@
   		- Color
 ## Game Logic
 - Manager / Handler differentiation
- 	- Manager scripts deal with overarching systems outside of the Players direct control (some are not explicitly named manager sometimes and that is probably confusing)
-   		- Audio
-  		- Events
-    		- PowerGrid
+	- Manager scripts deal with overarching systems outside of the Players direct control (some are not explicitly named manager sometimes and that is probably confusing)
+		- Audio
+		- Events
+		- PowerGrid
    	- Handlers deal with resolving individual player actions
-   	 	- Interacting
-   	    	- Picking up something
-   	     	- Dropping something
+		- Interacting
+		- Picking up something
+		- Dropping something
 		- etc
 ## Creating Levels
   - Add your level scenes to the `LevelStore` `Resource` file `res://resources/StandardLevels.tres`
