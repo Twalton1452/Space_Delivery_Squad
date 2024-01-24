@@ -53,7 +53,7 @@
 	- Note: You can export the `level_store` variable for more of an editor workflow
 
 ## Debug Related Things
-	- `my_debug` folder is gitignored, you can store any personal debugging stuff in there
+- `my_debug` folder is gitignored, you can store any personal debugging stuff in there
 
 ## Credits
 - SFX from [Kenney](https://www.kenney.nl/)
